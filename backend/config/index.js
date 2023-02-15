@@ -1,4 +1,5 @@
 // jdsFT3rvIyypZA==jdsFT3rvIyypZA==
+// XSRF-Token c0WoE5B6-3jrI0JpeK07clHVh6IV8uWysL0A
 
 module.exports = {
     environment: process.env.NODE_ENV || 'development',

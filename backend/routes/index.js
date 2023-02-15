@@ -19,7 +19,10 @@ router.get("/api/csrf/restore", (req, res) => {
     });
 });
 
+// Import this file into the routes/index.js file and connect it to the router there.
+const apiRouter = require('./api');
 
+router.use('/api', apiRouter);
 
 // export the router
 module.exports = router;
