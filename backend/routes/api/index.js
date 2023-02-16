@@ -8,5 +8,5 @@ router.post('/test', function(req, res) {
     res.json({ requestBody: req.body });
 });
 
-
+// Phase 3 | Authentication Flow | User Model Methods
 module.exports = router;
