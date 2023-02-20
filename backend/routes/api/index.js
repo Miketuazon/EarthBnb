@@ -15,6 +15,8 @@ router.use('/users', usersRouter);
 // router.post('/test', function(req, res) {
 //     res.json({ requestBody: req.body });
 // });
+
+
 // Phase 3 | Test User Auth Middlewares |
 // const { setTokenCookie } = require('../../utils/auth.js');
 // const { User } = require('../../db/models');
