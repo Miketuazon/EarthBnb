@@ -1,12 +1,24 @@
-// backend/routes/api/index.js
-// nesting an api folder in your routes folder.
 const router = require('express').Router();
+
 const { restoreUser } = require('../../utils/auth.js');
 
-// 2. GET /api/restore-user
-
-
 router.use(restoreUser);
+
+// router.post('/test', function(req, res) {
+//     res.json({ requestBody: req.body });
+// });
+// Phase 3 | Test User Auth Middlewares |
+// const { setTokenCookie } = require('../../utils/auth.js');
+// const { User } = require('../../db/models');
+// router.get('/set-token-cookie', async (_req, res) => {
+//   const user = await User.findOne({
+//       where: {
+//         username: 'Demo-lition'
+//       }
+//     });
+//   setTokenCookie(res, user);
+//   return res.json({ user: user });
+// });
 
 // router.get(
 //   '/restore-user',
@@ -14,32 +26,8 @@ router.use(restoreUser);
 //     return res.json(req.user);
 //   }
 // );
-
-router.post('/test', function(req, res) {
-    res.json({ requestBody: req.body });
-});
-
-// // Phase 3 | Test User Auth Middlewares
-
-
-// 1. Make sure to test this setup by creating the following test route in the api router:
-// GET /api/set-token-cookie
-const { setTokenCookie } = require('../../utils/auth');
-const { User } = require('../../db/models');
-router.get('/set-token-cookie', async (_req, res) => {
-  const user = await User.findOne({
-      where: {
-        username: 'Demo-lition'
-      }
-    });
-  setTokenCookie(res, user);
-  return res.json({ user: user });
-});
-
-// router.use(restoreUser);
-
-// GET /api/require-auth
-// const { requireAuth } = require('../../utils/auth');
+// Importing requireAuth from utils
+// const { requireAuth } = require('../../utils/auth.js');
 // router.get(
 //   '/require-auth',
 //   requireAuth,
@@ -47,4 +35,5 @@ router.get('/set-token-cookie', async (_req, res) => {
 //     return res.json(req.user);
 //   }
 // );
+// End phase 3. commented out for now.
 module.exports = router;
