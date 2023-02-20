@@ -6,6 +6,7 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const { ValidationError } = require('sequelize');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -46,6 +47,9 @@ if (!isProduction) {
     })
   );
 
+
+
+
 // Phase 2 | Resource Not Found Error-Handler | Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
@@ -56,7 +60,6 @@ app.use((_req, _res, next) => {
 });
 
 // Phase 2 | Sequelize Error-Handler | catching Sequelize errors, format them b4 sending err res
-const { ValidationError } = require('sequelize');
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
