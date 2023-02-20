@@ -1,4 +1,3 @@
-// backend/app.js
 const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
@@ -6,11 +5,12 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const { ValidationError } = require('sequelize');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-
 // Initialize express
+const routes = require('./routes');
 const app = express();
 
 // Connect the morgan middleware for logging information about requests and responses:
@@ -46,6 +46,9 @@ if (!isProduction) {
     })
   );
 
+app.use(routes); // Connect all the routes
+
+
 // Phase 2 | Resource Not Found Error-Handler | Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
@@ -56,7 +59,6 @@ app.use((_req, _res, next) => {
 });
 
 // Phase 2 | Sequelize Error-Handler | catching Sequelize errors, format them b4 sending err res
-const { ValidationError } = require('sequelize');
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
@@ -84,9 +86,5 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-// Phase 2 | Testing the Error Handlers | Can test Resource Not Found error handler
-
-const routes = require('./routes');
-app.use(routes); // Connect all the routes
 
 module.exports = app;
