@@ -23,7 +23,7 @@ const validateLogin = [
 
 
 
-// User Log in API Route
+// User Log in API Routee
 router.post(
     '/',
     validateLogin, // P5 added in validateLogin
