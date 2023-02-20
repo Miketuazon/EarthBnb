@@ -34,12 +34,15 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
     // User Model Methods 4 | signup
-    static async signup({ username, email, password }) {
+    // P5 | Wrap up BE | added fN and lN
+    static async signup({ username, email, password, firstName, lastName }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
         email,
-        hashedPassword
+        hashedPassword,
+        firstName,
+        lastName,
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
@@ -77,6 +80,14 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: [60, 60]
         }
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
       }
     },
     {

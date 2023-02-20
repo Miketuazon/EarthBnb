@@ -28,6 +28,15 @@ module.exports = {
         type: Sequelize.STRING.BINARY,
         allowNull: false
       },
+      // P5 | wrapping up BE | created fN and lN
+      firstName: {
+        type: Sequelize.STRING(256),
+        allowNull: false,
+      },
+      lastName: {
+        type: Sequelize.STRING(256),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

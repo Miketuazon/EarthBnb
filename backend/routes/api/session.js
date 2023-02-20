@@ -5,9 +5,34 @@ const router = express.Router();
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
-// User Log in API Route
+const { check } = require('express-validator'); // can check this documentation to make custom validators
+const { handleValidationErrors } = require('../../utils/validation');
+
+// Phase 5 | Validating Login Request Body
+const validateLogin = [
+    check('credential') // check fn's are mw fns. Taking in credential and pw in line 17
+      .exists({ checkFalsy: true })
+      .notEmpty()
+      .withMessage('Please provide a valid email or username.'),
+    check('password')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide a password.'),
+      check('firstName')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide a first name.'),
+      check('lastName')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide a last name.'),
+    handleValidationErrors
+  ];
+
+
+
+
+// User Log in API Routee
 router.post(
     '/',
+    validateLogin, // P5 added in validateLogin
     async (req, res, next) => {
       const { credential, password } = req.body;
       // Does user exist?
