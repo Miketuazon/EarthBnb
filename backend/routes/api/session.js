@@ -28,5 +28,13 @@ router.post(
       });
     }
   );
+// User Log out in API Route
+router.delete(
+  '/',
+  (_req, res) => {
+    res.clearCookie('token'); //remove cookie to logout
+    return res.json({ message: 'success' });
+  }
+);
 
 module.exports = router;
