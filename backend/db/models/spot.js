@@ -11,28 +11,92 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        // hooks: true,
+      });
       Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        hooks: true,
+        // hooks: true,
       });
       Spot.hasMany(models.Booking, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        hooks: true,
+        // hooks: true,
+      })
+      Spot.belongsTo(models.User, {
+        foreignKey: 'ownerId',
       })
     }
   }
   Spot.init({
-    address: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING,
-    lat: DataTypes.FLOAT,
-    lng: DataTypes.FLOAT,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    price: DataTypes.FLOAT
+    ownerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1,100],
+      },
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1,100],
+      },
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1,100],
+      },
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1,100],
+      },
+    },
+    lat: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true,
+      },
+    },
+    lng: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true,
+      },
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [2,250],
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [2,250],
+      },
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: {
+        min: 1,
+      }
+    },
   }, {
     sequelize,
     modelName: 'Spot',
