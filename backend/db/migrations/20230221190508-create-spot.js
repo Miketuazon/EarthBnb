@@ -58,7 +58,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }, options);
   },
   down: async (queryInterface, Sequelize) => {
     options.tableName = "Spots";
