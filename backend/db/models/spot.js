@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -14,17 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.Review, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        // hooks: true,
       });
       Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        // hooks: true,
       });
       Spot.hasMany(models.Booking, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        // hooks: true,
       })
       Spot.belongsTo(models.User, {
         foreignKey: 'ownerId',
@@ -39,63 +34,35 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [1,100],
-      },
     },
     city: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [1,100],
-      },
     },
     state: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [1,100],
-      },
     },
     country: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [1,100],
-      },
     },
     lat: {
-      type: DataTypes.DECIMAL,
-      validate: {
-        isDecimal: true,
-      },
+      type: DataTypes.FLOAT,
     },
     lng: {
-      type: DataTypes.DECIMAL,
-      validate: {
-        isDecimal: true,
-      },
+      type: DataTypes.FLOAT,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [2,250],
-      },
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [2,250],
-      },
     },
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
-      validate: {
-        min: 1,
-      }
     },
   }, {
     sequelize,
