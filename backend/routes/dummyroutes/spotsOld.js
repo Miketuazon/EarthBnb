@@ -114,3 +114,52 @@ router.get('/', async (req, res) => {
     // }
 
 // module.exports = router;
+
+/* OLD ROUTE HANDLER for get all spots.
+router.get('/', async (req, res) => {
+    const spots = await Spot.findAll({
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: [], where: {
+                preview: true,
+            }},
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                [sequelize.col('SpotImages.url'), 'previewImage']
+            ],
+        },
+        group: ['Spot.id']
+    })
+    res.json(spots);
+})
+*/
+
+/* Old get spots following vid 8:18
+router.get('/', async (req, res) => {
+    const spots = await Spot.findAll({
+        include: [
+            {model: Review},
+            {model: SpotImage}
+        ]
+    })
+    console.log(spots)
+    const spotObjects = [];
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i];
+        spotObjects.push(spot.toJSON())
+    }
+
+    for (let i = 0; i < spotObjects.length; i++) {
+        const spot = spotObjects[i];
+        if (spot.SpotImage.length > 0) {
+
+        } else {
+            spot.SpotImage = ""
+        }
+    }
+    res.json(spots);
+})
+
+*/
