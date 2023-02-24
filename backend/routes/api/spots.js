@@ -2,7 +2,7 @@ const express = require('express'); //This file will hold the resources for the 
 const router = express.Router();
 const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
 
-// Get all spots
+//  1. Get all spots
 router.get('/', async (req, res) => {
     // look for all spots
     const spots = await Spot.findAll({
@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
     res.json({Spots: spotObjects});
 })
 
-// Get all spots by current user. URL: /api/spots/current
+//  2. Get all Spots owned by the Current User
 router.get('/current', async (req, res) => {
     const { user } = req;
     const currentUserId = user.toJSON().id
@@ -75,9 +75,12 @@ router.get('/current', async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ],
         },
+        group: Spot.id
     })
     let payload = {Spots: spots}
     res.json(payload);
 })
+
+
 
 module.exports = router;
