@@ -1,6 +1,8 @@
 const express = require('express'); //This file will hold the resources for the route paths beginning with /api/spots.
 const router = express.Router();
 const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
 //  1. Get all spots
 router.get('/', async (req, res) => {
@@ -113,6 +115,60 @@ router.get('/current', async (req, res) => {
     res.json(payload);
 })
 
+// 4. Create a Spot | /api/spots
 
+// validateSpotSignup
+const validateSpotSignup = [
+    check('address').exists({ checkFalsy: true })
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .withMessage('Longitude is not valid'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .isNumeric({checkFalsy: true}, {min: 1})
+      .withMessage('Price per day is required'),
+    handleValidationErrors
+  ];
 
+router.post('/',
+    validateSpotSignup,
+    async (req, res) => {
+    const currentOwnerId = req.user.id
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const owner = await User.findByPk(currentOwnerId);
+    const newSpot = await Spot.create({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+        ownerId: owner.id,
+    })
+
+    res.status(200).json(newSpot);
+})
 module.exports = router;
