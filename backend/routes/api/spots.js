@@ -1,6 +1,6 @@
 const express = require('express'); //This file will hold the resources for the route paths beginning with /api/spots.
 const router = express.Router();
-const {Spot, SpotImage, Review, sequelize, Sequelize } = require('../../db/models');
+const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
 
 // Get all spots
 router.get('/', async (req, res) => {
@@ -57,7 +57,12 @@ router.get('/', async (req, res) => {
 
 // Get all spots by current user. URL: /api/spots/current
 router.get('/current', async (req, res) => {
+    const { user } = req;
+    const currentUserId = user.toJSON().id
     const spots = await Spot.findAll({
+        where: {
+            id: currentUserId
+        },
         include: [
             {model: Review, attributes: []},
             {model: SpotImage, attributes: [], where: {
@@ -70,7 +75,6 @@ router.get('/current', async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ],
         },
-        group: ['Spot.id']
     })
     let payload = {Spots: spots}
     res.json(payload);
