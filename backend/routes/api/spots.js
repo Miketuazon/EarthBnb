@@ -55,6 +55,11 @@ router.get('/', async (req, res) => {
     res.json({Spots: spotObjects});
 })
 
+//  3. Get details of a Spot from an id | URL: /api/spots/:spotId
+// router.get('/:spotId', async (req,res) => {
+
+// })
+
 //  2. Get all Spots owned by the Current User
 router.get('/current', async (req, res) => {
     const { user } = req;
@@ -75,7 +80,7 @@ router.get('/current', async (req, res) => {
                 [sequelize.col('SpotImages.url'), 'previewImage']
             ],
         },
-        group: ["Spot.id"]
+        group: ["Spot.id",'SpotImages.url']
     })
     let payload = {Spots: spots}
     res.json(payload);
