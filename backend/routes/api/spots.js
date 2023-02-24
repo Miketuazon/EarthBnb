@@ -153,9 +153,10 @@ const validateSpotSignup = [
 router.post('/',
     validateSpotSignup,
     async (req, res) => {
-    const currentOwnerId = req.user.id
+        const { user } = req;
+        const currentUserId = user.toJSON().id
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
-    const owner = await User.findByPk(currentOwnerId);
+    const owner = await User.findByPk(currentUserId);
     const newSpot = await Spot.create({
         address,
         city,
@@ -166,7 +167,7 @@ router.post('/',
         name,
         description,
         price,
-        ownerId: owner.id,
+        ownerId: currentUserId,
     })
 
     res.status(200).json(newSpot);
