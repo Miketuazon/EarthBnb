@@ -59,6 +59,14 @@ router.get('/', async (req, res) => {
 router.get('/:spotId', async (req,res) => {
     const {spotId} = req.params;
 
+     // Error response: if spot is not found
+     const findSpot = await Spot.findOne({
+        where: {id: spotId},
+    })
+    if (!findSpot) return res.status(404).json({
+        message: "Spot couldn't be found"
+    })
+
     const spot = await Spot.findOne({
         where: {
             id: spotId,
@@ -75,15 +83,6 @@ router.get('/:spotId', async (req,res) => {
             ]
         },
     })
-
-    // Error response: if spot is not found
-    const findSpot = await Spot.findOne({
-        where: {Id: spotId},
-    })
-    if (!findSpot) return res.status(404).json({
-        message: "Spot couldn't be found"
-    })
-
     res.json(spot);
 })
 
