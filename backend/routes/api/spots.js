@@ -55,24 +55,25 @@ router.get('/', async (req, res) => {
     res.json({Spots: spotObjects});
 })
 
-// router.get('/current', async (req, res) => {
-//     const spots = await Spot.findAll({
-//         include: [
-//             {model: Review, attributes: []},
-//             {model: SpotImage, attributes: [], where: {
-//                 preview: true,
-//             }},
-//         ],
-//         attributes: {
-//             include: [
-//                 [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-//                 [sequelize.col('SpotImages.url'), 'previewImage']
-//             ],
-//         },
-//         group: ['Spot.id']
-//     })
-//     let payload = {Spots: spots}
-//     res.json(payload);
-// })
+// Get all spots by current user. URL: /api/spots/current
+router.get('/current', async (req, res) => {
+    const spots = await Spot.findAll({
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: [], where: {
+                preview: true,
+            }},
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                [sequelize.col('SpotImages.url'), 'previewImage']
+            ],
+        },
+        group: ['Spot.id']
+    })
+    let payload = {Spots: spots}
+    res.json(payload);
+})
 
 module.exports = router;
