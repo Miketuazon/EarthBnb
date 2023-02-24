@@ -56,9 +56,26 @@ router.get('/', async (req, res) => {
 })
 
 //  3. Get details of a Spot from an id | URL: /api/spots/:spotId
-// router.get('/:spotId', async (req,res) => {
-
-// })
+router.get('/:spotId', async (req,res) => {
+    const {spotId} = req.params;
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId,
+        },
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: ['id', 'url', 'preview']},
+            {model: User, attributes: ['id','firstName','lastName',], as: 'Owner'}
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
+            ]
+        },
+    })
+    res.json(spot);
+})
 
 //  2. Get all Spots owned by the Current User
 router.get('/current', async (req, res) => {
@@ -82,7 +99,7 @@ router.get('/current', async (req, res) => {
         },
         group: ["Spot.id",'SpotImages.url']
     })
-    let payload = {Spots: spots}
+    let payload = {Spots: spots};
     res.json(payload);
 })
 
