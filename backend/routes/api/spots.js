@@ -58,6 +58,16 @@ router.get('/', async (req, res) => {
 //  3. Get details of a Spot from an id | URL: /api/spots/:spotId
 router.get('/:spotId', async (req,res) => {
     const {spotId} = req.params;
+
+    // Error response: if spot is not found
+    const findSpot = await Spot.findOne({
+        where: {Id: spotId},
+    })
+    if (!findSpot) return res.status(404).json({
+        message: "Spot couldn't be found"
+    })
+
+
     const spot = await Spot.findOne({
         where: {
             id: spotId,
