@@ -118,20 +118,66 @@ router.get('/:spotId', async (req,res) => {
 
 // 5. Add an Image to a Spot based on the Spot's id | URL: /api/spots/:spotId/images
 
-router.post('/:spotId/images', async (req, res) => {
-    const findSpot = await Spot.findByPk(req.params.spotId);
-    console.log(findSpot)
-    const bodyOfSpot = await Spot.findByPk(req.body);
-    console.log(bodyOfSpot)
-    if (!findSpot) {
-        const err = new Error("Spot couldn't be found");
-        res.status(404).json({
-            message: err.message,
-            statusCode: 404,
-        });
-    }
+router.post('/:spotId/images',
+    requireAuth,
+    async (req, res) => {
+        const {spotId} = req.params;
+        // console.log("this is the spotId", spotId) // 4 in this case
 
-    // await findSpot.create({})
+        const {user} = req;
+        // console.log(user.toJSON()) // user info
+
+        const currentUserId = (user.toJSON().id)
+        // console.log("this is the currentUserId", currentUserId) // 1 in this case
+
+     // Error response: if spot is not found
+     const findSpot = await Spot.findOne({
+        where: {id: spotId},
+    })
+    if (!findSpot) return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+    })
+
+    // Using #3's get details of a spot
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId,
+        },
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: ['id', 'url', 'preview']},
+            {model: User, attributes: ['id','firstName','lastName',], as: 'Owner'}
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
+            ]
+        },
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id']
+    })
+    const spotOwnerId = (spot.toJSON().ownerId)
+    // REQUIRE proper authorization. If spotOwnerId is not currentUserId
+    if (spotOwnerId !== currentUserId) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: "403"
+        });
+    };
+
+    const {url, preview} = req.body;
+    const createdSpotImage = await SpotImage.create({
+        spotId,
+        url,
+        preview,
+    })
+    let newSpotImage = createdSpotImage.toJSON()
+    // delete not needed data in res
+    delete newSpotImage.spotId
+    delete newSpotImage.updatedAt
+    delete newSpotImage.createdAt
+    res.status(200).json(newSpotImage)
 })
 
 // 4. Create a Spot | /api/spots
@@ -190,7 +236,7 @@ router.post('/',
         ownerId: currentUserId,
     })
 
-    res.status(200).json(newSpot);
+    res.status(201).json(newSpot);
 })
 
 

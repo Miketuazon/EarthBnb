@@ -163,3 +163,80 @@ router.get('/', async (req, res) => {
 })
 
 */
+
+
+// 5. Add an Image to a Spot based on the Spot's id | URL: /api/spots/:spotId/images
+
+router.post('/:spotId/images',
+    requireAuth,
+    async (req, res) => {
+        const {spotId} = req.params;
+        console.log("this is the spotId", spotId)
+        const {user} = req;
+        // console.log(user.toJSON())
+        const currentUserId = (user.toJSON().id)
+        // console.log("this is the currentUserId", currentUserId) // 1 in this case
+     // Error response: if spot is not found
+     const findSpot = await Spot.findOne({
+        where: {id: spotId},
+    })
+    if (!findSpot) return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+    })
+    // Using #3's get details of a spot
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId,
+        },
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: ['id', 'url', 'preview']},
+            {model: User, attributes: ['id','firstName','lastName',], as: 'Owner'}
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews'],
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
+            ]
+        },
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id']
+    })
+    // console.log("spot's details", spot.toJSON())
+    // const spotOwnerId = (spot.toJSON().ownerId)
+    // console.log("spotOwnerId", spotOwnerId) // on {{url}}/spots/2/images, this is 1
+    // const spotImageSpotId = req.params.spotId
+
+    // If spot doesn't belong to the current user
+    // if (currentUserId !== spotOwnerId) {
+
+    // }
+
+    // console.log(currentUserId) //1 for now
+
+    // const findSpot = await Spot.findByPk(req.params.spotId);
+    // console.log("finding of spot here",findSpot)
+    // const bodyOfSpot = await Spot.findByPk(req.body);
+    // console.log("body of spot here",bodyOfSpot)
+    // if (!findSpot) {
+    //     const err = new Error("Spot couldn't be found");
+    //     res.status(404).json({
+    //         message: err.message,
+    //         statusCode: 404,
+    //     });
+    // }
+
+    // await findSpot.create({})
+    res.json(spotImageSpotId)
+})
+
+// creating new true preview | doesnt work atm
+const spotsArray = (spot.toJSON().SpotImages)
+console.log(spotsArray)
+for (let i = spotsArray.length - 1; i >= 0; i--) {
+    const currentSpotImage = spotsArray[i];
+    const nextSpotImage = spotsArray[i-1];
+    if (currentSpotImage.preview === true) {
+        nextSpotImage.preview = false;
+    }
+}
