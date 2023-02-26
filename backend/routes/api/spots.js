@@ -2,8 +2,8 @@ const express = require('express'); //This file will hold the resources for the 
 const router = express.Router();
 const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-
+const { handleValidationErrorsForSpots } = require('../../utils/validation');
+const { requireAuth } = require('../../utils/auth')
 //  1. Get all spots
 router.get('/', async (req, res) => {
     // look for all spots
@@ -56,6 +56,33 @@ router.get('/', async (req, res) => {
     }
     res.json({Spots: spotObjects});
 })
+//  2. Get all Spots owned by the Current User
+router.get('/current',
+    requireAuth,
+    async (req, res) => {
+    const { user } = req;
+    const currentUserId = user.toJSON().id
+    const spots = await Spot.findAll({
+        where: {
+            ownerId: currentUserId
+        },
+        include: [
+            {model: Review, attributes: []},
+            {model: SpotImage, attributes: []/*, where: {
+                preview: true,
+            }*/},
+        ],
+        attributes: {
+            include: [
+                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
+                [sequelize.col('SpotImages.url'), 'previewImage']
+            ],
+        },
+        group: ["Spot.id",'SpotImages.url']
+    })
+    let payload = {Spots: spots};
+    res.json(payload);
+})
 
 //  3. Get details of a Spot from an id | URL: /api/spots/:spotId
 router.get('/:spotId', async (req,res) => {
@@ -89,30 +116,22 @@ router.get('/:spotId', async (req,res) => {
     res.json(spot);
 })
 
-//  2. Get all Spots owned by the Current User
-router.get('/current', async (req, res) => {
-    const { user } = req;
-    const currentUserId = user.toJSON().id
-    const spots = await Spot.findAll({
-        where: {
-            id: currentUserId
-        },
-        include: [
-            {model: Review, attributes: []},
-            {model: SpotImage, attributes: [], where: {
-                preview: true,
-            }},
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating'],
-                [sequelize.col('SpotImages.url'), 'previewImage']
-            ],
-        },
-        group: ["Spot.id",'SpotImages.url']
-    })
-    let payload = {Spots: spots};
-    res.json(payload);
+// 5. Add an Image to a Spot based on the Spot's id | URL: /api/spots/:spotId/images
+
+router.post('/:spotId/images', async (req, res) => {
+    const findSpot = await Spot.findByPk(req.params.spotId);
+    console.log(findSpot)
+    const bodyOfSpot = await Spot.findByPk(req.body);
+    console.log(bodyOfSpot)
+    if (!findSpot) {
+        const err = new Error("Spot couldn't be found");
+        res.status(404).json({
+            message: err.message,
+            statusCode: 404,
+        });
+    }
+
+    // await findSpot.create({})
 })
 
 // 4. Create a Spot | /api/spots
@@ -147,10 +166,11 @@ const validateSpotSignup = [
       .exists({ checkFalsy: true })
       .isNumeric({checkFalsy: true}, {min: 1})
       .withMessage('Price per day is required'),
-    handleValidationErrors
+      handleValidationErrorsForSpots
   ];
 
 router.post('/',
+    requireAuth,
     validateSpotSignup,
     async (req, res) => {
         const { user } = req;
@@ -172,4 +192,6 @@ router.post('/',
 
     res.status(200).json(newSpot);
 })
+
+
 module.exports = router;
