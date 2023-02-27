@@ -55,22 +55,21 @@ const validateBodyBookings = [
     handleValidationErrorsForSpots
 ]
 //  1. Get all spots
-router.get('/', async (req, res) => {
-    // look for all spots
-    // Adding in query
+router.get('/',
+    async (req,res) => {
     let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-    // pagination first
     if (!page) page = 1;
     if (!size) size = 20;
+
     if (parseInt(page) > 10) page = 10;
     if (parseInt(size) > 20) size = 20;
+
     if (parseInt(page) && parseInt(size)) {
         query.limit = size;
         query.offset = size * (page - 1);
     }
 
-    // defining other query properties now
     const where = {};
     if (req.query.minLat && req.query.maxLat) {
         where.lat = { [Op.gte]: Number(minLat), [Op.lte]: Number(maxLat) }
@@ -82,7 +81,7 @@ router.get('/', async (req, res) => {
         where.lat = { [Op.lte]: Number(maxLat) }
     }
 
-    if (req.query.minLng && req.query.maxLng) {
+    if(req.query.minLng && req.query.maxLng) {
         where.lng = { [Op.gte]: Number(minLng), [Op.lte]: Number(maxLng) }
     }
     else if (req.query.minLng) {
@@ -101,55 +100,54 @@ router.get('/', async (req, res) => {
     else if (req.query.maxPrice) {
         where.price = { [Op.lte]: Number(maxPrice) }
     }
-
     const spots = await Spot.findAll({
+        where,
         include: [
-            { model: SpotImage }
-        ]
-    })
-    // create spotObjects array to hold spots
-    const spotObjects = [];
-    // iterate through spots and push them to array
-    for (let i = 0; i < spots.length; i++) {
-        const spot = spots[i];
-        spotObjects.push(spot.toJSON())
-    }
-    // iterate through spotObjects array
-    for (let i = 0; i < spotObjects.length; i++) {
-        const spot = spotObjects[i];
-        // if there is a SpotImage
-        if (spot.SpotImages.length > 0) {
-            // loop thru SpotImages to find which image is preview
-            for (let j = 0; j < spot.SpotImages.length; j++) {
-                const image = spot.SpotImages[j];
-                if (image.preview === true) {
-                    spot.previewImage = image.url;
-                }
+            {
+            model: SpotImage,
+            attributes: ['url', 'preview']
             }
-        } else {
-            spot.SpotImages = "No image for this spot"
-        }
-        delete spot.SpotImages
+        ],
+        limit: query.limit,
+        offset: query.offset
+    });
 
-        // find avgRating
-        let reviewData = await Review.findOne({
+
+    const spotObjects = [];
+    spots.length ?
+    spots.forEach(spot => spotObjects.push(spot.toJSON()))
+    : spotObjects.push(spots);
+
+
+    for(let spot of spotObjects) {
+        if (!Object.keys(spot).length) break;
+        const review = await Review.findOne({
             where: {
-                // spotId matches spot.id
                 spotId: spot.id
             },
             attributes: [
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
-            ],
-
+            ]
         })
-        let reviewAvg = reviewData.toJSON().avgRating;
-        if (reviewAvg) {
-            spot.avgRating = reviewAvg;
-        } else {
-            spot.avgRating = 'No review yet'
+        if (review) {
+            spot.avgRating = Number(review.toJSON().avgRating).toFixed(1);
         }
-    }
-    res.json({ Spots: spotObjects });
+        else spot.avgRating = "No Reviews exist for this spot";
+
+        if (spot.SpotImages.length) {
+            const filterTrue = spot.SpotImages.filter(image => image.preview === true);
+            filterTrue.length ? spot.previewImage = filterTrue[0].url : spot.previewImage = "No Preview Image Available";
+        }
+        else {
+            spot.previewImage = "No Preview Image Available";
+        }
+        delete spot.SpotImages;
+    };
+   res.status(200);
+    res.json({
+        Spots: spotObjects,
+        page: page,
+        size: size });
 })
 //  2. Get all Spots owned by the Current User
 router.get('/current',
