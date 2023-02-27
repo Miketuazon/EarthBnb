@@ -57,4 +57,42 @@ router.get('/current',
             Bookings: bookingsObjectsArray
         })
     })
+
+// 4. Booking | Delete a Booking | URL: /api/bookings/:bookingId
+// reqAuth AND req proper authorization
+router.delete("/:bookingId",
+  requireAuth,
+  async (req, res) => {
+    const userId = req.user.id;
+    const booking = await Booking.findByPk(req.params.bookingId)
+
+    // if there is no Booking existing like me
+    if (!booking) {
+      return res.status(404).json({
+        "message": "Booking couldn't be found",
+        "statusCode": 404
+      })
+    }
+
+    // require proper authorization
+    if (userId !== booking.userId) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: "403"
+      });
+    }
+
+    if (booking.startDate <= new Date()) {
+        return res.status(403).json(
+            {
+                message: "Bookings that have been started can't be deleted",
+                statusCode: 403
+            })
+    }
+    await booking.destroy();
+    res.status(200).json({
+      message: "Successfully deleted",
+      statusCode: 200
+    })
+  })
 module.exports = router;
