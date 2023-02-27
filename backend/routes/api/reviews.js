@@ -4,40 +4,17 @@ const {Spot, SpotImage, Review, ReviewImage, sequelize, User, Sequelize } = requ
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const e = require('express');
-const review = require('../../db/models/review');
 
-// validateSpotSignup
-const validateSpotSignup = [
-    check('address').exists({ checkFalsy: true })
-      .withMessage('Street address is required'),
-    check('city')
+// validateEditReview
+const validateEditReview = [
+    check('review')
       .exists({ checkFalsy: true })
-      .withMessage('City is required'),
-    check('state')
-      .exists({ checkFalsy: true })
-      .withMessage('State is required'),
-    check('country')
-      .exists({ checkFalsy: true })
-      .withMessage('Country is required'),
-    check('lat')
-      .exists({ checkFalsy: true })
-      .withMessage('Latitude is not valid'),
-    check('lng')
-      .exists({ checkFalsy: true })
-      .withMessage('Longitude is not valid'),
-    check('name')
-      .exists({ checkFalsy: true })
-      .isLength({ max: 50 })
-      .withMessage('Name must be less than 50 characters'),
-    check('description')
-      .exists({ checkFalsy: true })
-      .withMessage('Description is required'),
-    check('price')
-      .exists({ checkFalsy: true })
-      .isNumeric({checkFalsy: true}, {min: 1})
-      .withMessage('Price per day is required'),
-      handleValidationErrorsForSpots
+      .withMessage('Review text is required'),
+    check('stars')
+      // .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 5})
+      .withMessage('Stars must be an integer from 1 to 5'),
+      handleValidationErrorsForSpots,
   ];
 //  1. Get all Reviews of the Current User | URL:/api/reviews/current | reqAuth
 router.get('/current',
@@ -86,7 +63,7 @@ router.post('/:reviewId/images',
   async (req, res) => {
     const userId = Number(req.user.id)
     console.log(userId)
-    // used parseInt because it might have been coming up as a decimal?
+    // parseInt since reviewId came as a decimal?
     const reviewId = parseInt(req.params.reviewId, 10)
     console.log(reviewId)
     const { url } = req.body
@@ -105,10 +82,10 @@ router.post('/:reviewId/images',
 
     // Require proper author check
     if (userId !== review.userId) {
-      res.status(404).json({
+      return res.status(403).json({
         message: "Forbidden",
-        statusCode: 403
-      })
+        statusCode: "403"
+    });
     }
 
     // Passed both tests, now can create
@@ -135,4 +112,39 @@ router.post('/:reviewId/images',
     })
 })
 
+// Reviews 5 | Edit a Review | URL: /reviews/:reviewId
+// requireAuth AND requireProper
+router.put('/:reviewId',
+  requireAuth,
+  validateEditReview,
+  async (req, res) => {
+    const userId = req.user.id;
+    const reviewId = parseInt(req.params.reviewId);
+    const {review, stars} = req.body;
+
+    const editTheReview = await Review.findByPk(req.params.reviewId)
+
+    // if review is non-existent like me
+    if(!editTheReview) {
+      res.status(404).json({
+        "message": "Review couldn't be found",
+        "statusCode": 404
+      })
+    }
+
+    // require proper authorization for user to access
+    if (userId !== editTheReview.userId) {
+      return res.status(403).json({
+        message: "Forbidden",
+        statusCode: "403"
+      });
+    }
+
+    // Passed all checks, now can edit
+    const allowedToEditReview = await editTheReview.update({
+      review,
+      stars
+    })
+    res.status(200).json(allowedToEditReview);
+})
 module.exports = router;
