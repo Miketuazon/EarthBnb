@@ -1,6 +1,6 @@
 const express = require('express'); //This file will hold the resources for the route paths beginning with /api/spots.
 const router = express.Router();
-const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
+const {Spot, SpotImage, Review, ReviewImage, Booking, sequelize, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -301,4 +301,27 @@ router.delete('/:spotId',
         })
     })
 
+
+// Reviews 2: Get all Reviews by a Spot's id | URL: /api/spots/:spotId/reviews
+router.get('/:spotId/reviews',
+    async (req, res) => {
+    const userId = req.user.id;
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(req.params.spotId);
+        if (!spot) {
+            res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+            })
+        }
+
+    const allReviewsBySpot = await Review.findAll({
+        where: {spotId},
+            include: [
+                {model: User, attributes: ['id', 'firstName', 'lastName']},
+                {model: ReviewImage, attributes: ['id', 'url']},
+            ]
+    })
+    res.status(200).json({Reviews: allReviewsBySpot})
+})
 module.exports = router;
