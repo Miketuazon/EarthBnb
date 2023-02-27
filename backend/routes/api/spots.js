@@ -3,7 +3,40 @@ const router = express.Router();
 const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
-const { requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth');
+
+// validateSpotSignup
+const validateSpotSignup = [
+    check('address').exists({ checkFalsy: true })
+      .withMessage('Street address is required'),
+    check('city')
+      .exists({ checkFalsy: true })
+      .withMessage('City is required'),
+    check('state')
+      .exists({ checkFalsy: true })
+      .withMessage('State is required'),
+    check('country')
+      .exists({ checkFalsy: true })
+      .withMessage('Country is required'),
+    check('lat')
+      .exists({ checkFalsy: true })
+      .withMessage('Latitude is not valid'),
+    check('lng')
+      .exists({ checkFalsy: true })
+      .withMessage('Longitude is not valid'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isLength({ max: 50 })
+      .withMessage('Name must be less than 50 characters'),
+    check('description')
+      .exists({ checkFalsy: true })
+      .withMessage('Description is required'),
+    check('price')
+      .exists({ checkFalsy: true })
+      .isNumeric({checkFalsy: true}, {min: 1})
+      .withMessage('Price per day is required'),
+      handleValidationErrorsForSpots
+  ];
 //  1. Get all spots
 router.get('/', async (req, res) => {
     // look for all spots
@@ -116,6 +149,48 @@ router.get('/:spotId', async (req,res) => {
     res.json(spot);
 })
 
+// 6. Edit a Spot | URL: /api/spots/:spotId | reqAuth and reqPropAuthorization
+router.put('/:spotId',
+    requireAuth,
+    validateSpotSignup,
+    async (req, res) => {
+
+        // Get Current User
+        const {user} = req;
+        // console.log("user id here", user.id)
+
+        //get spot and find by pKey
+        const editTheSpot = await Spot.findByPk(req.params.spotId)
+        // console.log(editTheSpot)
+        // Error response: if spot is not found
+        if (!editTheSpot) return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    // Error response: requestProperAuthorization
+        if (editTheSpot.ownerId !== user.id) return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+    })
+
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    editTheSpot.set({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+    })
+
+    await editTheSpot.save();
+
+    res.status(200).json(editTheSpot)
+    })
+
 // 5. Add an Image to a Spot based on the Spot's id | URL: /api/spots/:spotId/images
 
 router.post('/:spotId/images',
@@ -139,24 +214,7 @@ router.post('/:spotId/images',
         statusCode: 404
     })
 
-    // Using #3's get details of a spot
-    const spot = await Spot.findOne({
-        where: {
-            id: spotId,
-        },
-        include: [
-            {model: Review, attributes: []},
-            {model: SpotImage, attributes: ['id', 'url', 'preview']},
-            {model: User, attributes: ['id','firstName','lastName',], as: 'Owner'}
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn('COUNT', sequelize.col('Reviews.stars')), 'numReviews'],
-                [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgStarRating'],
-            ]
-        },
-        group: ['Spot.id', 'SpotImages.id', 'Owner.id']
-    })
+    const spot = await Spot.findByPk(req.params.spotId)
     const spotOwnerId = (spot.toJSON().ownerId)
     // REQUIRE proper authorization. If spotOwnerId is not currentUserId
     if (spotOwnerId !== currentUserId) {
@@ -182,47 +240,12 @@ router.post('/:spotId/images',
 
 // 4. Create a Spot | /api/spots
 
-// validateSpotSignup
-const validateSpotSignup = [
-    check('address').exists({ checkFalsy: true })
-      .withMessage('Street address is required'),
-    check('city')
-      .exists({ checkFalsy: true })
-      .withMessage('City is required'),
-    check('state')
-      .exists({ checkFalsy: true })
-      .withMessage('State is required'),
-    check('country')
-      .exists({ checkFalsy: true })
-      .withMessage('Country is required'),
-    check('lat')
-      .exists({ checkFalsy: true })
-      .withMessage('Latitude is not valid'),
-    check('lng')
-      .exists({ checkFalsy: true })
-      .withMessage('Longitude is not valid'),
-    check('name')
-      .exists({ checkFalsy: true })
-      .isLength({ max: 50 })
-      .withMessage('Name must be less than 50 characters'),
-    check('description')
-      .exists({ checkFalsy: true })
-      .withMessage('Description is required'),
-    check('price')
-      .exists({ checkFalsy: true })
-      .isNumeric({checkFalsy: true}, {min: 1})
-      .withMessage('Price per day is required'),
-      handleValidationErrorsForSpots
-  ];
-
 router.post('/',
     requireAuth,
     validateSpotSignup,
     async (req, res) => {
-        const { user } = req;
-        const currentUserId = user.toJSON().id
+    const { user } = req;
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
-    const owner = await User.findByPk(currentUserId);
     const newSpot = await Spot.create({
         address,
         city,
@@ -233,7 +256,7 @@ router.post('/',
         name,
         description,
         price,
-        ownerId: currentUserId,
+        ownerId: user.id,
     })
 
     res.status(201).json(newSpot);
