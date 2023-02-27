@@ -5,41 +5,41 @@ const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
-// delete a spot image | URL: /api/spot-images/:imageId
+// delete a review image | URL: /api/review-images/:imageId
 // ReqAuthen AND ReqPropAuthor
-router.delete('/:imageId',
-    requireAuth,
-    async (req, res, next) => {
+router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const { user } = req;
 
-    let spotImage = await SpotImage.findByPk(req.params.imageId, {
+    let mustDestroyReviewImage = await ReviewImage.findByPk(req.params.imageId, {
         include: [
-            {model: Spot}
+            { model: Review }
         ]
     });
 
-    // Couldn't find a Spot Image with the specified id
-    if (!spotImage) {
+    // Error response: Couldn't find a Review Image with the specified id
+    if (!mustDestroyReviewImage) {
         return res.status(404).json({
-            message: "Spot couldn't be found",
+            message: "Review Image couldn't be found",
             statusCode: 404
         })
+        // const err = new Error("Review Image couldn't be found");
+        // err.status = 404;
+        // return next(err);
     };
 
-    let willDestroyImage = spotImage.toJSON();
+    let willBeDestroyed = mustDestroyReviewImage.toJSON();
 
-    // Spot must belong to the current user | Authorization
-    if (willDestroyImage.Spot.ownerId !== user.id) {
+    // Review must belong to the current user
+    if (willBeDestroyed.Review.userId !== user.id) {
         return res.status(403).json({
             message: "Forbidden",
-            statusCode: "403"
-        });
+            statusCode: 403
+        })
     }
 
-    await spotImage.destroy();
+    await mustDestroyReviewImage.destroy();
 
-    res.status(200);
-    res.json({
+    res.status(200).json({
         message: "Successfully deleted",
         statusCode: res.statusCode
     })
