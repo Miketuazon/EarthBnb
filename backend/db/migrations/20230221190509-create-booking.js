@@ -19,6 +19,7 @@ module.exports = {
         references: {
           model: 'Spots'
         },
+        onDelete: 'CASCADE',
         allowNull: false,
         unique: true,
       },
@@ -29,6 +30,7 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       startDate: {
         type: Sequelize.DATEONLY,
