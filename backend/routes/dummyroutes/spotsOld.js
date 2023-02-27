@@ -230,7 +230,7 @@ router.post('/:spotId/images',
     res.json(spotImageSpotId)
 })
 
-// creating new true preview | doesnt work atm
+// creating new true preview | doesn't work atm
 const spotsArray = (spot.toJSON().SpotImages)
 console.log(spotsArray)
 for (let i = spotsArray.length - 1; i >= 0; i--) {
