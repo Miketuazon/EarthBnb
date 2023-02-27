@@ -163,15 +163,19 @@ router.put('/:spotId',
         const editTheSpot = await Spot.findByPk(req.params.spotId)
         // console.log(editTheSpot)
         // Error response: if spot is not found
-        if (!editTheSpot) return res.status(404).json({
+        if (!editTheSpot) {
+            return res.status(404).json({
             message: "Spot couldn't be found",
             statusCode: 404
-        })
+            })
+        }
     // Error response: requestProperAuthorization
-        if (editTheSpot.ownerId !== user.id) return res.status(403).json({
-            message: "Forbidden",
-            statusCode: 403
-    })
+        if (editTheSpot.ownerId !== user.id) {
+            return res.status(403).json({
+                message: "Forbidden",
+                statusCode: 403
+            })
+        }
 
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     editTheSpot.set({
