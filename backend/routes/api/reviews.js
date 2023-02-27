@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const e = require('express');
+const review = require('../../db/models/review');
 
 // validateSpotSignup
 const validateSpotSignup = [
@@ -76,6 +77,62 @@ router.get('/current',
       }
     let payload = {Reviews: reviewsObjectArray};
     res.status(200).json(payload)
+})
+
+// Reviews 4 | Add an Image to a Review based on the Review's id
+// Require auth AND Require proper author | URL: reviews/:reviewId/images
+router.post('/:reviewId/images',
+  requireAuth,
+  async (req, res) => {
+    const userId = Number(req.user.id)
+    console.log(userId)
+    // used parseInt because it might have been coming up as a decimal?
+    const reviewId = parseInt(req.params.reviewId, 10)
+    console.log(reviewId)
+    const { url } = req.body
+    const review = await Review.findByPk(reviewId)
+    const thereIsAReview = await Review.findByPk(reviewId, {
+      include: [{model: ReviewImage}]
+    });
+
+    // If there is NOT a review
+    if (!thereIsAReview) {
+      res.status(404).json({
+        message: "Review couldn't be found",
+        "statusCode": 404
+      })
+    }
+
+    // Require proper author check
+    if (userId !== review.userId) {
+      res.status(404).json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
+
+    // Passed both tests, now can create
+    const addImageToReview = await ReviewImage.create({
+      reviewId,
+      url
+    })
+
+    // If newly created reaches 10 (limit)
+    const allImagesOfReview = await ReviewImage.findAll({
+      where: {reviewId}
+    });
+    // console.log(allImagesOfReview)
+    if (allImagesOfReview.length >= 10) {
+      res.status(403).json({
+        "message": "Maximum number of images for this resource was reached",
+        "statusCode": 403
+      })
+      return;
+    }
+    res.json({
+      id: addImageToReview.id,
+      url: addImageToReview.url
+    })
 })
 
 module.exports = router;
