@@ -266,5 +266,37 @@ router.post('/',
     res.status(201).json(newSpot);
 })
 
+// 7. Delete a Spot | URL: /api/spots/:spotId
+router.delete('/:spotId',
+    requireAuth,
+    async (req, res) => {
+    // Get Current User
+    const {user} = req;
+    // console.log("user id here", user.id)
+
+    //get spot and find by pKey
+        const deleteTheSpot = await Spot.findByPk(req.params.spotId)
+        // console.log(editTheSpot)
+        // Error response: if spot is not found
+        if (!deleteTheSpot) {
+            res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+            })
+        }
+    // Error response: requestProperAuthorization
+        if (deleteTheSpot.ownerId !== user.id) {
+            res.status(403).json({
+                message: "Forbidden",
+                statusCode: 403
+            })
+        }
+
+        await deleteTheSpot.destroy();
+        res.status(200).json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        })
+    })
 
 module.exports = router;
