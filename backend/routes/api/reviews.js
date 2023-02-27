@@ -34,9 +34,9 @@ router.get('/current',
     });
 
     const reviewsObjectArray = [];
-    allReviews.length ?
-    allReviews.forEach(reviewInAllReviews => reviewsObjectArray.push(reviewInAllReviews.toJSON())):
-    reviewsObjectArray.push(allReviews);
+    if (allReviews.length) {
+      allReviews.forEach(reviewInAllReviews => reviewsObjectArray.push(reviewInAllReviews.toJSON()))
+    } else if (!allReviews.length) reviewsObjectArray.push(allReviews);
 
     for(let review of reviewsObjectArray) {
       if (Object.keys(review).length === 0) break;
