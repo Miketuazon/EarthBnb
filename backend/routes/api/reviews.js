@@ -1,6 +1,10 @@
 const express = require('express'); //This file will hold the resources for the route paths beginning with /api/spots.
 const router = express.Router();
+<<<<<<< HEAD
 const {Spot, SpotImage, Review, ReviewImage, sequelize, User, Sequelize } = require('../../db/models');
+=======
+const {Spot, SpotImage, Review, sequelize, User, Sequelize } = require('../../db/models');
+>>>>>>> b9b9309a6570df53e4985c36aeed7e132d2072dd
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');

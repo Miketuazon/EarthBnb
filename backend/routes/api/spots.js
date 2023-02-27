@@ -275,7 +275,9 @@ router.delete('/:spotId',
     // console.log("user id here", user.id)
 
     //get spot and find by pKey
-        const deleteTheSpot = await Spot.findByPk(req.params.spotId)
+        const deleteTheSpot = await Spot.findOne({
+            where: {id: req.params.spotId}
+        })
         // console.log(editTheSpot)
         // Error response: if spot is not found
         if (!deleteTheSpot) {
