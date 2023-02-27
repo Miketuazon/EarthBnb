@@ -4,6 +4,7 @@ const {Spot, SpotImage, Review, ReviewImage, sequelize, User, Sequelize } = requ
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
+const e = require('express');
 
 // validateSpotSignup
 const validateSpotSignup = [
@@ -42,36 +43,39 @@ router.get('/current',
     requireAuth,
     async (req, res) => {
     const {user} = req;
-    const currentUserId = user.toJSON().id
-    const currentReviews = Review.findAll({
-        where: {
-            userId: currentUserId
-        },
-        include:  [
-            {model: User, attributes: ['id', 'firstName', 'lastName']},
-            {model: Spot, attributes: ['id', 'ownerId', 'address', 'city', 'state',
-            'country', 'lat', 'lng', 'name', 'price'],
-            include: [{model: SpotImage}]},
-            {model: ReviewImage, attributes: ['id', 'url'] },
-        ],
-    })
-    // create reviewObjectsArray to hold spots
-    const reviewObjectsArray = [];
-    // iterate through reviews and push them to array
-    // console.log(currentReviews.toJSON())
-    if (currentReviews.length > 0) {
-        currentReviews.forEach(review => reviewObjectsArray.push(review.toJSON()));
-        reviewObjectsArray.push(currentReviews);
-    }
-    // console.log(currentReviews);
-    // console.log(reviewObjectsArray);
+    const currentUserId = user.toJSON().id;
+    const allReviews = await Review.findAll({
+      where: {
+        userId: currentUserId
+      },
+      include: [
+        {model: User, attributes: ['id', 'firstName', 'lastName']},
+        {model: Spot, attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'], include: [{model: SpotImage}]},
+        {model: ReviewImage, attributes: ['id','url']},
+      ],
+    });
 
-    for (let review of reviewObjectsArray) {
-        const spotPreviewImages = review.Spot.SpotImages;
-        console.log(spotPreviewImages)
-    }
+    const reviewsObjectArray = [];
+    allReviews.length ?
+    allReviews.forEach(reviewInAllReviews => reviewsObjectArray.push(reviewInAllReviews.toJSON())):
+    reviewsObjectArray.push(allReviews);
 
-    res.status(200).json({Reviews: currentReviews});
+    for(let review of reviewsObjectArray) {
+      if (Object.keys(review).length === 0) break;
+      // console.log(review.Spot.SpotImages)
+      if (review.Spot.SpotImages.length !== 0) {
+        const isPreviewTrue = review.Spot.SpotImages.filter(image => image.preview === true);
+        if (isPreviewTrue.length !== 0) {
+          review.Spot.previewImage = isPreviewTrue[0].url
+        } else review.Spot.previewImage = "No Preview Image Available";
+        }
+        else {
+          review.Spot.previewImage = "No Preview Image Available";
+        }
+        delete review.Spot.SpotImages;
+      }
+    let payload = {Reviews: reviewsObjectArray};
+    res.status(200).json(payload)
 })
 
 module.exports = router;
