@@ -10,49 +10,49 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 // Phase 5 | Validating Login Request Body
 const validateLogin = [
-    check('credential') // check fn's are mw fns. Taking in credential and pw in line 17
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Please provide a valid email or username.'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide a password.'),
-      check('firstName')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide a first name.'),
-      check('lastName')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide a last name.'),
-    handleValidationErrors
-  ];
+  check('credential') // check fn's are mw fns. Taking in credential and pw in line 17
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Please provide a valid email or username.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a first name.'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a last name.'),
+  handleValidationErrors
+];
 
 
 
 
 // User Log in API Route
 router.post(
-    '/',
-    validateLogin, // P5 added in validateLogin
-    async (req, res, next) => {
-      const { credential, password } = req.body;
-      // Does user exist?
-      const user = await User.login({ credential, password });
-      // If not
-      if (!user) {
-        const err = new Error('Login failed');
-        err.status = 401;
-        err.title = 'Login failed';
-        err.errors = { credential: 'The provided credentials were invalid.' };
-        return next(err);
-      }
-
-      await setTokenCookie(res, user);
-
-      return res.json({
-        user: user
-      });
+  '/',
+  validateLogin, // P5 added in validateLogin
+  async (req, res, next) => {
+    const { credential, password } = req.body;
+    // Does user exist?
+    const user = await User.login({ credential, password });
+    // If not
+    if (!user) {
+      const err = new Error('Login failed');
+      err.status = 401;
+      err.title = 'Login failed';
+      err.errors = { credential: 'The provided credentials were invalid.' };
+      return next(err);
     }
-  );
+
+    await setTokenCookie(res, user);
+
+    return res.json({
+      user: user
+    });
+  }
+);
 // User Log out in API Route
 router.delete(
   '/',
@@ -64,15 +64,15 @@ router.delete(
 
 // Restore session user
 router.get(
-    '/',
-    (req, res) => {
-      const { user } = req;
-      if (user) {
-        return res.json({
-          user: user.toSafeObject()
-        });
-      } else return res.json({ user: null });
-    }
-  );
+  '/',
+  (req, res) => {
+    const { user } = req;
+    if (user) {
+      return res.json({
+        user: user.toSafeObject()
+      });
+    } else return res.json({ user: null });
+  }
+);
 
 module.exports = router;
