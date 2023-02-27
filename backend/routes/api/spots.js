@@ -4,6 +4,8 @@ const { Spot, SpotImage, Review, ReviewImage, Booking, sequelize, User, Sequeliz
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
+const { query } = require('express');
+const { Op, DATE } = require('sequelize');
 
 // validateSpotSignup
 const validateSpotSignup = [
@@ -55,6 +57,51 @@ const validateBodyBookings = [
 //  1. Get all spots
 router.get('/', async (req, res) => {
     // look for all spots
+    // Adding in query
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    // pagination first
+    if (!page) page = 1;
+    if (!size) size = 20;
+    if (parseInt(page) > 10) page = 10;
+    if (parseInt(size) > 20) size = 20;
+    if (parseInt(page) && parseInt(size)) {
+        query.limit = size;
+        query.offset = size * (page - 1);
+    }
+
+    // defining other query properties now
+    const where = {};
+    if (req.query.minLat && req.query.maxLat) {
+        where.lat = { [Op.gte]: Number(minLat), [Op.lte]: Number(maxLat) }
+    }
+    else if (req.query.minLat) {
+        where.lat = { [Op.gte]: Number(minLat) }
+    }
+    else if (req.query.maxLat) {
+        where.lat = { [Op.lte]: Number(maxLat) }
+    }
+
+    if (req.query.minLng && req.query.maxLng) {
+        where.lng = { [Op.gte]: Number(minLng), [Op.lte]: Number(maxLng) }
+    }
+    else if (req.query.minLng) {
+        where.lng = { [Op.gte]: Number(minLng) }
+    }
+    else if (req.query.maxLng) {
+        where.lng = { [Op.lte]: Number(maxLng) }
+    }
+
+    if (req.query.minPrice && req.query.maxPrice) {
+        where.price = { [Op.gte]: Number(minPrice), [Op.lte]: Number(maxPrice) }
+    }
+    else if (req.query.minPrice) {
+        where.price = { [Op.gte]: Number(minPrice) }
+    }
+    else if (req.query.maxPrice) {
+        where.price = { [Op.lte]: Number(maxPrice) }
+    }
+
     const spots = await Spot.findAll({
         include: [
             { model: SpotImage }
@@ -475,8 +522,7 @@ router.post('/:spotId/bookings',
             }
             if (((start < bookingEndDate && start > bookingStartDate) || start === bookingStartDate || start === bookingEndDate)
                 ||
-                ((end < bookingEndDate && end > bookingStartDate) || end === bookingEndDate || end === bookingStartDate))
-                {
+                ((end < bookingEndDate && end > bookingStartDate) || end === bookingEndDate || end === bookingStartDate)) {
                 res.status(403).json({
                     message: "Sorry, this spot is already booked for the specified dates",
                     statusCode: 403,
