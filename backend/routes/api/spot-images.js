@@ -6,7 +6,7 @@ const { handleValidationErrorsForSpots } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 
 // delete a spot image | URL: /api/spot-images/:imageId
-// ReqAuthen AND ReqPropAuthor
+// ReqAuthentication AND ReqPropAuthor
 router.delete('/:imageId',
     requireAuth,
     async (req, res, next) => {
