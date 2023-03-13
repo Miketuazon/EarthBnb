@@ -39,6 +39,14 @@ export const login = (user) => async (dispatch) => {
 
 const initialState = { user: null };
 
+// P1. Restore session user thunk
+export const restoreUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session');
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
+
 // P1a. Create sessionReducer to hold current session user's information.
 const sessionReducer = (state = initialState, action) => {
   let newState;
