@@ -66,6 +66,15 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+// P3 Logout action thunk
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE',
+  });
+  dispatch(removeUser());
+  return response;
+};
+
 // P1a. Create sessionReducer to hold current session user's information.
 const sessionReducer = (state = initialState, action) => {
   let newState;
