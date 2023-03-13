@@ -8,9 +8,13 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <ul className="navBar">
+      <li className='homeButton'>
+        <NavLink
+        style={{textDecoration: 'none'}} exact to="/"
+        >
+        <i class="fa-solid fa-earth-americas"/>
+        EarthBnb</NavLink>
       </li>
       {isLoaded && (
         <li>

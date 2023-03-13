@@ -30,6 +30,17 @@ function SignupFormModal() {
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
+  // couldn't figure out way to test register
+  // const signDemoInfo = (e) => {
+  //   e.preventDefault();
+  //   setEmail("demoUser1337@gmail.com");
+  //   setUsername("demoUser1337");
+  //   setFirstName("demo");
+  //   setLastName("user");
+  //   setPassword("password");
+  //   setConfirmPassword("password");
+  // }
+
   return (
     <>
       <h1>Sign Up</h1>
@@ -92,6 +103,7 @@ function SignupFormModal() {
           />
         </label>
         <button type="submit">Sign Up</button>
+        {/* <button onClick={signDemoInfo}>Register as demo user!</button> */}
       </form>
     </>
   );
