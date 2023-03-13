@@ -62,10 +62,10 @@ router.post('/:reviewId/images',
   requireAuth,
   async (req, res) => {
     const userId = Number(req.user.id)
-    console.log(userId)
+    // console.log(userId)
     // parseInt since reviewId came as a decimal?
     const reviewId = parseInt(req.params.reviewId, 10)
-    console.log(reviewId)
+    // console.log(reviewId)
     const { url } = req.body
     const review = await Review.findByPk(reviewId)
     const thereIsAReview = await Review.findByPk(reviewId, {
