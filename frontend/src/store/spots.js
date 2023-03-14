@@ -11,7 +11,7 @@ const LOAD_ONE_SPOT = 'spots/oneSpot'
 // Store - action creators | Spots
 export const loadSpots = (spots) => ({
   type: LOAD_SPOTS,
-  payload: spots
+  spots
 })
 
 export const loadOneSpot = (spots) => ({
@@ -35,22 +35,21 @@ export const removeSpots = (id) => ({
 })
 
 // Store - Thunk | Spots
-  // Thunk1: Get all spots
-  export const getAllSpots = () => async (dispatch) => {
-    const response = await csrfFetch("/api/spots");
-    if (response.ok) {
-      const data = await response.json();
+// Thunk1: Get all spots
+export const getAllSpots = () => async (dispatch) => {
+  const res = await csrfFetch("/api/spots");
+  if (res.ok) {
+    const data = await res.json();
 
-      dispatch(loadSpots(data))
-      return data
-    }
+    dispatch(loadSpots(data))
+    return data
   }
+}
 
 // initial State
 const initialState = {
   allSpots: {},
-  singleSpot: {},
-  userSpecificSpots: {}
+  singleSpot: {}
 }
 
 // Store - Reducer | Spots
@@ -58,14 +57,13 @@ const spotsReducer = (state = initialState, action) => {
   let newState;
 
   switch (action.type) {
-    case LOAD_SPOTS: {
-      newState = {...state}
-          newState = { allSpots: {}, singleSpot: {}}
-          action.payload.Spots.forEach(spot => {
-              newState.allSpots[spot.id] = spot
-          });
-          return newState
-    }
+    case LOAD_SPOTS:
+      newState = { ...state };
+      // debugger
+      action.spots.Spots.forEach(spot => {
+        newState.allSpots[spot.id] = spot
+      });
+      return newState;
     default:
       return state;
   }
