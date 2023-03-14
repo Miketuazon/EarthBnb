@@ -38,21 +38,45 @@ const validateSignup = [
 
 // /api/users
 // Sign up
-router.post(
-  '/',
-  // P5 | added validateSignup to connect
-  validateSignup,
-  async (req, res) => {
-    // P5 | wrapping up BE | added fN, lN
-    const { email, password, username, firstName, lastName } = req.body;
-    const user = await User.signup({ email, username, password, firstName, lastName });
+router.post('/',
+validateSignup,
+async (req, res, next) => {
+  const { firstName, lastName, email, password, username } = req.body;
 
-    await setTokenCookie(res, user);
+  const checkEmail  = await User.findOne({
+    where: { email }
+  });
 
-    return res.json({
-      user: user
-    });
-  }
-);
+  const checkUsername = await User.findOne({
+    where: { username }
+  });
+
+  if (checkEmail) {
+    return res
+      .status(403)
+      .json({
+        message: 'User already exists',
+        statusCode: res.statusCode,
+        errors: ['username: User with that email already exists']
+      });
+  };
+
+  if (checkUsername) {
+    return res
+      .status(403)
+      .json({
+        message: 'User already exists',
+        statusCode: res.statusCode,
+        errors: ['User with that username already exists']
+      });
+  };
+
+  const user = await User.signup({ firstName, lastName, email, username, password });
+  const token = await setTokenCookie(res, user);
+  const userRes = user.toJSON();
+  userRes.token = token;
+  return res.json(userRes);
+
+});
 
 module.exports = router;

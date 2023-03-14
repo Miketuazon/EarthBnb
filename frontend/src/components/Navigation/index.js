@@ -4,17 +4,19 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
     <ul className="navBar">
       <li className='homeButton'>
         <NavLink
-        style={{textDecoration: 'none'}} exact to="/"
+          style={{ textDecoration: 'none' }} exact to="/"
         >
-        <i class="fa-solid fa-earth-americas"/>
-        EarthBnb</NavLink>
+          <i class="fa-solid fa-earth-americas" />
+          EarthBnb
+          <span class="tool-tip-text1">Return home</span>
+        </NavLink>
       </li>
       {isLoaded && (
         <li>

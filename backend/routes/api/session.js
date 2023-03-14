@@ -6,7 +6,7 @@ const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const { check } = require('express-validator'); // can check this documentation to make custom validators
-const { handleValidationErrors, handleValidationError } = require('../../utils/validation');
+const { handleValidationErrorsForSpots } = require('../../utils/validation');
 
 // Phase 5 | Validating Login Request Body
 const validateLogin = [
@@ -17,8 +17,7 @@ const validateLogin = [
   check('password')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a password.'),
-  // handleValidationErrors
-  handleValidationError
+    handleValidationErrorsForSpots
 ];
 
 
