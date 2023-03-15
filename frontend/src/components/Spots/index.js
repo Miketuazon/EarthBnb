@@ -6,24 +6,29 @@ import { Link } from "react-router-dom";
 
 
 export default function Spots() {
+    // const [spots, setSpots] = useState({})
+    const spotsObj = useSelector((state) => state.spots.allSpots)
+    const spots = Object.values(spotsObj)
+
+    console.log("spot => ", spots)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllSpots())
     }, [dispatch])
 
-    let spotsObj = useSelector((state) => state.spots.allSpots)
-    console.log("spot => ", spotsObj)
 
     // .map(spot => {
     //     return <div>{spot.name}</div>
     // })
+    if (!spots.length) return null;
     return (
         <div>
-            {Object.values(spotsObj).map(spot => {
+            {spots.map(spot => {
                 return (
-                    <div key={spot.id}>
+                    <div key={spot.id} className="spot-place">
                         {spot.previewImage !== "No Preview Image Available"
-                            ?<Link to={`spot/${spot.id}`}><img alt="No preview Available" src={spot.previewImage}/></Link>
+                            ?<Link to={`spot/${spot.id}`}><img alt="No preview Available"
+                            src={spot.previewImage}/></Link>
                             : <div>No Preview Image Available</div>}
 
                         <div className="city-rating-spot">

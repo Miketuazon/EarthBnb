@@ -16,22 +16,22 @@ export const loadSpots = (spots) => ({
 
 export const loadOneSpot = (spots) => ({
   type: LOAD_ONE_SPOT,
-  payload: spots
+  spots
 })
 
 export const createSpots = (spots) => ({
   type: ADD_SPOTS,
-  payload: spots
+  spots
 })
 
 export const updateSpots = (spots) => ({
   type: EDIT_SPOTS,
-  payload: spots
+  spots
 })
 
 export const removeSpots = (id) => ({
   type: DELETE_SPOTS,
-  payload: id
+  id
 })
 
 // Store - Thunk | Spots
@@ -41,8 +41,8 @@ export const getAllSpots = () => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
 
-    dispatch(loadSpots(data))
-    return data
+    dispatch(loadSpots(data));
+    return data;
   }
 }
 
@@ -53,12 +53,15 @@ const initialState = {
 }
 
 // Store - Reducer | Spots
+export const getSpots = (state) => {
+  return state.spots.allSpots
+}
 const spotsReducer = (state = initialState, action) => {
-  let newState;
-
+  // debugger
   switch (action.type) {
     case LOAD_SPOTS:
-      newState = { ...state };
+      // debugger
+      const newState = { ...state };
       // debugger
       action.spots.Spots.forEach(spot => {
         newState.allSpots[spot.id] = spot
