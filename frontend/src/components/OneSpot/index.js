@@ -42,7 +42,7 @@ export default function OneSpot() {
                     </div>
                     <div className="price-ratings-review container">
                         <div className="price-rating-review">
-                            {spotDetails.price} night
+                            ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {spotDetails.avgRating}
                             {spotDetails.numReviews} reviews</div>
                         <button className="reserve"> Reserve
