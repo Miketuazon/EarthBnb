@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpots, getOneSpot } from "../../store/spots";
-import { NavLink, Link, useParams } from 'react-router-dom';
+import { getOneSpot } from "../../store/spots";
+import { useParams } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 import "./OneSpot.css";
 
@@ -10,8 +10,10 @@ export default function OneSpot() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
-    console.log("is this a spot =>", spotDetails)
+    console.log("this is spot details =>", spotDetails)
     console.log("ensure spotId =>", spotId)
+    const owner = (spotDetails.Owner)
+    console.log("should be owner", owner)
 
     useEffect(() => {
         dispatch(getOneSpot(spotId))
@@ -21,27 +23,37 @@ export default function OneSpot() {
         <div className="spot-details-page">
             <div className="spot-details-container">
                 <div className="name-city-state-country-container">
-                    <div className="spot-name">Test Name</div>
-                    <div className="spot-city-date-country">City, State, Country</div>
+                    <div className="spot-name">{spotDetails.name}</div>
+                    <div className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</div>
                 </div>
                 <div className="spot-images-container">
-                    <div className="image-preview">Image preview goes here</div>
+                    <div className="image-preview">
+                        { spotDetails.SpotImages.length === 0
+                            ? <div>No images yet!</div>
+                            : <div>{spotDetails.SpotImages[0]}</div>
+                        }
+                        </div>
                     <div className="other-images">Other images</div>
                 </div>
                 <div className="below-image-container">
                     <div className="owner-description-container">
-                        <div className="name-description">Hosted by FirstName LastName</div>
-                        <div className="description">Description of spot</div>
+                        <div className="name-description">Hosted by {owner.firstName} {owner.lastName}</div>
+                        <div className="description">{spotDetails.description}</div>
                     </div>
                     <div className="price-ratings-review container">
-                        <div className="price-rating-review">$123.45 night | <i class="fa-solid fa-star"></i> #.# | # reviews</div>
-                        <button className="reserve">Reserve</button>
+                        <div className="price-rating-review">
+                            {spotDetails.price} night
+                            <i class="fa-solid fa-star"></i> {spotDetails.avgRating}
+                            {spotDetails.numReviews} reviews</div>
+                        <button className="reserve"> Reserve
+                        <span class="toolTipText">Feature coming soon! :D</span>
+                            </button>
                     </div>
                 </div>
             </div>
             <hr></hr>
             <div className="reviews-container">
-                <div className="stars-reviews"><i class="fa-solid fa-star"/> #.# | # reviews </div>
+                <div className="stars-reviews"><i class="fa-solid fa-star" /> {spotDetails.avgRating} | {spotDetails.numReviews} reviews </div>
                 <div className="reviewer-info">
                     <div className="firstName-review">FirstName</div>
                     <div className="month-year">Month 20##</div>

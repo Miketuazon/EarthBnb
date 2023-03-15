@@ -41,7 +41,8 @@ export const getAllSpots = () => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
 
-    dispatch(loadSpots(data));
+    await dispatch(loadSpots(data));
+    // console.log("await dispatched allSpots => ", data)
     return data;
   }
 }
@@ -49,13 +50,13 @@ export const getAllSpots = () => async (dispatch) => {
 // Thunk2: Get one spot
 export const getOneSpot = (spotId) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${spotId}`)
-  console.log("res of getOneSpot", res);
+  // console.log("res of getOneSpot", res);
 
   if (res.ok) {
     const data = await res.json();
 
     await dispatch(loadOneSpot(data));
-    console.log("await dispatched oneSpot", data)
+    // console.log("await dispatched oneSpot", data)
     return data;
   }
 }
@@ -72,6 +73,7 @@ export const getSpots = (state) => {
 }
 const spotsReducer = (state = initialState, action) => {
   // debugger
+  console.log("this is supposed to be initial state => ",state)
   switch (action.type) {
     case LOAD_SPOTS: {
       // debugger
