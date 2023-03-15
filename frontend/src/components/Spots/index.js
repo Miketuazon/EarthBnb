@@ -29,7 +29,7 @@ export default function Spots() {
                         {spot.previewImage !== "No Preview Image Available"
                             ?<Link to={`spot/${spot.id}`}><img alt="No preview Available"
                             src={spot.previewImage}/></Link>
-                            : <div>No Preview Image Available</div>}
+                            : <Link to={`spot/${spot.id}`}>No Preview Image Available</Link>}
 
                         <div className="city-rating-spot">
                             <div>{spot.city}, {spot.state}</div>

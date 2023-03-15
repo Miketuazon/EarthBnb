@@ -14,9 +14,9 @@ export const loadSpots = (spots) => ({
   spots
 })
 
-export const loadOneSpot = (spots) => ({
+export const loadOneSpot = (spot) => ({
   type: LOAD_ONE_SPOT,
-  spots
+  spot
 })
 
 export const createSpots = (spots) => ({
@@ -46,6 +46,20 @@ export const getAllSpots = () => async (dispatch) => {
   }
 }
 
+// Thunk2: Get one spot
+export const getOneSpot = (spotId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`)
+  console.log("res of getOneSpot", res);
+
+  if (res.ok) {
+    const data = await res.json();
+
+    await dispatch(loadOneSpot(data));
+    console.log("await dispatched oneSpot", data)
+    return data;
+  }
+}
+
 // initial State
 const initialState = {
   allSpots: {},
@@ -59,7 +73,7 @@ export const getSpots = (state) => {
 const spotsReducer = (state = initialState, action) => {
   // debugger
   switch (action.type) {
-    case LOAD_SPOTS:
+    case LOAD_SPOTS: {
       // debugger
       const newState = { ...state };
       // debugger
@@ -67,6 +81,12 @@ const spotsReducer = (state = initialState, action) => {
         newState.allSpots[spot.id] = spot
       });
       return newState;
+    }
+    case LOAD_ONE_SPOT: {
+      const newState = {...state};
+      newState.singleSpot = {...action.spot}
+      return newState;
+    }
     default:
       return state;
   }
