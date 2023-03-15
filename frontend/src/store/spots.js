@@ -68,9 +68,6 @@ const initialState = {
 }
 
 // Store - Reducer | Spots
-export const getSpots = (state) => {
-  return state.spots.allSpots
-}
 const spotsReducer = (state = initialState, action) => {
   // debugger
   console.log("this is supposed to be initial state => ",state)
