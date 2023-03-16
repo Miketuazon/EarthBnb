@@ -3,7 +3,7 @@ import { csrfFetch } from './csrf';
 
 // Declare POJO action creator
 const LOAD_SPOTS = "spots/loadSpots";
-const ADD_SPOTS = "spots/addSpots";
+const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOTS = "spots/editSpots";
 const DELETE_SPOTS = "spots/deleteSpots";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
@@ -19,9 +19,9 @@ export const loadOneSpot = (spot) => ({
   spot
 })
 
-export const createSpots = (spots) => ({
-  type: ADD_SPOTS,
-  spots
+export const createSpot = (spot) => ({
+  type: CREATE_SPOT,
+  spot
 })
 
 export const updateSpots = (spots) => ({
@@ -61,6 +61,20 @@ export const getOneSpot = (spotId) => async (dispatch) => {
   }
 }
 
+// Thunk3: Create new spot (in progress)
+export const createNewSpot = (detailsOfNewSpot) => async (dispatch) => {
+  const res = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(detailsOfNewSpot)
+  })
+  if (res.ok) {
+    const createdSpot = await res.json();
+    await dispatch(createNewSpot(createdSpot));
+    return createdSpot
+  }
+}
+
 // initial State
 const initialState = {
   allSpots: {},
@@ -84,6 +98,12 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_ONE_SPOT: {
       const newState = {...state};
       newState.singleSpot = {...action.spot}
+      return newState;
+    }
+    case CREATE_SPOT: {
+      const newState = {...state, allSpots: {...state.allSpots}};
+      debugger
+      newState.allSpots[action.newSpot.id] = action.newSpot
       return newState;
     }
     default:

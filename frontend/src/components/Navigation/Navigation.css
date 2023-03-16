@@ -17,6 +17,7 @@
     flex-direction: row;
     list-style: none;
     background-color: rgb(0, 182, 182);
+    font-family: 'Lato';
 }
 
 .earth {

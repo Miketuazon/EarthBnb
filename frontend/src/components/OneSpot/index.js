@@ -18,7 +18,8 @@ export default function OneSpot() {
     useEffect(() => {
         dispatch(getOneSpot(spotId))
     }, [dispatch])
-
+    // debugger
+    if (!spotDetails.SpotImages) return null
     return (
         <div className="spot-details-page">
             <div className="spot-details-container">
@@ -53,7 +54,8 @@ export default function OneSpot() {
             </div>
             <hr></hr>
             <div className="reviews-container">
-                <div className="stars-reviews"><i class="fa-solid fa-star" /> {spotDetails.avgRating} | {spotDetails.numReviews} reviews </div>
+            <div>BELOW NEEDS TO BE IMPLEMENTED SOON!</div>
+                <div className="stars-reviews"><i class="fa-solid fa-star" /> {parseFloat(spotDetails.avgStarRating).toFixed(2)} | {spotDetails.numReviews} reviews </div>
                 <div className="reviewer-info">
                     <div className="firstName-review">FirstName</div>
                     <div className="month-year">Month 20##</div>
