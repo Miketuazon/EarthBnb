@@ -93,7 +93,7 @@ export default function CreateNewSpot() {
                     <h3>Describe your place to guests</h3>
                     <div>Mention the best features of your space, any special amenities like fast wifi or parking,
                     and what you love about the neighborhood.</div>
-                    <input
+                    <textarea
                         type='textarea' placeholder='Please write at least 30 characters' min='30'
                         required value={description} onChange={updateDescription}
                     />
