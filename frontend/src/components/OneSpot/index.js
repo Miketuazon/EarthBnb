@@ -14,7 +14,8 @@ export default function OneSpot() {
     console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
     console.log("should be owner", owner)
-
+    // const spotImages = spotDetails.SpotImages // need to fix this later
+    // console.log("spotImages", Object.entries(spotImages))
     useEffect(() => {
         dispatch(getOneSpot(spotId))
     }, [dispatch])
@@ -29,9 +30,10 @@ export default function OneSpot() {
                 </div>
                 <div className="spot-images-container">
                     <div className="image-preview">
+                        {/* NEED TO FIX THIS BUG HERE BUT FOR LATER */}
                         { spotDetails.SpotImages.length === 0
                             ? <div>No images yet!</div>
-                            : <div>{spotDetails.SpotImages[0]}</div>
+                            : <div>{spotDetails.SpotImages}</div>
                         }
                         </div>
                     <div className="other-images">Other images</div>

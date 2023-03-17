@@ -3,8 +3,7 @@ import { NavLink, Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, } from 'react';
 
-import { getAllSpots } from '../../store/spots';
-import { createNewSpot } from '../../store/spots';
+import { createNewSpot, getAllSpots } from '../../store/spots';
 
 import './CreateNewSpot.css'
 
@@ -19,7 +18,14 @@ export default function CreateNewSpot() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
-    const [imageURL, setImageURL] = useState('')
+
+    const [imageURL, setImageURL] = useState(""); //preview
+    const [imageTwo, setImageTwo] = useState("");
+    const [imageThree, setImageThree] = useState("");
+    const [imageFour, setImageFour] = useState("");
+    const [imageFive, setImageFive] = useState("");
+
+    const [errors, setErrors] = useState([]);
 
     const updateAddress = (e) => setAddress(e.target.value);
     const updateCountry = (e) => setCountry(e.target.value);
@@ -29,27 +35,63 @@ export default function CreateNewSpot() {
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePrice = (e) => setPrice(e.target.value);
     const updateImageURL = (e) => setImageURL(e.target.value);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const spot = {
-            country,
-            address,
-            city,
-            state,
-            name,
-            description,
-            price,
-            imageURL
-        };
-        const createdSpot = dispatch(createNewSpot(spot));
-        if (createdSpot) {
-            history.push(`/spots/${createdSpot.id}`)
-        }
-    }
+    const updateImageTwo = (e) => setImageTwo(e.target.value);
+    const updateImageThree = (e) => setImageThree(e.target.value);
+    const updateImageFour = (e) => setImageFour(e.target.value);
+    const updateImageFive = (e) => setImageFive(e.target.value);
 
-    useEffect(() => {
-        dispatch(getAllSpots())
-    }, [dispatch])
+    // debugger
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        // handle validation errors | spot details
+        const validationErrors = [];
+        if (!country.length) validationErrors.push('Country is required')
+        if (!address.length) validationErrors.push('Address is required')
+        if (!city.length) validationErrors.push('City is required')
+        if (!state.length) validationErrors.push('State is required')
+        if (!description.length) validationErrors.push('Description is required')
+        if (description.length < 30) validationErrors.push('Description needs at least 30 characters')
+        if (!name.length) validationErrors.push('Title is required')
+        if (typeof price !== 'number') validationErrors.push('Price must be a number')
+        if (!price) validationErrors.push('Price is required')
+        // handle validation errors | images
+
+        if (!imageURL.length) validationErrors.push('Preview photo is required')
+        if (!imageURL.endsWith(".png") && !imageURL.endsWith(".jpg") && !imageURL.endsWith(".jpeg")) {
+            validationErrors.push("Preview Image must end in .png, .jpg, or .jpeg")
+        }
+        // errors for extra images IF they are included
+        if (imageTwo.length > 0 && !imageTwo.endsWith(".png") && !imageTwo.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+            validationErrors.push("2nd Image URL must end in .png, .jpg, or .jpeg")
+        }
+        if (imageThree.length > 0 && !imageThree.endsWith(".png") && !imageThree.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+            validationErrors.push("3rd Image URL must end in .png, .jpg, or .jpeg")
+        }
+        if (imageFour.length > 0 && !imageFour.endsWith(".png") && !imageFour.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+            validationErrors.push("4th Image URL must end in .png, .jpg, or .jpeg")
+        }
+        if (imageFive.length > 0 && !imageFive.endsWith(".png") && !imageFive.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+            validationErrors.push("5th Image URL must end in .png, .jpg, or .jpeg")
+        }
+
+        if (validationErrors.length) return setErrors(validationErrors)
+
+        const spotImages = [
+            {url: imageURL, preview: true},
+            {url: imageTwo, preview: false},
+            {url: imageThree, preview: false},
+            {url: imageFour, preview: false},
+            {url: imageFive, preview: false},
+        ]
+        const createdSpotDetails = {
+            country, address, city, state, description, price, name,
+        }
+        const newSpot = await dispatch(createNewSpot(createdSpotDetails, spotImages))
+        console.log("new spot submitted", newSpot)
+        history.push(`/spots/${newSpot.id}`)
+    }
+    debugger
+    console.log('errors', errors)
 
 
     return (
@@ -57,6 +99,9 @@ export default function CreateNewSpot() {
             <form onSubmit={handleSubmit}>
                 <h1>Create a new Spot</h1>
                 <h3>Where's your place located?</h3>
+                <ul>
+                    {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
+                </ul>
                 <label>
                     Country
                     <input
@@ -117,19 +162,41 @@ export default function CreateNewSpot() {
                     higher in search results.</div>
                     $
                     <input
-                        type='text' placeholder='price' min='1'
+                        type='number' placeholder='price' min='1'
                         required value={price} onChange={updatePrice}
                     />
                 </label>
+
                 <hr></hr>
                 <label>
                     <h3>Liven up your spot with photos</h3>
                     <span>Submit a link to at least one photo to publish your spot</span>
                     <br></br>
                     <input
-                        type='text' placeholder='imageURL' min='1'
+                        type='text' placeholder='Preview Image URL' min='1'
                         required value={imageURL} onChange={updateImageURL}
                     />
+                    <br></br>
+                    <input
+                        type='text' placeholder='imageURL' min='1'
+                        value={imageTwo} onChange={updateImageTwo}
+                    />
+                    <br></br>
+                    <input
+                        type='text' placeholder='imageURL' min='1'
+                        value={imageThree} onChange={updateImageThree}
+                    />
+                    <br></br>
+                    <input
+                        type='text' placeholder='imageURL' min='1'
+                        value={imageFour} onChange={updateImageFour}
+                    />
+                    <br></br>
+                    <input
+                        type='text' placeholder='imageURL' min='1'
+                        value={imageFive} onChange={updateImageFive}
+                    />
+                    <br></br>
                 </label>
                 <hr></hr>
                 <button type="submit">Create spot!</button>
