@@ -5,6 +5,7 @@ import { getOneSpot } from "../../store/spots";
 import { useParams } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 import "./OneSpot.css";
+import { getSpotReviews } from "../../store/reviews";
 
 export default function OneSpot() {
     const dispatch = useDispatch()
@@ -16,8 +17,11 @@ export default function OneSpot() {
     console.log("should be owner", owner)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
+    const reviewDetails = useSelector((state) => (state.reviews.spot))
+    console.log("reviewDetails => ", reviewDetails)
     useEffect(() => {
         dispatch(getOneSpot(spotId))
+        dispatch(getSpotReviews(spotId))
     }, [dispatch])
     // debugger
     if (!spotDetails.SpotImages) return null
@@ -56,7 +60,9 @@ export default function OneSpot() {
             <hr></hr>
             <div className="reviews-container">
                 <div>BELOW NEEDS TO BE IMPLEMENTED SOON!</div>
-                <div className="stars-reviews"><i class="fa-solid fa-star" /> {parseFloat(spotDetails.avgStarRating).toFixed(2)} | {spotDetails.numReviews} reviews </div>
+                <div className="stars-reviews"><i class="fa-solid fa-star" />
+                 {parseFloat(spotDetails.avgStarRating).toFixed(2)} | {spotDetails.numReviews} reviews
+                 </div>
                 <div className="reviewer-info">
                     <div className="firstName-review">FirstName</div>
                     <div className="month-year">Month 20##</div>

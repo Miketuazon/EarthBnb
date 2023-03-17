@@ -17,7 +17,7 @@ export default function CreateNewSpot() {
     const [state, setState] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
 
     const [imageURL, setImageURL] = useState(""); //preview
     const [imageTwo, setImageTwo] = useState("");
@@ -33,7 +33,7 @@ export default function CreateNewSpot() {
     const updateState = (e) => setState(e.target.value);
     const updateName = (e) => setName(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
-    const updatePrice = (e) => setPrice(e.target.value);
+    const updatePrice = (e) => setPrice(parseInt(e.target.value));
     const updateImageURL = (e) => setImageURL(e.target.value);
     const updateImageTwo = (e) => setImageTwo(e.target.value);
     const updateImageThree = (e) => setImageThree(e.target.value);
@@ -57,22 +57,22 @@ export default function CreateNewSpot() {
         // handle validation errors | images
 
         if (!imageURL.length) validationErrors.push('Preview photo is required')
-        if (!imageURL.endsWith(".png") && !imageURL.endsWith(".jpg") && !imageURL.endsWith(".jpeg")) {
-            validationErrors.push("Preview Image must end in .png, .jpg, or .jpeg")
-        }
-        // errors for extra images IF they are included
-        if (imageTwo.length > 0 && !imageTwo.endsWith(".png") && !imageTwo.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
-            validationErrors.push("2nd Image URL must end in .png, .jpg, or .jpeg")
-        }
-        if (imageThree.length > 0 && !imageThree.endsWith(".png") && !imageThree.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
-            validationErrors.push("3rd Image URL must end in .png, .jpg, or .jpeg")
-        }
-        if (imageFour.length > 0 && !imageFour.endsWith(".png") && !imageFour.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
-            validationErrors.push("4th Image URL must end in .png, .jpg, or .jpeg")
-        }
-        if (imageFive.length > 0 && !imageFive.endsWith(".png") && !imageFive.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
-            validationErrors.push("5th Image URL must end in .png, .jpg, or .jpeg")
-        }
+        // if (!imageURL.endsWith(".png") && !imageURL.endsWith(".jpg") && !imageURL.endsWith(".jpeg")) {
+        //     // validationErrors.push("Preview Image must end in .png, .jpg, or .jpeg")
+        // }
+        // // errors for extra images IF they are included
+        // if (imageTwo.length > 0 && !imageTwo.endsWith(".png") && !imageTwo.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+        //     // validationErrors.push("2nd Image URL must end in .png, .jpg, or .jpeg")
+        // }
+        // if (imageThree.length > 0 && !imageThree.endsWith(".png") && !imageThree.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+        //     // validationErrors.push("3rd Image URL must end in .png, .jpg, or .jpeg")
+        // }
+        // if (imageFour.length > 0 && !imageFour.endsWith(".png") && !imageFour.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+        //     // validationErrors.push("4th Image URL must end in .png, .jpg, or .jpeg")
+        // }
+        // if (imageFive.length > 0 && !imageFive.endsWith(".png") && !imageFive.endsWith(".jpg") && !imageTwo.endsWith(".jpeg")) {
+        //     // validationErrors.push("5th Image URL must end in .png, .jpg, or .jpeg")
+        // }
 
         if (validationErrors.length) return setErrors(validationErrors)
 
@@ -90,7 +90,7 @@ export default function CreateNewSpot() {
         console.log("new spot submitted", newSpot)
         history.push(`/spots/${newSpot.id}`)
     }
-    debugger
+    // debugger
     console.log('errors', errors)
 
 
@@ -100,6 +100,7 @@ export default function CreateNewSpot() {
                 <h1>Create a new Spot</h1>
                 <h3>Where's your place located?</h3>
                 <ul>
+                    {/* will place errors next to labels later */}
                     {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
                 </ul>
                 <label>
@@ -173,27 +174,27 @@ export default function CreateNewSpot() {
                     <span>Submit a link to at least one photo to publish your spot</span>
                     <br></br>
                     <input
-                        type='text' placeholder='Preview Image URL' min='1'
+                        type='url' placeholder='Preview Image URL' min='1'
                         required value={imageURL} onChange={updateImageURL}
                     />
                     <br></br>
                     <input
-                        type='text' placeholder='imageURL' min='1'
+                        type='url' placeholder='imageURL' min='1'
                         value={imageTwo} onChange={updateImageTwo}
                     />
                     <br></br>
                     <input
-                        type='text' placeholder='imageURL' min='1'
+                        type='url' placeholder='imageURL' min='1'
                         value={imageThree} onChange={updateImageThree}
                     />
                     <br></br>
                     <input
-                        type='text' placeholder='imageURL' min='1'
+                        type='url' placeholder='imageURL' min='1'
                         value={imageFour} onChange={updateImageFour}
                     />
                     <br></br>
                     <input
-                        type='text' placeholder='imageURL' min='1'
+                        type='url' placeholder='imageURL' min='1'
                         value={imageFive} onChange={updateImageFive}
                     />
                     <br></br>

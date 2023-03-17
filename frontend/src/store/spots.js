@@ -4,7 +4,7 @@ import { csrfFetch } from './csrf';
 // Declare POJO action creator
 const LOAD_SPOTS = "spots/loadSpots";
 const CREATE_SPOT = 'spots/createSpot'
-const EDIT_SPOTS = "spots/editSpots";
+const EDIT_SPOT = "spots/editSpot";
 const DELETE_SPOTS = "spots/deleteSpots";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
 
@@ -24,8 +24,8 @@ export const createSpot = (spot) => ({
   spot
 })
 
-export const updateSpots = (spots) => ({
-  type: EDIT_SPOTS,
+export const editSpot = (spots) => ({
+  type: EDIT_SPOT,
   spots
 })
 
@@ -62,16 +62,23 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 }
 
 // Thunk3: Create new spot (in progress)
-export const createNewSpot = (detailsOfNewSpot) => async (dispatch) => {
+export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) => {
   const res = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(detailsOfNewSpot)
   })
   if (res.ok) {
-    // debugger
     const createdSpot = await res.json();
-    await dispatch(createNewSpot(createdSpot));
+    debugger
+    await dispatch(createSpot(createdSpot));
+    for (let image of spotImages) {
+      console.log("should be image", image)
+      await csrfFetch(`/api/spots/${createdSpot.id}/images`, {
+        method: 'POST',
+        body: JSON.stringify(image)
+      });
+    }
     return createdSpot
   }
 }
@@ -79,17 +86,24 @@ export const createNewSpot = (detailsOfNewSpot) => async (dispatch) => {
 // initial State
 const initialState = {
   allSpots: {},
-  singleSpot: {}
+  singleSpot: {
+    SpotImages: [],
+    Owner: {}
+  }
 }
 
 // Store - Reducer | Spots
 const spotsReducer = (state = initialState, action) => {
   // debugger
-  console.log("this is supposed to be initial state => ",state)
+  console.log("inside spotsReducer")
   switch (action.type) {
     case LOAD_SPOTS: {
       // debugger
-      const newState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
+      const newState = {
+        ...state,
+        allSpots: {...state.allSpots},
+        singleSpot: {...state.singleSpot}
+      };
       // debugger
       action.spots.Spots.forEach(spot => {
         newState.allSpots[spot.id] = spot
@@ -98,17 +112,16 @@ const spotsReducer = (state = initialState, action) => {
     }
     case LOAD_ONE_SPOT: {
       const newState = {...state};
-      newState.singleSpot = {
-        ...action.spot,
-        SpotImages: [...action.spot.SpotImages],
-        Owner: {...action.spot.Owner}
-      }
+      newState.singleSpot = {...action.spot}
       return newState;
     }
     case CREATE_SPOT: {
-      const newState = {...state, allSpots: {...state.allSpots}, singleSpot: {...state.singleSpot}};
+      const newState = {...state,
+        allSpots: {...state.allSpots},
+        singleSpot: {...state.singleSpot}
+      };
       debugger
-      newState.allSpots[action.newSpot.id] = action.newSpot
+      newState.allSpots[action.spot.id] = action.spot
       return newState;
     }
     default:
