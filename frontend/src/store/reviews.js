@@ -33,7 +33,13 @@ const reviewsReducer = (state = initialState, action) => {
         case GET_SPOT_REVIEWS: {
             const newState = {...state, spot: {}}
             for (let review of action.reviews.Reviews) {
-                newState.spot[review.id] = review
+                if (newState.spot[review.spotId]) {
+                    const prevReviews = Object.values(newState.spot[review.spotId])
+                    newState.spot[review.spotId] = [...prevReviews, review]
+                } else {
+                    // now when update this, make sure to SPREAD out what was previously there
+                    newState.spot[review.spotId] = [review]
+                }
             }
             return newState
         }

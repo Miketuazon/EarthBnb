@@ -17,7 +17,7 @@ export default function OneSpot() {
     console.log("should be owner", owner)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
-    const reviewDetails = useSelector((state) => (state.reviews.spot))
+    const reviewDetails = useSelector((state) => (state.reviews.spot[spotId]))
     console.log("reviewDetails => ", reviewDetails)
     useEffect(() => {
         dispatch(getOneSpot(spotId))
@@ -50,7 +50,13 @@ export default function OneSpot() {
                         <div className="price-rating-review">
                             ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {spotDetails.avgRating}
-                            {spotDetails.numReviews} reviews</div>
+                            <div>
+                                {spotDetails.numReviews === 1
+                                    ? `${spotDetails.numReviews} review`
+                                    : `${spotDetails.numReviews} reviews`
+                                }
+                            </div>
+                        </div>
                         <button className="reserve"> Reserve
                             <span class="toolTipText">Feature coming soon! :D</span>
                         </button>
@@ -59,14 +65,55 @@ export default function OneSpot() {
             </div>
             <hr></hr>
             <div className="reviews-container">
-                <div>BELOW NEEDS TO BE IMPLEMENTED SOON!</div>
-                <div className="stars-reviews"><i class="fa-solid fa-star" />
-                 {parseFloat(spotDetails.avgStarRating).toFixed(2)} | {spotDetails.numReviews} reviews
-                 </div>
+                <div className="stars"><i class="fa-solid fa-star" />
+                    {
+                        spotDetails.avgStarRating === null ? 'NEW' : spotDetails.avgStarRating
+                    }
+                    <div>
+                        {spotDetails.numReviews === 1
+                            ? `${spotDetails.numReviews} review`
+                            : `${spotDetails.numReviews} reviews`
+                        }
+                    </div>
+                </div>
                 <div className="reviewer-info">
-                    <div className="firstName-review">FirstName</div>
-                    <div className="month-year">Month 20##</div>
-                    <div className="review-description">I loved this place! blah blah blah</div>
+                    <div className="new-spot-hider">
+                        {spotDetails.avgStarRating === null ? 'NEW' : (
+                            reviewDetails?.map(reviewDetail => {
+                                const date = new Date(reviewDetail.createdAt)
+                                console.log(date)
+                                console.log("day", date.getDate())
+                                console.log("month", date.getMonth())
+                                console.log("year", date.getFullYear())
+                                const months = {
+                                    0: 'January',
+                                    1: 'February',
+                                    2: 'March',
+                                    3: 'April',
+                                    4: 'May',
+                                    5: 'June',
+                                    6: 'July',
+                                    7: 'August',
+                                    8: 'September',
+                                    9: 'October',
+                                    10: 'November',
+                                    11: 'December'
+                                }
+                                const month = months[date.getMonth()];
+                                const day = date.getDate();
+                                const year = date.getFullYear();
+                                console.log(reviewDetail)
+                                return (
+                                    <>
+                                        <div className="firstName-review">{reviewDetail.User.firstName}</div>
+                                        <div className="month-year">{month},{day},{year}</div>
+                                        <div className="review-description">{reviewDetail.review}</div>
+                                    </>
+                                )
+                            })
+                        )
+                        }
+                    </div>
                 </div>
             </div>
         </div>
