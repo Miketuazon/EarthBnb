@@ -29,14 +29,13 @@ export default function OneSpot() {
                     <div className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</div>
                 </div>
                 <div className="spot-images-container">
-                    <div className="image-preview">
-                        {/* NEED TO FIX THIS BUG HERE BUT FOR LATER */}
-                        { spotDetails.SpotImages.length === 0
-                            ? <div>No images yet!</div>
-                            : <div>{spotDetails.SpotImages}</div>
-                        }
-                        </div>
-                    <div className="other-images">Other images</div>
+                    {spotDetails.SpotImages.map(image =>
+                        <img
+                            src={image.url}
+                            // need to fix this later
+                            className='spot-images'
+                            alt='No images yet'
+                        />)}
                 </div>
                 <div className="below-image-container">
                     <div className="owner-description-container">
@@ -49,14 +48,14 @@ export default function OneSpot() {
                             <i class="fa-solid fa-star"></i> {spotDetails.avgRating}
                             {spotDetails.numReviews} reviews</div>
                         <button className="reserve"> Reserve
-                        <span class="toolTipText">Feature coming soon! :D</span>
-                            </button>
+                            <span class="toolTipText">Feature coming soon! :D</span>
+                        </button>
                     </div>
                 </div>
             </div>
             <hr></hr>
             <div className="reviews-container">
-            <div>BELOW NEEDS TO BE IMPLEMENTED SOON!</div>
+                <div>BELOW NEEDS TO BE IMPLEMENTED SOON!</div>
                 <div className="stars-reviews"><i class="fa-solid fa-star" /> {parseFloat(spotDetails.avgStarRating).toFixed(2)} | {spotDetails.numReviews} reviews </div>
                 <div className="reviewer-info">
                     <div className="firstName-review">FirstName</div>
