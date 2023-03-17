@@ -20,7 +20,7 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && (
         <li>
-          <NavLink className={createSpotButton} to="/spots">Create a new spot</NavLink>
+          <NavLink className={createSpotButton} to="/spots/new">Create a new spot</NavLink>
           <ProfileButton user={sessionUser} />
         </li>
       )}
