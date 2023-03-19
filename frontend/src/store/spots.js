@@ -7,6 +7,7 @@ const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = "spots/editSpot";
 const DELETE_SPOTS = "spots/deleteSpots";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
+const LOAD_USER_SPOTS = 'spots/userSpots'
 
 // Store - action creators | Spots
 export const loadSpots = (spots) => ({
@@ -22,6 +23,11 @@ export const loadOneSpot = (spot) => ({
 export const createSpot = (spot) => ({
   type: CREATE_SPOT,
   spot
+})
+
+export const loadUserSpots = (spots) => ({
+  type: LOAD_USER_SPOTS,
+  spots
 })
 
 export const editSpot = (spots) => ({
@@ -83,6 +89,15 @@ export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) 
   }
 }
 
+// Thunk4: Get user spots
+export const getUserSpots = () => async dispatch => {
+  const res = await csrfFetch("/api/spots/current");
+
+  const data = await res.json();
+  await dispatch(loadUserSpots(data))
+  return data
+}
+
 // initial State
 const initialState = {
   allSpots: {},
@@ -123,6 +138,13 @@ const spotsReducer = (state = initialState, action) => {
       debugger
       newState.allSpots[action.spot.id] = action.spot
       return newState;
+    }
+    case LOAD_USER_SPOTS: {
+      const newState = {
+        ...state,
+        allSpots: {...state.allSpots},
+      }
+      return newState
     }
     default:
       return state;
