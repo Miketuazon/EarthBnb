@@ -30,9 +30,9 @@ export const loadUserSpots = (spots) => ({
   spots
 })
 
-export const editSpot = (spots) => ({
+export const editSpot = (spot) => ({
   type: EDIT_SPOT,
-  spots
+  spot
 })
 
 export const removeSpots = (id) => ({
@@ -98,6 +98,18 @@ export const getUserSpots = () => async dispatch => {
   return data
 }
 
+// Thunk5: Edit one of user's spot
+export const updateSpot = (detailsOfSpot, spotImages) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${detailsOfSpot.id}`, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(detailsOfSpot)
+  })
+  if (res.ok) {
+    const data = await res.json()
+    dispatch(editSpot(data))
+  }
+}
 // initial State
 const initialState = {
   allSpots: {},
@@ -150,6 +162,14 @@ const spotsReducer = (state = initialState, action) => {
         newState.userSpots[spot.id] = spot;
       })
       return newState
+    }
+    case EDIT_SPOT: {
+      const newState = {
+        ...state,
+        userSpots: {...action.spot}
+      }
+      newState.userSpots[action.spot.id] = {...action.spot}
+      return newState;
     }
     default:
       return state;
