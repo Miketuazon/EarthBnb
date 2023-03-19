@@ -24,12 +24,28 @@ function LoginFormModal() {
       );
   };
 
+  const handleDemoUser = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    return dispatch(sessionActions.login({
+      credential: 'Demo-lition',
+      password: 'password'
+    }))
+    .then(closeModal)
+    .catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
+  }
+// debugger
   return (
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {errors.map((error, idx) => (
+          {Object.values(errors).map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
@@ -52,6 +68,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemoUser}>Sign in as demo!</button>
       </form>
     </>
   );

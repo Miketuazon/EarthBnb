@@ -5,7 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 // Phase 5 | validating signup requests
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, handleValidationError } = require('../../utils/validation');
 
 const validateSignup = [
   check('email')
@@ -20,11 +20,20 @@ const validateSignup = [
     .not()
     .isEmail()
     .withMessage('Username cannot be an email.'),
-  check('password')
+  // check('password')
+  //   .exists({ checkFalsy: true })
+  //   .isLength({ min: 6 })
+  //   .withMessage('Password must be 6 characters or more.'),
+  check("firstName")
     .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
-  handleValidationErrors
+    .isLength({ min: 3 })
+    .withMessage("First Name is required"),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .isLength({ min: 3 })
+    .withMessage("Last Name is required"),
+  // handleValidationErrors
+  handleValidationError
 ];
 
 // /api/users

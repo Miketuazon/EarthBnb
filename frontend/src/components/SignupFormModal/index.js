@@ -23,18 +23,30 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
+          console.log('data type errors', data)
           if (data && data.errors) setErrors(data.errors);
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
+  // couldn't figure out way to test register
+  // const signDemoInfo = (e) => {
+  //   e.preventDefault();
+  //   setEmail("demoUser1337@gmail.com");
+  //   setUsername("demoUser1337");
+  //   setFirstName("demo");
+  //   setLastName("user");
+  //   setPassword("password");
+  //   setConfirmPassword("password");
+  // }
+
   return (
     <>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>
           Email
@@ -91,6 +103,7 @@ function SignupFormModal() {
           />
         </label>
         <button type="submit">Sign Up</button>
+        {/* <button onClick={signDemoInfo}>Register as demo user!</button> */}
       </form>
     </>
   );

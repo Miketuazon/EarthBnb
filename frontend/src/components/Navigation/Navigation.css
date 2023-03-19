@@ -5,3 +5,57 @@
 .hidden {
     display: none;
 }
+
+.navBar {
+    border: 2px solid lightgray;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex:  */
+    height: 5rem;
+    flex-direction: row;
+    list-style: none;
+    background-color: rgb(0, 182, 182);
+    font-family: 'Lato';
+}
+
+.earth {
+    display: flex;
+    align-items: center;
+    height:0;
+    min-height:100%;
+    color: #0AC25A;
+}
+
+.tool-tip-text1 {
+    visibility: hidden;
+}
+
+.tool-tip-text1:hover {
+    visibility: visible;
+}
+
+.homeButton {
+    display: flex;
+    height:0;
+    min-height:100%;
+    flex-wrap: nowrap;
+    font-size:large;
+}
+
+a.active {
+    font-family: 'Lato';
+    display: flex;
+    align-items: center;
+}
+
+
+.profile-dropdown {
+    font-family: 'Lato';
+    list-style: none;
+}
+
+#modal-content {
+    font-family: 'Lato';
+}
