@@ -5,8 +5,9 @@ import { getAllSpots, getUserSpots } from "../../store/spots";
 import { Link, useHistory } from "react-router-dom";
 import './ManageSpots.css';
 
-function ManageSpots () {
-    const spots = useSelector(state => state.spots)
+function ManageSpots() {
+    const spotsObj = useSelector(state => state.spots.userSpots)
+    const spots = Object.values(spotsObj)
     const user = useSelector(state => state.session.user)
     console.log("spots => ", spots)
     console.log("user =>", user)
@@ -18,11 +19,28 @@ function ManageSpots () {
     }, [dispatch])
 
     const history = useHistory();
+
+    const goToCreateSpot = () => {
+        let path = `/spots/new`
+        history.push(path);
+    }
+
     if (!spots) return null;
     return (
-        <>
-        test
-        </>
+        <div className="manage-spots-page">
+            {spots?.map(spot => {
+                return (
+                    <div className="manage-place">
+                        <h1>Manage your spots</h1>
+                        <button onClick={goToCreateSpot}>Create a new spot</button>
+                        <div className="user-spots">
+                            Will implement spots here
+                        </div>
+                    </div>
+                )
+            })}
+            test
+        </div>
     )
 }
 

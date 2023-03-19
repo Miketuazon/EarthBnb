@@ -104,7 +104,8 @@ const initialState = {
   singleSpot: {
     SpotImages: [],
     Owner: {}
-  }
+  },
+  userSpots: {}
 }
 
 // Store - Reducer | Spots
@@ -142,8 +143,11 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_USER_SPOTS: {
       const newState = {
         ...state,
-        allSpots: {...state.allSpots},
+        userSpots: {...state.allSpots},
       }
+      action.spots.Spots.forEach(spot => {
+        newState.userSpots[spot.id] = spot;
+      })
       return newState
     }
     default:
