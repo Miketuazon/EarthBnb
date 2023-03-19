@@ -26,8 +26,18 @@ function LoginFormModal() {
 
   const handleDemoUser = (e) => {
     e.preventDefault();
-    setCredential('Demo-lition');
-    setPassword('password');
+    setErrors([]);
+    return dispatch(sessionActions.login({
+      credential: 'Demo-lition',
+      password: 'password'
+    }))
+    .then(closeModal)
+    .catch(
+      async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
   }
 // debugger
   return (

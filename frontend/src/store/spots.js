@@ -143,8 +143,9 @@ const spotsReducer = (state = initialState, action) => {
     case LOAD_USER_SPOTS: {
       const newState = {
         ...state,
-        userSpots: {...state.allSpots},
-      }
+        // userSpots: {...state.allSpots}, //commented out to see change
+       }
+      newState.userSpots = {}; //added to see to add from Spots to userSpots
       action.spots.Spots.forEach(spot => {
         newState.userSpots[spot.id] = spot;
       })
