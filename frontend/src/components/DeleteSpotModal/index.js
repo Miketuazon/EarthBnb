@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useModal } from "../../context/Modal";
-import { deleteSpot} from "../../store/spots";
+import { deleteSpot } from "../../store/spots";
 import './DeleteSpotModal.css'
 
-function DeleteSpotModal({spotId}) {
+function DeleteSpotModal({ spotId }) {
     const dispatch = useDispatch()
-    const spot = useSelector(state => state.spots.singleSpot);
-    const user = useSelector(state => state.session.user)
-    console.log("spots => ", spot)
-    console.log("user =>", user)
     const { closeModal } = useModal();
 
     const handleSubmit = (e) => {
@@ -21,8 +16,8 @@ function DeleteSpotModal({spotId}) {
     return (
         <div className="delete-spot-modal">
             <form onSubmit={handleSubmit}>
-                <h1 className="delete-header">Confirm Delete</h1>
-                <h2 className="delete-header">Are you sure you want to remove this spot from the listings?</h2>
+                <h1 className="confirm-delete">Confirm Delete</h1>
+                <h2 className="warning">Are you sure you want to remove this spot from the listings?</h2>
                 <button type="submit">Yes (Delete Spot) </button>
                 <button onClick={closeModal}>No (Keep Spot)</button>
             </form>

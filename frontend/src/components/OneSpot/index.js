@@ -8,6 +8,7 @@ import "./OneSpot.css";
 import { getSpotReviews } from "../../store/reviews";
 import CreateNewReviewModal from "../CreateNewReviewModal"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteReviewModal from "../DeleteReviewModal"
 
 export default function OneSpot() {
     const dispatch = useDispatch()
@@ -30,6 +31,7 @@ export default function OneSpot() {
     //     console.log("this is a single review user id", review.userId)
     // })
     const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
+    const createDeleteButton = "create-spot" + (sessionUser ? "" : " hidden")
     const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
 
     const reserveClick = (e) => {
@@ -131,6 +133,14 @@ export default function OneSpot() {
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
                             modalComponent={<CreateNewReviewModal />}
+                        />
+                    </button>
+                </div>
+                <div className={createDeleteButton}>
+                    <button className="delete-button">
+                    <OpenModalMenuItem
+                            itemText={"Delete Your Review"}
+                            modalComponent={<DeleteReviewModal />}
                         />
                     </button>
                 </div>
