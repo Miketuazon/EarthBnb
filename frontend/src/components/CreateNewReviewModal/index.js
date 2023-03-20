@@ -34,11 +34,34 @@ function CreateNewReviewModal({ spotId }) {
             review, stars
         }
         const newReview = dispatch(createNewReview(createdReviewDetails, spotId, user))
-        console.log("newReview submitted => ", newReview)
+        // console.log("newReview submitted => ", newReview)
         history.push(`/spots/${spotId}`)
         closeModal();
     }
 
+    const StarRating = () => {
+        const [stars, setStars] = useState(0);
+        const [hover, setHover] = useState(0);
+        return (
+          <div className="star-rating">
+            {[...Array(5)].map((star, index) => {
+              index += 1;
+              return (
+                <button
+                  type="button"
+                  key={index}
+                  className={index <= (hover || stars) ? "on" : "off"}
+                  onClick={() => setStars(index)}
+                  onMouseEnter={() => setHover(index)}
+                  onMouseLeave={() => setHover(stars)}
+                >
+                  <span className="star">&#9733;</span>
+                </button>
+              );
+            })}
+          </div>
+        );
+      };
     return (
         <section className='create-new-review-modal'>
             <form onSubmit={handleSubmit}>
@@ -53,14 +76,7 @@ function CreateNewReviewModal({ spotId }) {
                     >
                     </input>
                 </label>
-                <label>
-                    Stars
-                <input
-                    type='number' placeholder='' min='1'
-                    required value={review} onChange={updateStars}
-                    >
-                    </input>
-                </label>
+                    <StarRating/>
                 <button
                 disabled={review.length < 10 || stars < 1}
                 type="submit">Submit Your Review!</button>

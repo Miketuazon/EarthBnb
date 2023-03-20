@@ -12,7 +12,7 @@ export default function UpdateSpot() {
     const history = useHistory();
     const {spotId} = useParams();
     const spot = useSelector((state) => state.spots.userSpots[spotId])
-    console.log('spots =>', spot)
+    // console.log('spots =>', spot)
     const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
@@ -75,11 +75,11 @@ export default function UpdateSpot() {
         }
         // debugger
         const newSpot = await dispatch(updateSpot(updatedSpotDetails))
-        console.log("spot edited", newSpot)
+        // console.log("spot edited", newSpot)
         history.push(`/spots/${spotId}`)
     }
     // debugger
-    console.log('errors', errors)
+    // console.log('errors', errors)
 
 
     return (

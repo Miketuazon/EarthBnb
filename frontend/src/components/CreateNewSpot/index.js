@@ -1,7 +1,7 @@
 import React from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState, } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useState, } from 'react';
 
 import { createNewSpot, getAllSpots } from '../../store/spots';
 
@@ -77,21 +77,21 @@ export default function CreateNewSpot() {
         if (validationErrors.length) return setErrors(validationErrors)
 
         const spotImages = [
-            {url: imageURL, preview: true},
-            {url: imageTwo, preview: false},
-            {url: imageThree, preview: false},
-            {url: imageFour, preview: false},
-            {url: imageFive, preview: false},
+            { url: imageURL, preview: true },
+            { url: imageTwo, preview: false },
+            { url: imageThree, preview: false },
+            { url: imageFour, preview: false },
+            { url: imageFive, preview: false },
         ]
         const createdSpotDetails = {
             country, address, city, state, description, price, name,
         }
         const newSpot = await dispatch(createNewSpot(createdSpotDetails, spotImages))
-        console.log("new spot submitted", newSpot)
+        // console.log("new spot submitted", newSpot)
         history.push(`/spots/${newSpot.id}`)
     }
     // debugger
-    console.log('errors', errors)
+    // console.log('errors', errors)
 
 
     return (
@@ -138,7 +138,7 @@ export default function CreateNewSpot() {
                 <label>
                     <h3>Describe your place to guests</h3>
                     <div>Mention the best features of your space, any special amenities like fast wifi or parking,
-                    and what you love about the neighborhood.</div>
+                        and what you love about the neighborhood.</div>
                     <textarea
                         type='textarea' placeholder='Please write at least 30 characters' min='30'
                         required value={description} onChange={updateDescription}
@@ -160,7 +160,7 @@ export default function CreateNewSpot() {
                 <label>
                     <h3>Set a base price for your spot</h3>
                     <div>Competitive pricing can help your listing stand out and rank
-                    higher in search results.</div>
+                        higher in search results.</div>
                     $
                     <input
                         type='number' placeholder='Price per night (USD)' min='1'
@@ -200,7 +200,13 @@ export default function CreateNewSpot() {
                     <br></br>
                 </label>
                 <hr></hr>
-                <button type="submit">Create spot!</button>
+                <button
+                    disabled={
+                        country.length < 1 || address.length < 1 || city.length < 1 ||
+                        state.length < 1 || description.length < 30 || name.length < 0 ||
+                        price.length < 1 || imageURL.length < 1
+                    }
+                    type="submit">Create spot!</button>
             </form>
         </section>
     )

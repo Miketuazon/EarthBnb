@@ -9,7 +9,7 @@ export default function Spots() {
     const spotsObj = useSelector((state) => state.spots.allSpots)
     const spots = Object.values(spotsObj)
 
-    console.log("spot => ", spots)
+    // console.log("spot => ", spots)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllSpots())
@@ -25,7 +25,9 @@ export default function Spots() {
                     <div key={spot.id} className="spot-place">
                         {spot.previewImage !== "No Preview Image Available"
                             ?<Link to={`spots/${spot.id}`}><img alt="No preview Available"
+                            className="img"
                             src={spot.previewImage}
+
                             /></Link>
                             : <Link to={`spots/${spot.id}`}>No Preview Image Available</Link>}
                         <div className="city-rating-spot">
