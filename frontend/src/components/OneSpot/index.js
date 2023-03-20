@@ -21,12 +21,16 @@ export default function OneSpot() {
     console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
-    const reviewDetails = useSelector((state) => (state.reviews.spot))
-    console.log("reviewDetails => ", reviewDetails)
-    reviewDetails.forEach(review => {
-        console.log("this is a single review user id", review.userId)
-    })
+    const reviews = useSelector((state) => (state.reviews.spot))
+    const reviewsArr = Object.values(reviews).reverse
+    console.log("reviewsArr =>", reviewsArr)
+    console.log("reviews => ", reviews)
+    const avgReviewRating = useSelector((state) => state.spots.singleSpot.avgStarRating)
+    // reviewDetails.forEach(review => {
+    //     console.log("this is a single review user id", review.userId)
+    // })
     const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
+    const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
     // const idsOfUsersInReviews = [];
     // reviewDetails.forEach(review => {
     //     idsOfUsersInReviews.push(review.userId)
@@ -37,6 +41,32 @@ export default function OneSpot() {
         dispatch(getSpotReviews(spotId))
     }, [dispatch])
     // debugger
+    const singleReviews = Object.values(reviews)
+    console.log("single Reviews", singleReviews)
+    let reviewUserIds = []
+    for (let review of Object.values(reviews)) {
+        reviewUserIds.push(review.userId)
+    }
+
+    const months = {
+        0: 'January',
+        1: 'February',
+        2: 'March',
+        3: 'April',
+        4: 'May',
+        5: 'June',
+        6: 'July',
+        7: 'August',
+        8: 'September',
+        9: 'October',
+        10: 'November',
+        11: 'December'
+    }
+    const date = new Date(reviews.createdAt)
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
     if (!spotDetails.SpotImages) return null
     return (
         <div className="spot-details-page">
@@ -96,23 +126,33 @@ export default function OneSpot() {
 
                     </div>
                 </div>
-                <div className={createReviewButton}>
-                    {/*code for if reviews include currUser idsOfUsersInReviews.includes(user.id) === false && */}
-                    {reviewDetails.forEach(review => {
-                        if (review.id === sessionUser.id) return ""
-                    })
-                        /*idsOfUsersInReviews.includes(user.id) === false*/ ? ""
-                        : owner.id === spotDetails.ownerId ? ""
-                            : <button className="create-review">
-                                <OpenModalMenuItem
-                                    itemText="Post Your Review"
-                                    modalComponent={<CreateNewReviewModal />}
-                                />
-                            </button>
-                    }
+                <div className="post-review">
+                        <button>Placeholder for post review</button>
                 </div>
-                <div className="reviewer-info">
-                    <div className="new-spot-hider">
+                <div className="single-review">
+                    {reviewsArr.length > 0
+                    ? reviewsArr.forEach(review => {
+                        return (
+                        <>
+                        <div>{review}</div>
+                        <div>{review.User}</div>
+                        <div>{day}, {month}, {year}</div>
+                        <div>{review.review}</div>
+                        </>
+                        )
+
+                    })
+                    : ""
+                    }
+                    <div>Description here</div>
+                </div>
+                {/* <div className="reviewer-info"> */}
+                {/* {
+                        <div className="new-spot-hider">
+
+                        </div>
+                    } */}
+                {/* <div className="new-spot-hider">
                         {spotDetails.avgStarRating === null ? 'NEW' : (
                             reviewDetails?.map(reviewDetail => {
                                 const date = new Date(reviewDetail.createdAt)
@@ -148,8 +188,8 @@ export default function OneSpot() {
                             })
                         )
                         }
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
             </div>
         </div>
     )
