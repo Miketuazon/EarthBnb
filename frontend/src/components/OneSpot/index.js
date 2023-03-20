@@ -45,7 +45,7 @@ export default function OneSpot() {
     }, [dispatch])
     // debugger
     const singleReviews = Object.values(reviews)
-    // console.log("single Reviews", singleReviews)
+    console.log("single Reviews", singleReviews)
     let reviewUserIds = []
     for (let review of Object.values(reviews)) {
         reviewUserIds.push(review.userId)
@@ -148,6 +148,15 @@ export default function OneSpot() {
                         />
                     </button>
                 </div>
+                <div className="reviews">
+                        {spotDetails.numReviews === 0
+                            ? <div></div>
+                            : spotDetails.numReviews === 1
+                                ? `${singleReviews} review`
+                                : `${spotDetails.numReviews} reviews`
+                        }
+
+                    </div>
                 {/* <div className="reviewer-info"> */}
                 {/* {
                         <div className="new-spot-hider">

@@ -53,6 +53,9 @@
   list-style: none;
 }
 
+.stars {
+  display: flex;
+}
 /* .image {
   max-width: 200px;
   max-height: 200px;
