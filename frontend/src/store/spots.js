@@ -13,32 +13,32 @@ const LOAD_USER_SPOTS = 'spots/userSpots'
 export const loadSpots = (spots) => ({
   type: LOAD_SPOTS,
   spots
-})
+});
 
 export const loadOneSpot = (spot) => ({
   type: LOAD_ONE_SPOT,
   spot
-})
+});
 
 export const createSpot = (spot) => ({
   type: CREATE_SPOT,
   spot
-})
+});
 
 export const loadUserSpots = (spots) => ({
   type: LOAD_USER_SPOTS,
   spots
-})
+});
 
 export const editSpot = (spot) => ({
   type: EDIT_SPOT,
   spot
-})
+});
 
 export const removeSpot = (spot) => ({
   type: DELETE_SPOT,
   spot
-})
+});
 
 // Store - Thunk | Spots
 // Thunk1: Get all spots
@@ -50,8 +50,8 @@ export const getAllSpots = () => async (dispatch) => {
     await dispatch(loadSpots(data));
     // console.log("await dispatched allSpots => ", data)
     return data;
-  }
-}
+  };
+};
 
 // Thunk2: Get one spot
 export const getOneSpot = (spotId) => async (dispatch) => {
@@ -64,8 +64,8 @@ export const getOneSpot = (spotId) => async (dispatch) => {
     await dispatch(loadOneSpot(data));
     // console.log("await dispatched oneSpot", data)
     return data;
-  }
-}
+  };
+};
 
 // Thunk3: Create new spot (in progress)
 export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) => {
@@ -73,7 +73,7 @@ export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) 
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(detailsOfNewSpot)
-  })
+  });
   if (res.ok) {
     const createdSpot = await res.json();
     debugger
@@ -84,19 +84,19 @@ export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) 
         method: 'POST',
         body: JSON.stringify(image)
       });
-    }
-    return createdSpot
-  }
-}
+    };
+    return createdSpot;
+  };
+};
 
 // Thunk4: Get user spots
 export const getUserSpots = () => async dispatch => {
   const res = await csrfFetch("/api/spots/current");
 
   const data = await res.json();
-  await dispatch(loadUserSpots(data))
-  return data
-}
+  await dispatch(loadUserSpots(data));
+  return data;
+};
 
 // Thunk5: Edit one of user's spot
 export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
@@ -106,33 +106,30 @@ export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
     body: JSON.stringify(detailsOfSpot)
   })
   if (res.ok) {
-    const data = await res.json()
-    dispatch(editSpot(data))
-  }
-}
+    const data = await res.json();
+    dispatch(editSpot(data));
+  };
+};
 
 // Thunk6: Delete one of user's spot
 export const deleteSpot = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
-  })
+  });
 
   if (res.ok) {
-    const data = await res.json()
-    dispatch(removeSpot(data))
-  }
-}
+    const data = await res.json();
+    dispatch(removeSpot(data));
+  };
+};
 
 // initial State
 const initialState = {
   allSpots: {},
-  singleSpot: {
-    SpotImages: [],
-    Owner: {}
-  },
+  singleSpot: {},
   userSpots: {}
-}
+};
 
 // Store - Reducer | Spots
 const spotsReducer = (state = initialState, action) => {
@@ -145,17 +142,16 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         allSpots: { ...state.allSpots },
         singleSpot: { ...state.singleSpot },
-        userSpots: {}
       };
       // debugger
-      action.spots.Spots.forEach(spot => {
+      action.spots.Spots.map(spot => {
         newState.allSpots[spot.id] = spot
       });
       return newState;
     }
     case LOAD_ONE_SPOT: {
       const newState = { ...state };
-      newState.singleSpot = { ...action.spot }
+      newState.singleSpot = { ...action.spot };
       return newState;
     }
     case CREATE_SPOT: {
@@ -165,7 +161,7 @@ const spotsReducer = (state = initialState, action) => {
         singleSpot: { ...state.singleSpot }
       };
       // debugger
-      newState.allSpots[action.spot.id] = action.spot
+      newState.allSpots[action.spot.id] = action.spot;
       return newState;
     }
     case LOAD_USER_SPOTS: {
@@ -176,26 +172,26 @@ const spotsReducer = (state = initialState, action) => {
       newState.userSpots = {}; //added to see to add from Spots to userSpots
       action.spots.Spots.forEach(spot => {
         newState.userSpots[spot.id] = spot;
-      })
-      return newState
+      });
+      return newState;
     }
     case EDIT_SPOT: {
       const newState = {
         ...state,
         userSpots: { ...state.user }
-      }
-      newState.userSpots[action.spot.id] = { ...action.spot }
+      };
+      newState.userSpots[action.spot.id] = { ...action.spot };
       return newState;
     }
     case DELETE_SPOT: {
-      const newState = {...state};
+      const newState = { ...state };
       delete newState.allSpots[action.spot.id];
       delete newState.userSpots[action.spots];
       return newState;
     }
     default:
       return state;
-  }
+  };
 };
 
 export default spotsReducer;
