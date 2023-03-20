@@ -144,7 +144,8 @@ const spotsReducer = (state = initialState, action) => {
       const newState = {
         ...state,
         allSpots: { ...state.allSpots },
-        singleSpot: { ...state.singleSpot }
+        singleSpot: { ...state.singleSpot },
+        userSpots: {}
       };
       // debugger
       action.spots.Spots.forEach(spot => {

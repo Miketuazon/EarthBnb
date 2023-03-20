@@ -2,12 +2,19 @@ import { csrfFetch } from "./csrf";
 
 // Declare POJO action creator
 const GET_SPOT_REVIEWS = 'reviews/getSpotReview'
-
+const CREATE_REVIEW = 'reviews/createReview'
 // Store - action creators | Reviews
 const getReviewsOfSpots = (reviews) => ({
     type: GET_SPOT_REVIEWS,
     reviews
 })
+
+const createReview = (review) => {
+    return {
+        type: CREATE_REVIEW,
+        review
+    }
+}
 
 // Store - Thunk | Reviews
 //Thunk1. Get all reviews OF spot
@@ -19,6 +26,25 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
     }
 }
 
+// Thunk2. Create new review OF spot
+export const createNewReview = (review, user, spotId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            "review": review.review,
+            "stars": review.stars
+        })
+    })
+
+    if (res.ok) {
+        const data = await res.json()
+        // console.log('review thunk', review)
+        review.User = user
+        await dispatch(createReview(data))
+        return data
+    }
+}
 // Initial state
 const initialState = {
     spot: {},
@@ -31,7 +57,7 @@ const initialState = {
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_REVIEWS: {
-            const newState = {...state, spot: {}}
+            const newState = { ...state, spot: {} }
             for (let review of action.reviews.Reviews) {
                 if (newState.spot[review.spotId]) {
                     const prevReviews = Object.values(newState.spot[review.spotId])
@@ -41,6 +67,15 @@ const reviewsReducer = (state = initialState, action) => {
                     newState.spot[review.spotId] = [review]
                 }
             }
+            return newState
+        }
+        case CREATE_REVIEW: {
+            const newState = {...state, spot: {...state.spot}}
+
+            newState.user.userReviews = {}
+            newState.user.userReviews[action.review.id] = action.review
+
+            newState.spot[action.review.id] = action.review
             return newState
         }
         default:

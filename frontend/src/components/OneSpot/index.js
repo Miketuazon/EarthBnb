@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 import "./OneSpot.css";
 import { getSpotReviews } from "../../store/reviews";
+import CreateNewReviewModal from "../CreateNewReviewModal"
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
 export default function OneSpot() {
     const dispatch = useDispatch()
@@ -15,10 +17,21 @@ export default function OneSpot() {
     console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
     console.log("should be owner", owner)
+    const sessionUser = useSelector(state => state.session.user)
+    console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
-    const reviewDetails = useSelector((state) => (state.reviews.spot[spotId]))
+    const reviewDetails = useSelector((state) => (state.reviews.spot))
     console.log("reviewDetails => ", reviewDetails)
+    reviewDetails.forEach(review => {
+        console.log("this is a single review user id", review.userId)
+    })
+    const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
+    // const idsOfUsersInReviews = [];
+    // reviewDetails.forEach(review => {
+    //     idsOfUsersInReviews.push(review.userId)
+    // })
+    // console.log("idsOfUsersInReviews =>",idsOfUsersInReviews)
     useEffect(() => {
         dispatch(getOneSpot(spotId))
         dispatch(getSpotReviews(spotId))
@@ -50,8 +63,8 @@ export default function OneSpot() {
                         <div className="price-rating-review">
                             ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {
-                        spotDetails.avgStarRating === null ? 'NEW' : spotDetails.avgStarRating
-                    }
+                                spotDetails.avgStarRating === null ? 'NEW' : spotDetails.avgStarRating
+                            }
                             <div>
                                 {spotDetails.numReviews === 1
                                     ? `${spotDetails.numReviews} review`
@@ -70,16 +83,33 @@ export default function OneSpot() {
                 <div className="stars"><i class="fa-solid fa-star" />
                     {
                         spotDetails.avgStarRating === null
-                        ? 'NEW'
-                        :  spotDetails.avgStarRating
+                            ? `NEW `
+                            : `${spotDetails.avgStarRating} · `
                     }
-                    &nbsp;·&nbsp;
-                    <div>
-                        {spotDetails.numReviews === 1
-                            ? `${spotDetails.numReviews} review`
-                            : `${spotDetails.numReviews} reviews`
+                    <div className="review-count">
+                        {spotDetails.numReviews === 0
+                            ? <div>{spotDetails.numReviews} reviews</div>
+                            : spotDetails.numReviews === 1
+                                ? `${spotDetails.numReviews} review`
+                                : `${spotDetails.numReviews} reviews`
                         }
+
                     </div>
+                </div>
+                <div className={createReviewButton}>
+                    {/*code for if reviews include currUser idsOfUsersInReviews.includes(user.id) === false && */}
+                    {reviewDetails.forEach(review => {
+                        if (review.id === sessionUser.id) return ""
+                    })
+                        /*idsOfUsersInReviews.includes(user.id) === false*/ ? ""
+                        : owner.id === spotDetails.ownerId ? ""
+                            : <button className="create-review">
+                                <OpenModalMenuItem
+                                    itemText="Post Your Review"
+                                    modalComponent={<CreateNewReviewModal />}
+                                />
+                            </button>
+                    }
                 </div>
                 <div className="reviewer-info">
                     <div className="new-spot-hider">
