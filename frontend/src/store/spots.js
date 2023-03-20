@@ -79,7 +79,7 @@ export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) 
     debugger
     await dispatch(createSpot(createdSpot));
     for (let image of spotImages) {
-      console.log("should be image", image)
+      // console.log("should be image", image)
       await csrfFetch(`/api/spots/${createdSpot.id}/images`, {
         method: 'POST',
         body: JSON.stringify(image)
@@ -134,7 +134,7 @@ const initialState = {
 // Store - Reducer | Spots
 const spotsReducer = (state = initialState, action) => {
   // debugger
-  console.log("inside spotsReducer")
+  // console.log("inside spotsReducer")
   switch (action.type) {
     case LOAD_SPOTS: {
       // debugger

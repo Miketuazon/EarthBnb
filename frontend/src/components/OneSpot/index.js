@@ -14,18 +14,18 @@ export default function OneSpot() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
-    console.log("this is spot details =>", spotDetails)
-    console.log("ensure spotId =>", spotId)
+    // console.log("this is spot details =>", spotDetails)
+    // console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
-    console.log("should be owner", owner)
+    // console.log("should be owner", owner)
     const sessionUser = useSelector(state => state.session.user)
-    console.log("should be user =>", sessionUser)
+    // console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
     const reviews = useSelector((state) => (state.reviews.spot))
-    const reviewsArr = Object.values(reviews).reverse
-    console.log("reviewsArr =>", reviewsArr)
-    console.log("reviews => ", reviews)
+
+    // console.log("reviewsArr =>", reviewsArr)
+    // console.log("reviews => ", reviews)
     const avgReviewRating = useSelector((state) => state.spots.singleSpot.avgStarRating)
     // reviewDetails.forEach(review => {
     //     console.log("this is a single review user id", review.userId)
@@ -45,7 +45,7 @@ export default function OneSpot() {
     }, [dispatch])
     // debugger
     const singleReviews = Object.values(reviews)
-    console.log("single Reviews", singleReviews)
+    // console.log("single Reviews", singleReviews)
     let reviewUserIds = []
     for (let review of Object.values(reviews)) {
         reviewUserIds.push(review.userId)
@@ -81,7 +81,8 @@ export default function OneSpot() {
                 <div className="spot-images-container">
                     {spotDetails.SpotImages.map(image =>
                         <img
-                            src={image.url}
+                            src={image.url === null ? `https://thumbs.dreamstime.com/b/print-209555561.jpg` : image.url }
+
                             // need to fix this later
                             className='spot-images'
                             alt='No images yet'
@@ -96,7 +97,7 @@ export default function OneSpot() {
                         <div className="price-rating-review">
                             ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {
-                                spotDetails.avgStarRating === null ? 'NEW' : spotDetails.avgStarRating
+                                spotDetails.avgStarRating === null ? 'NEW' : Number.parseFloat(spotDetails.avgStarRating).toFixed(2)
                             }
                             <div>
                                 {spotDetails.numReviews === 1
@@ -120,7 +121,7 @@ export default function OneSpot() {
                     }
                     <div className="review-count">
                         {spotDetails.numReviews === 0
-                            ? <div>{spotDetails.numReviews} reviews</div>
+                            ? <div>Be the first to post a review!</div>
                             : spotDetails.numReviews === 1
                                 ? `${spotDetails.numReviews} review`
                                 : `${spotDetails.numReviews} reviews`
@@ -137,6 +138,9 @@ export default function OneSpot() {
                     </button>
                 </div>
                 <div className={createDeleteButton}>
+                    {
+
+                    }
                     <button className="delete-button">
                     <OpenModalMenuItem
                             itemText={"Delete Your Review"}

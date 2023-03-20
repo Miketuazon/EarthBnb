@@ -52,3 +52,19 @@
 .delete-button {
   list-style: none;
 }
+
+/* .image {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.spots-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px
+}
+
+.city-rating-spot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+} */
