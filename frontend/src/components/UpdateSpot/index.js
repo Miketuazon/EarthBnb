@@ -1,29 +1,33 @@
 import React from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { NavLink, Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, } from 'react';
 
-import { updateSpot, getAllSpots } from '../../store/spots';
+import { updateSpot, getOneSpot } from '../../store/spots';
 
 import './UpdateSpot.css'
 
 export default function UpdateSpot() {
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const [country, setCountry] = useState("")
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
+    const {spotId} = useParams();
+    const spot = useSelector((state) => state.spots.userSpots[spotId])
+    console.log('spots =>', spot)
+    const [country, setCountry] = useState(spot.country)
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [name, setName] = useState(spot.name);
+    const [description, setDescription] = useState(spot.description);
+    const [price, setPrice] = useState(spot.price);
+    const [id] = useState(spot.id)
 
     const [imageURL, setImageURL] = useState(""); //preview
-    const [imageTwo, setImageTwo] = useState("");
-    const [imageThree, setImageThree] = useState("");
-    const [imageFour, setImageFour] = useState("");
-    const [imageFive, setImageFive] = useState("");
+    // below commented out since it's optional for update spot
+    // const [imageTwo, setImageTwo] = useState("");
+    // const [imageThree, setImageThree] = useState("");
+    // const [imageFour, setImageFour] = useState("");
+    // const [imageFive, setImageFive] = useState("");
 
     const [errors, setErrors] = useState([]);
 
@@ -35,10 +39,10 @@ export default function UpdateSpot() {
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePrice = (e) => setPrice(parseInt(e.target.value));
     const updateImageURL = (e) => setImageURL(e.target.value);
-    const updateImageTwo = (e) => setImageTwo(e.target.value);
-    const updateImageThree = (e) => setImageThree(e.target.value);
-    const updateImageFour = (e) => setImageFour(e.target.value);
-    const updateImageFive = (e) => setImageFive(e.target.value);
+    // const updateImageTwo = (e) => setImageTwo(e.target.value);
+    // const updateImageThree = (e) => setImageThree(e.target.value);
+    // const updateImageFour = (e) => setImageFour(e.target.value);
+    // const updateImageFive = (e) => setImageFive(e.target.value);
 
     // debugger
     const handleSubmit = async (e) => {
@@ -56,22 +60,23 @@ export default function UpdateSpot() {
         if (!price) validationErrors.push('Price is required')
 
         // handle validation errors | images
-        if (!imageURL.length) validationErrors.push('Preview photo is required')
+        // if (!imageURL.length) validationErrors.push('Preview photo is required')
         if (validationErrors.length) return setErrors(validationErrors)
 
-        const spotImages = [
-            {url: imageURL, preview: true},
-            {url: imageTwo, preview: false},
-            {url: imageThree, preview: false},
-            {url: imageFour, preview: false},
-            {url: imageFive, preview: false},
-        ]
-        const createdSpotDetails = {
-            country, address, city, state, description, price, name,
+        // const spotImages = [
+        //     {url: imageURL, preview: true},
+        //     {url: imageTwo, preview: false},
+        //     {url: imageThree, preview: false},
+        //     {url: imageFour, preview: false},
+        //     {url: imageFive, preview: false},
+        // ]
+        const updatedSpotDetails = {
+            country, address, city, state, description, price, name, id
         }
-        const newSpot = await dispatch(updateSpot(createdSpotDetails, spotImages))
+        // debugger
+        const newSpot = await dispatch(updateSpot(updatedSpotDetails))
         console.log("spot edited", newSpot)
-        history.push(`/spots/${newSpot.id}`)
+        history.push(`/spots/${spotId}`)
     }
     // debugger
     console.log('errors', errors)
@@ -80,8 +85,9 @@ export default function UpdateSpot() {
     return (
         <section className='edit-form-spots'>
             <form onSubmit={handleSubmit}>
-                <h1>Create a new Spot</h1>
+                <h1>Update your Spot</h1>
                 <h3>Where's your place located?</h3>
+                <span>Guests will only get your exact address once they booked a reservation</span>
                 <ul>
                     {/* will place errors next to labels later */}
                     {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
@@ -149,38 +155,6 @@ export default function UpdateSpot() {
                         type='number' placeholder='price' min='1'
                         required value={price} onChange={updatePrice}
                     />
-                </label>
-
-                <hr></hr>
-                <label>
-                    <h3>Liven up your spot with photos</h3>
-                    <span>Submit a link to at least one photo to publish your spot</span>
-                    <br></br>
-                    <input
-                        type='url' placeholder='Preview Image URL' min='1'
-                        required value={imageURL} onChange={updateImageURL}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageTwo} onChange={updateImageTwo}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageThree} onChange={updateImageThree}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageFour} onChange={updateImageFour}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageFive} onChange={updateImageFive}
-                    />
-                    <br></br>
                 </label>
                 <hr></hr>
                 <button type="submit">Update spot!</button>
