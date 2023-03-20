@@ -56,7 +56,7 @@ function CreateNewReviewModal({ spotId }) {
                 <label>
                     Stars
                 <input
-                    type='text' placeholder='' min='1'
+                    type='number' placeholder='' min='1'
                     required value={review} onChange={updateStars}
                     >
                     </input>

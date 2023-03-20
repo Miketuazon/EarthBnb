@@ -31,11 +31,12 @@ export default function OneSpot() {
     // })
     const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
     const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
-    // const idsOfUsersInReviews = [];
-    // reviewDetails.forEach(review => {
-    //     idsOfUsersInReviews.push(review.userId)
-    // })
-    // console.log("idsOfUsersInReviews =>",idsOfUsersInReviews)
+
+    const reserveClick = (e) => {
+        e.preventDefault();
+        alert('Feature Coming Soon...');
+    };
+
     useEffect(() => {
         dispatch(getOneSpot(spotId))
         dispatch(getSpotReviews(spotId))
@@ -102,8 +103,7 @@ export default function OneSpot() {
                                 }
                             </div>
                         </div>
-                        <button className="reserve"> Reserve
-                            <span class="toolTipText">Feature coming soon! :D</span>
+                        <button className="reserve-click" onClick={reserveClick}> Reserve
                         </button>
                     </div>
                 </div>
@@ -126,25 +126,13 @@ export default function OneSpot() {
 
                     </div>
                 </div>
-                <div className="post-review">
-                        <button>Placeholder for post review</button>
-                </div>
-                <div className="single-review">
-                    {reviewsArr.length > 0
-                    ? reviewsArr.forEach(review => {
-                        return (
-                        <>
-                        <div>{review}</div>
-                        <div>{review.User}</div>
-                        <div>{day}, {month}, {year}</div>
-                        <div>{review.review}</div>
-                        </>
-                        )
-
-                    })
-                    : ""
-                    }
-                    <div>Description here</div>
+                <div className={createReviewButton}>
+                    <button className="post-button">
+                        <OpenModalMenuItem
+                            itemText={"Post Your Review"}
+                            modalComponent={<CreateNewReviewModal />}
+                        />
+                    </button>
                 </div>
                 {/* <div className="reviewer-info"> */}
                 {/* {

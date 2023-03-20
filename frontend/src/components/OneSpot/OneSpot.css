@@ -40,3 +40,7 @@
 .hidden {
   display: none;
 }
+
+.post-button {
+  list-style: none;
+}
