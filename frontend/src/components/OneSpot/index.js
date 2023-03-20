@@ -69,8 +69,11 @@ export default function OneSpot() {
             <div className="reviews-container">
                 <div className="stars"><i class="fa-solid fa-star" />
                     {
-                        spotDetails.avgStarRating === null ? 'NEW' : spotDetails.avgStarRating
+                        spotDetails.avgStarRating === null
+                        ? 'NEW'
+                        :  spotDetails.avgStarRating
                     }
+                    &nbsp;·&nbsp;
                     <div>
                         {spotDetails.numReviews === 1
                             ? `${spotDetails.numReviews} review`

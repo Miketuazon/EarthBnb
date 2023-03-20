@@ -17,7 +17,7 @@ export default function CreateNewSpot() {
     const [state, setState] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState("");
 
     const [imageURL, setImageURL] = useState(""); //preview
     const [imageTwo, setImageTwo] = useState("");
@@ -163,7 +163,7 @@ export default function CreateNewSpot() {
                     higher in search results.</div>
                     $
                     <input
-                        type='number' placeholder='price' min='1'
+                        type='number' placeholder='Price per night (USD)' min='1'
                         required value={price} onChange={updatePrice}
                     />
                 </label>

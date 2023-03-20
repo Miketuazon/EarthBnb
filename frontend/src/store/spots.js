@@ -5,7 +5,7 @@ import { csrfFetch } from './csrf';
 const LOAD_SPOTS = "spots/loadSpots";
 const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = "spots/editSpot";
-const DELETE_SPOTS = "spots/deleteSpots";
+const DELETE_SPOT = "spots/deleteSpot";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
 const LOAD_USER_SPOTS = 'spots/userSpots'
 
@@ -35,9 +35,9 @@ export const editSpot = (spot) => ({
   spot
 })
 
-export const removeSpots = (id) => ({
-  type: DELETE_SPOTS,
-  id
+export const removeSpot = (spot) => ({
+  type: DELETE_SPOT,
+  spot
 })
 
 // Store - Thunk | Spots
@@ -71,7 +71,7 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) => {
   const res = await csrfFetch('/api/spots', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(detailsOfNewSpot)
   })
   if (res.ok) {
@@ -102,7 +102,7 @@ export const getUserSpots = () => async dispatch => {
 export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${detailsOfSpot.id}`, {
     method: 'PUT',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(detailsOfSpot)
   })
   if (res.ok) {
@@ -110,6 +110,20 @@ export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
     dispatch(editSpot(data))
   }
 }
+
+// Thunk6: Delete one of user's spot
+export const deleteSpot = (id) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    dispatch(removeSpot(data))
+  }
+}
+
 // initial State
 const initialState = {
   allSpots: {},
@@ -129,8 +143,8 @@ const spotsReducer = (state = initialState, action) => {
       // debugger
       const newState = {
         ...state,
-        allSpots: {...state.allSpots},
-        singleSpot: {...state.singleSpot}
+        allSpots: { ...state.allSpots },
+        singleSpot: { ...state.singleSpot }
       };
       // debugger
       action.spots.Spots.forEach(spot => {
@@ -139,16 +153,17 @@ const spotsReducer = (state = initialState, action) => {
       return newState;
     }
     case LOAD_ONE_SPOT: {
-      const newState = {...state};
-      newState.singleSpot = {...action.spot}
+      const newState = { ...state };
+      newState.singleSpot = { ...action.spot }
       return newState;
     }
     case CREATE_SPOT: {
-      const newState = {...state,
-        allSpots: {...state.allSpots},
-        singleSpot: {...state.singleSpot}
+      const newState = {
+        ...state,
+        allSpots: { ...state.allSpots },
+        singleSpot: { ...state.singleSpot }
       };
-      debugger
+      // debugger
       newState.allSpots[action.spot.id] = action.spot
       return newState;
     }
@@ -156,7 +171,7 @@ const spotsReducer = (state = initialState, action) => {
       const newState = {
         ...state,
         // userSpots: {...state.allSpots}, //commented out to see change
-       }
+      }
       newState.userSpots = {}; //added to see to add from Spots to userSpots
       action.spots.Spots.forEach(spot => {
         newState.userSpots[spot.id] = spot;
@@ -166,9 +181,15 @@ const spotsReducer = (state = initialState, action) => {
     case EDIT_SPOT: {
       const newState = {
         ...state,
-        userSpots: {...state.user}
+        userSpots: { ...state.user }
       }
-      newState.userSpots[action.spot.id] = {...action.spot}
+      newState.userSpots[action.spot.id] = { ...action.spot }
+      return newState;
+    }
+    case DELETE_SPOT: {
+      const newState = {...state};
+      delete newState.allSpots[action.spot.id];
+      delete newState.userSpots[action.spots];
       return newState;
     }
     default:
