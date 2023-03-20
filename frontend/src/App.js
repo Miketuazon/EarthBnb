@@ -30,7 +30,7 @@ function App() {
           <Route exact path ='/spots/current'>
             <ManageSpots />
           </Route>
-          <Route>
+          <Route exact path ='/spots/:spotId/edit'>
             <UpdateSpot />
           </Route>
           <Route exact path='/spots/:spotId'>

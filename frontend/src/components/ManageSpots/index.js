@@ -10,9 +10,9 @@ function ManageSpots() {
     const spots = Object.values(spotsObj)
     const user = useSelector(state => state.session.user)
     console.log("spots => ", spots)
-    console.log("user =>", user)
+    // console.log("user =>", user)
     const currUserId = user.id;
-    console.log(currUserId)
+    // console.log(currUserId)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getUserSpots());
@@ -29,6 +29,7 @@ function ManageSpots() {
     //     let path = `/spots/${spots.id}`
     //     history.push(path)
     // }
+    debugger
     if (!spots) return null;
     return (
         <div className="manage-spots-page">
@@ -41,10 +42,10 @@ function ManageSpots() {
                         return (
                             <div key={spot.id} className="spot-place">
                                 {spot.previewImage !== "No Preview Image Available"
-                                    ? <Link to={`spots/${spot.id}`}><img alt="No preview Available"
+                                    ? <Link to={`/spots/${spot.id}`}><img alt="No preview Available"
                                         src={spot.previewImage}
                                     /></Link>
-                                    : <Link to={`spots/${spot.id}`}>No Preview Image Available</Link>}
+                                    : <Link to={`/spots/${spot.id}`}>No Preview Image Available</Link>}
                                 <div className="city-rating-spot">
                                     <div>{spot.city}, {spot.state}</div>
                                     <div>
@@ -72,7 +73,6 @@ function ManageSpots() {
                     })}
                 </div>
             </div>
-            test
         </div>
     )
 }

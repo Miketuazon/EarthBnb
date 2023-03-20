@@ -99,7 +99,7 @@ export const getUserSpots = () => async dispatch => {
 }
 
 // Thunk5: Edit one of user's spot
-export const updateSpot = (detailsOfSpot, spotImages) => async (dispatch) => {
+export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${detailsOfSpot.id}`, {
     method: 'PUT',
     headers: {'Content-Type': 'application/json'},
@@ -166,7 +166,7 @@ const spotsReducer = (state = initialState, action) => {
     case EDIT_SPOT: {
       const newState = {
         ...state,
-        userSpots: {...action.spot}
+        userSpots: {...state.user}
       }
       newState.userSpots[action.spot.id] = {...action.spot}
       return newState;

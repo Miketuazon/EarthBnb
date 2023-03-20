@@ -29,8 +29,8 @@ export default function OneSpot() {
         <div className="spot-details-page">
             <div className="spot-details-container">
                 <div className="name-city-state-country-container">
-                    <div className="spot-name">{spotDetails.name}</div>
-                    <div className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</div>
+                    <h1 className="spot-name">{spotDetails.name}</h1>
+                    <h2 className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</h2>
                 </div>
                 <div className="spot-images-container">
                     {spotDetails.SpotImages.map(image =>
