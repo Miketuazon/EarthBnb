@@ -6,12 +6,12 @@ import './DeleteReviewModal.css'
 
 function DeleteReviewModal({reviewId}) {
     const dispatch = useDispatch()
-    const {closeModal} = useModal;
+    const {closeModal} = useModal();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        closeModal()
         dispatch(eraseReview(reviewId))
+        closeModal()
     }
     return (
         <div className="delete-spot-modal">
