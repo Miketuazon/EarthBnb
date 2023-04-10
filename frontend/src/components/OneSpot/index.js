@@ -81,11 +81,10 @@ export default function OneSpot() {
                 <div className="spot-images-container">
                     {spotDetails.SpotImages.map(image =>
                         <img
-                            src={image.url === null ? `https://thumbs.dreamstime.com/b/print-209555561.jpg` : image.url }
-
+                            src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url }
                             // need to fix this later
                             className='spot-images'
-                            alt='No images yet'
+                            alt="no image yet"
                         />)}
                 </div>
                 <div className="below-image-container">
