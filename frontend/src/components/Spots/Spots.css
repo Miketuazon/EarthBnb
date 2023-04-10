@@ -1,22 +1,53 @@
 .spots-page {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin: 0 1em;
+  flex-wrap: wrap;
 }
 
 .spot-place {
-    max-width: 300px;
-    max-height: 300px;
+  display: flex;
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 1em;
+  flex: 50%;
+  justify-content: space-around;
+  flex-direction: column;
 }
 
-.city-rating {
+/* .city-rating {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-}
+} */
 
 .img {
-    max-height: 100%;
-    max-width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.spot-image-container .toolTipText {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.spot-image-container:hover .toolTipText {
+  visibility: visible;
 }
