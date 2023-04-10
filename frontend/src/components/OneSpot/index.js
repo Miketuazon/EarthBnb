@@ -79,13 +79,25 @@ export default function OneSpot() {
                     <h2 className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</h2>
                 </div>
                 <div className="spot-images-container">
-                    {spotDetails.SpotImages.map(image =>
-                        <img
-                            src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url }
-                            // need to fix this later
-                            className='spot-images'
-                            alt="no image yet"
-                        />)}
+                    {spotDetails.SpotImages.map((image, idx) =>
+                        idx === 0 ?
+                        <div className="left-side">
+                            <img
+                                className="preview-image1"
+                                src={image.url}
+                            />
+                        </div>
+                            :
+                            // <div className="right-side">
+                                <img
+                                    className="other-images"
+                                    src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                    alt="no image yet"
+                                    />
+                            // </div>
+                            )
+                    }
+
                 </div>
                 <div className="below-image-container">
                     <div className="owner-description-container">
@@ -141,21 +153,21 @@ export default function OneSpot() {
 
                     }
                     <button className="delete-button">
-                    <OpenModalMenuItem
+                        <OpenModalMenuItem
                             itemText={"Delete Your Review"}
                             modalComponent={<DeleteReviewModal />}
                         />
                     </button>
                 </div>
                 <div className="reviews">
-                        {spotDetails.numReviews === 0
-                            ? <div></div>
-                            : spotDetails.numReviews === 1
-                                ? `${singleReviews} review`
-                                : `${spotDetails.numReviews} reviews`
-                        }
+                    {spotDetails.numReviews === 0
+                        ? <div></div>
+                        : spotDetails.numReviews === 1
+                            ? `${singleReviews} review`
+                            : `${spotDetails.numReviews} reviews`
+                    }
 
-                    </div>
+                </div>
                 {/* <div className="reviewer-info"> */}
                 {/* {
                         <div className="new-spot-hider">
