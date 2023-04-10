@@ -76,7 +76,7 @@ export const createNewSpot = (detailsOfNewSpot, spotImages) => async (dispatch) 
   });
   if (res.ok) {
     const createdSpot = await res.json();
-    debugger
+    // debugger
     await dispatch(createSpot(createdSpot));
     for (let image of spotImages) {
       // console.log("should be image", image)
