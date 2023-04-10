@@ -94,7 +94,7 @@ export const getUserSpots = () => async dispatch => {
   const res = await csrfFetch("/api/spots/current");
 
   const data = await res.json();
-  await dispatch(loadUserSpots(data));
+  await dispatch(loadSpots(data));
   return data;
 };
 
@@ -164,17 +164,18 @@ const spotsReducer = (state = initialState, action) => {
       newState.allSpots[action.spot.id] = action.spot;
       return newState;
     }
-    case LOAD_USER_SPOTS: {
-      const newState = {
-        ...state,
-        // userSpots: {...state.allSpots}, //commented out to see change
-      }
-      newState.userSpots = {}; //added to see to add from Spots to userSpots
-      action.spots.Spots.forEach(spot => {
-        newState.userSpots[spot.id] = spot;
-      });
-      return newState;
-    }
+    // commented out this for now | trying to not create another slice
+    // case LOAD_USER_SPOTS: {
+    //   const newState = {
+    //     ...state,
+    //     // userSpots: {...state.allSpots}, //commented out to see change
+    //   }
+    //   newState.userSpots = {}; //added to see to add from Spots to userSpots
+    //   action.spots.Spots.forEach(spot => {
+    //     newState.userSpots[spot.id] = spot;
+    //   });
+    //   return newState;
+    // }
     case EDIT_SPOT: {
       const newState = {
         ...state,
