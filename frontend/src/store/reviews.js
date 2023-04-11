@@ -79,16 +79,8 @@ const initialState = {
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_REVIEWS: {
-            const newState = { ...state, spot: {} }
-            for (let review of action.reviews.Reviews) {
-                if (newState.spot[review.spotId]) {
-                    const prevReviews = Object.values(newState.spot[review.spotId])
-                    newState.spot[review.spotId] = [...prevReviews, review]
-                } else {
-                    // now when update this, make sure to SPREAD out what was previously there
-                    newState.spot[review.spotId] = [review]
-                }
-            }
+            const newState = {...state, spot: {...state.spot}};
+            action.reviews.Reviews.forEach(review => newState.spot[review.id] = review)
             return newState
         }
         case CREATE_REVIEW: {

@@ -12,6 +12,7 @@
   max-height: 400px;
   margin: 0 1em;
   flex: 50%;
+  width: 25%;
   justify-content: space-around;
   flex-direction: column;
 }

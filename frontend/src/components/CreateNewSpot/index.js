@@ -201,11 +201,11 @@ export default function CreateNewSpot() {
                 </label>
                 <hr></hr>
                 <button
-                    disabled={
-                        country.length < 1 || address.length < 1 || city.length < 1 ||
-                        state.length < 1 || description.length < 30 || name.length < 0 ||
-                        price.length < 1 || imageURL.length < 1
-                    }
+                    // disabled={
+                    //     country.length < 1 || address.length < 1 || city.length < 1 ||
+                    //     state.length < 1 || description.length < 30 || name.length < 0 ||
+                    //     price.length < 1 || imageURL.length < 1
+                    // }
                     type="submit">Create spot!</button>
             </form>
         </section>

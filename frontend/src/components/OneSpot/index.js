@@ -14,26 +14,27 @@ export default function OneSpot() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
-    // console.log("this is spot details =>", spotDetails)
+    console.log("this is spot details =>", spotDetails)
     // console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
-    // console.log("should be owner", owner)
+    console.log("should be owner", owner)
     const sessionUser = useSelector(state => state.session.user)
-    // console.log("should be user =>", sessionUser)
+    console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
-    const reviews = useSelector((state) => (state.reviews.spot))
-
-    // console.log("reviewsArr =>", reviewsArr)
-    // console.log("reviews => ", reviews)
+    const reviews = useSelector(state => (state.reviews.spot[spotId]))
+    console.log("reviews => ", reviews)
+    // debugger
+    // const xReviews = useSelector(state => (state)) //testing reviews?
+    // console.log("example xReviews", reviews)
     const avgReviewRating = useSelector((state) => state.spots.singleSpot.avgStarRating)
     // reviewDetails.forEach(review => {
     //     console.log("this is a single review user id", review.userId)
     // })
-    const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
-    const createDeleteButton = "create-spot" + (sessionUser ? "" : " hidden")
+    // debugger                                            // cant create review if you own the place
+    const createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    const createDeleteButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
     const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
-
     const reserveClick = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -42,14 +43,13 @@ export default function OneSpot() {
     useEffect(() => {
         dispatch(getOneSpot(spotId))
         dispatch(getSpotReviews(spotId))
-    }, [dispatch])
+    }, [dispatch, spotId])
     // debugger
-    const singleReviews = Object.values(reviews)
-    console.log("single Reviews", singleReviews)
-    let reviewUserIds = []
-    for (let review of Object.values(reviews)) {
-        reviewUserIds.push(review.userId)
-    }
+    // 4 below lines commented out for now
+    // let reviewUserIds = []
+    // for (let review of Object.values(reviews)) {
+    //     reviewUserIds.push(review.userId)
+    // }
 
     const months = {
         0: 'January',
@@ -65,11 +65,10 @@ export default function OneSpot() {
         10: 'November',
         11: 'December'
     }
-    const date = new Date(reviews.createdAt)
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-
+    // const date = new Date(reviews.createdAt)
+    // const month = months[date.getMonth()];
+    // const day = date.getDate();
+    // const year = date.getFullYear();
     if (!spotDetails.SpotImages) return null
     return (
         <div className="spot-details-page">
@@ -132,7 +131,7 @@ export default function OneSpot() {
                     }
                     <div className="review-count">
                         {spotDetails.numReviews === 0
-                            ? <div>Be the first to post a review!</div>
+                            ? <div className="be-the">Be the first to post a review!</div>
                             : spotDetails.numReviews === 1
                                 ? `${spotDetails.numReviews} review`
                                 : `${spotDetails.numReviews} reviews`
@@ -149,9 +148,6 @@ export default function OneSpot() {
                     </button>
                 </div>
                 <div className={createDeleteButton}>
-                    {
-
-                    }
                     <button className="delete-button">
                         <OpenModalMenuItem
                             itemText={"Delete Your Review"}
@@ -160,12 +156,6 @@ export default function OneSpot() {
                     </button>
                 </div>
                 <div className="reviews">
-                    {spotDetails.numReviews === 0
-                        ? <div></div>
-                        : spotDetails.numReviews === 1
-                            ? `${singleReviews} review`
-                            : `${spotDetails.numReviews} reviews`
-                    }
 
                 </div>
                 {/* <div className="reviewer-info"> */}

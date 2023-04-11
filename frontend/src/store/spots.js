@@ -7,7 +7,7 @@ const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = "spots/editSpot";
 const DELETE_SPOT = "spots/deleteSpot";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
-const LOAD_USER_SPOTS = 'spots/userSpots'
+// const LOAD_USER_SPOTS = 'spots/userSpots'
 
 // Store - action creators | Spots
 export const loadSpots = (spots) => ({
@@ -25,10 +25,10 @@ export const createSpot = (spot) => ({
   spot
 });
 
-export const loadUserSpots = (spots) => ({
-  type: LOAD_USER_SPOTS,
-  spots
-});
+// export const loadUserSpots = (spots) => ({
+//   type: LOAD_USER_SPOTS,
+//   spots
+// });
 
 export const editSpot = (spot) => ({
   type: EDIT_SPOT,
