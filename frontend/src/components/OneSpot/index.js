@@ -166,6 +166,7 @@ export default function OneSpot() {
                         const day = date.getDate();
                         const year = date.getFullYear();
                         console.log(spotId)
+                        console.log(review)
                         if (Number(review.spotId) === Number(spotId))
                             return (
                                 <div key={review.id} className="review-place">

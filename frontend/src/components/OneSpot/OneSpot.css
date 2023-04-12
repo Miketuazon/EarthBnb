@@ -1,3 +1,10 @@
+.spot-details-page {
+  max-width: 1000px;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
 .reserve {
   position: relative;
   display: inline-block;

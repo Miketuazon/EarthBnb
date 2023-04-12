@@ -1,0 +1,20 @@
+.submit {
+    background-color: rgb(255, 105, 105);
+    font-weight: 900;
+}
+
+.no {
+    background-color: lightgrey;
+    font-weight: 900;
+}
+
+#modal-content {
+    border-radius: 20px;
+}
+
+.delete-spot-modal {
+    margin: auto;
+    width: 50%;
+    border: 3px;
+    padding: 10px;
+}

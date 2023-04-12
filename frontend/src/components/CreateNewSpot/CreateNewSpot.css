@@ -4,3 +4,8 @@
     /* background-image: url("http://missioncleanearth.org/img/intro.jpg");
     background-size:cover; */
 }
+
+.description-box {
+    width: 100%;
+    height: 90px;
+}

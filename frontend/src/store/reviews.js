@@ -80,7 +80,7 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_REVIEWS: {
             const newState = {...state, spot: {...state.spot}};
-            // console.log("action GET_SPOT_REVIEWS =>", action)
+            console.log("action GET_SPOT_REVIEWS =>", action)
             action.reviews.Reviews.map(review => newState.spot[review.id] = review)
             return newState
         }
