@@ -7,7 +7,7 @@ const CREATE_SPOT = 'spots/createSpot'
 const EDIT_SPOT = "spots/editSpot";
 const DELETE_SPOT = "spots/deleteSpot";
 const LOAD_ONE_SPOT = 'spots/oneSpot'
-const LOAD_USER_SPOTS = 'spots/userSpots'
+// const LOAD_USER_SPOTS = 'spots/userSpots'
 
 // Store - action creators | Spots
 export const loadSpots = (spots) => ({
@@ -25,19 +25,19 @@ export const createSpot = (spot) => ({
   spot
 });
 
-export const loadUserSpots = (spots) => ({
-  type: LOAD_USER_SPOTS,
-  spots
-});
+// export const loadUserSpots = (spots) => ({
+//   type: LOAD_USER_SPOTS,
+//   spots
+// });
 
 export const editSpot = (spot) => ({
   type: EDIT_SPOT,
   spot
 });
 
-export const removeSpot = (spot) => ({
+export const removeSpot = (spotId) => ({
   type: DELETE_SPOT,
-  spot
+  spotId
 });
 
 // Store - Thunk | Spots
@@ -94,7 +94,7 @@ export const getUserSpots = () => async dispatch => {
   const res = await csrfFetch("/api/spots/current");
 
   const data = await res.json();
-  await dispatch(loadUserSpots(data));
+  await dispatch(loadSpots(data));
   return data;
 };
 
@@ -113,6 +113,7 @@ export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
 
 // Thunk6: Delete one of user's spot
 export const deleteSpot = (id) => async (dispatch) => {
+  console.log("deleteSpot id => ", id)
   const res = await csrfFetch(`/api/spots/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
@@ -120,7 +121,9 @@ export const deleteSpot = (id) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(removeSpot(data));
+    console.log("data =>", data)
+    dispatch(removeSpot(id));
+    return res
   };
 };
 
@@ -164,17 +167,18 @@ const spotsReducer = (state = initialState, action) => {
       newState.allSpots[action.spot.id] = action.spot;
       return newState;
     }
-    case LOAD_USER_SPOTS: {
-      const newState = {
-        ...state,
-        // userSpots: {...state.allSpots}, //commented out to see change
-      }
-      newState.userSpots = {}; //added to see to add from Spots to userSpots
-      action.spots.Spots.forEach(spot => {
-        newState.userSpots[spot.id] = spot;
-      });
-      return newState;
-    }
+    // commented out this for now | trying to not create another slice
+    // case LOAD_USER_SPOTS: {
+    //   const newState = {
+    //     ...state,
+    //     // userSpots: {...state.allSpots}, //commented out to see change
+    //   }
+    //   newState.userSpots = {}; //added to see to add from Spots to userSpots
+    //   action.spots.Spots.forEach(spot => {
+    //     newState.userSpots[spot.id] = spot;
+    //   });
+    //   return newState;
+    // }
     case EDIT_SPOT: {
       const newState = {
         ...state,
@@ -184,9 +188,17 @@ const spotsReducer = (state = initialState, action) => {
       return newState;
     }
     case DELETE_SPOT: {
-      const newState = { ...state };
-      delete newState.allSpots[action.spot.id];
-      delete newState.userSpots[action.spots];
+      const newState = {
+        ...state,
+        allSpots: {...state.allSpots},
+        singleSpot: {...state.singleSpot},
+        userSpots: {...state.userSpots},
+      };
+      console.log("newState del => ",newState)
+      console.log("action del =>",action )
+      delete newState.allSpots[action.spotId];
+      delete newState.userSpots[action.spotId];
+      delete newState.singleSpot[action.spotId];
       return newState;
     }
     default:

@@ -71,3 +71,24 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 } */
+
+.spot-images-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  grid-auto-flow: column;
+}
+
+.left-side {
+  grid-area: 1 / 1 / span 2 / span 2;
+  position: sticky;
+}
+
+.preview-image1 {
+  max-height:fit-content
+}
+
+.owner-description-container {
+  display: flex;
+  flex-direction: column;
+}

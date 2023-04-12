@@ -11,9 +11,9 @@ function DeleteSpotModal({ spotId }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(deleteSpot(spotId))
+        history.push(`/spots/current`)
         closeModal()
-        history.push(`/`)
-        return dispatch(deleteSpot(spotId))
     };
 
     return (
@@ -21,8 +21,8 @@ function DeleteSpotModal({ spotId }) {
             <form onSubmit={handleSubmit}>
                 <h1 className="confirm-delete">Confirm Delete</h1>
                 <h2 className="warning">Are you sure you want to remove this spot from the listings?</h2>
-                <button type="submit">Yes (Delete Spot) </button>
-                <button onClick={closeModal}>No (Keep Spot)</button>
+                <button type="submit" className="submit">Yes (Delete Spot) </button>
+                <button onClick={closeModal} className="no">No (Keep Spot)</button>
             </form>
         </div>
     );

@@ -14,26 +14,30 @@ export default function OneSpot() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
-    // console.log("this is spot details =>", spotDetails)
+    console.log("this is spot details =>", spotDetails)
     // console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
-    // console.log("should be owner", owner)
+    console.log("should be owner", owner)
     const sessionUser = useSelector(state => state.session.user)
-    // console.log("should be user =>", sessionUser)
+    console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
-    const reviews = useSelector((state) => (state.reviews.spot))
+    const reviewsObj = useSelector(state => (state.reviews.spot))
+    console.log("reviewsObj => ", reviewsObj)
+    const reviews = Object.values(reviewsObj)
+    console.log("reviews =>", reviews)
 
-    // console.log("reviewsArr =>", reviewsArr)
-    // console.log("reviews => ", reviews)
-    const avgReviewRating = useSelector((state) => state.spots.singleSpot.avgStarRating)
+    // debugger
+    // const xReviews = useSelector(state => (state)) //testing reviews?
+    // console.log("example xReviews", reviews)
+    // const avgReviewRating = useSelector((state) => state.spots.singleSpot.avgStarRating)
     // reviewDetails.forEach(review => {
     //     console.log("this is a single review user id", review.userId)
     // })
-    const createReviewButton = "create-spot" + (sessionUser ? "" : " hidden")
-    const createDeleteButton = "create-spot" + (sessionUser ? "" : " hidden")
+    // debugger                                            // cant create review if you own the place
+    const createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    // const createDeleteButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
     const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
-
     const reserveClick = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -42,14 +46,13 @@ export default function OneSpot() {
     useEffect(() => {
         dispatch(getOneSpot(spotId))
         dispatch(getSpotReviews(spotId))
-    }, [dispatch])
+    }, [dispatch, spotId])
     // debugger
-    const singleReviews = Object.values(reviews)
-    console.log("single Reviews", singleReviews)
-    let reviewUserIds = []
-    for (let review of Object.values(reviews)) {
-        reviewUserIds.push(review.userId)
-    }
+    // 4 below lines commented out for now
+    // let reviewUserIds = []
+    // for (let review of Object.values(reviews)) {
+    //     reviewUserIds.push(review.userId)
+    // }
 
     const months = {
         0: 'January',
@@ -65,11 +68,10 @@ export default function OneSpot() {
         10: 'November',
         11: 'December'
     }
-    const date = new Date(reviews.createdAt)
-    const month = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
-
+    // const date = new Date(reviews.createdAt)
+    // const month = months[date.getMonth()];
+    // const day = date.getDate();
+    // const year = date.getFullYear();
     if (!spotDetails.SpotImages) return null
     return (
         <div className="spot-details-page">
@@ -79,14 +81,25 @@ export default function OneSpot() {
                     <h2 className="spot-city-date-country">{spotDetails.city}, {spotDetails.state}, {spotDetails.country}</h2>
                 </div>
                 <div className="spot-images-container">
-                    {spotDetails.SpotImages.map(image =>
-                        <img
-                            src={image.url === null ? `https://thumbs.dreamstime.com/b/print-209555561.jpg` : image.url }
+                    {spotDetails.SpotImages.map((image, idx) =>
+                        idx === 0 ?
+                            <div className="left-side">
+                                <img
+                                    className="preview-image1"
+                                    src={image.url}
+                                />
+                            </div>
+                            :
+                            // <div className="right-side">
+                            <img
+                                className="other-images"
+                                src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                alt="no image yet"
+                            />
+                        // </div>
+                    )
+                    }
 
-                            // need to fix this later
-                            className='spot-images'
-                            alt='No images yet'
-                        />)}
                 </div>
                 <div className="below-image-container">
                     <div className="owner-description-container">
@@ -121,7 +134,7 @@ export default function OneSpot() {
                     }
                     <div className="review-count">
                         {spotDetails.numReviews === 0
-                            ? <div>Be the first to post a review!</div>
+                            ? <div className="be-the">Be the first to post a review!</div>
                             : spotDetails.numReviews === 1
                                 ? `${spotDetails.numReviews} review`
                                 : `${spotDetails.numReviews} reviews`
@@ -137,26 +150,45 @@ export default function OneSpot() {
                         />
                     </button>
                 </div>
-                <div className={createDeleteButton}>
-                    {
-
-                    }
+                {/* commented out the below 8 lines */}
+                {/* <div className={createDeleteButton}>
                     <button className="delete-button">
-                    <OpenModalMenuItem
+                        <OpenModalMenuItem
                             itemText={"Delete Your Review"}
                             modalComponent={<DeleteReviewModal />}
                         />
                     </button>
-                </div>
+                </div> */}
                 <div className="reviews">
-                        {spotDetails.numReviews === 0
-                            ? <div></div>
-                            : spotDetails.numReviews === 1
-                                ? `${singleReviews} review`
-                                : `${spotDetails.numReviews} reviews`
-                        }
-
-                    </div>
+                    {reviews?.map(review => {
+                        const date = new Date(review.createdAt)
+                        const month = months[date.getMonth()];
+                        const day = date.getDate();
+                        const year = date.getFullYear();
+                        console.log(spotId)
+                        if (Number(review.spotId) === Number(spotId))
+                            return (
+                                <div key={review.id} className="review-place">
+                                    <div className="review-container">
+                                        <div className="review-owner">{review.User.firstName}</div>
+                                        <div className="review-month-year">{month},{day},{year}</div>
+                                        <div className="review-description">{review.review}</div>
+                                        <div className="delete-button-here">
+                                            {review.User.id === sessionUser?.id
+                                                ? <button className="delete-button">
+                                                    <OpenModalMenuItem
+                                                        itemText={"Delete Your Review"}
+                                                        modalComponent={<DeleteReviewModal />}
+                                                    />
+                                                </button>
+                                                : <></>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                    })}
+                </div>
                 {/* <div className="reviewer-info"> */}
                 {/* {
                         <div className="new-spot-hider">

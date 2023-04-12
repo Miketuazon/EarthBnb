@@ -1,50 +1,55 @@
-.spot-place {
-    max-width: 300px;
-    max-height: 300px;
+.spots-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0 1em;
+  flex-wrap: wrap;
 }
 
-.city-rating {
+.spot-place {
+  display: flex;
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 1em;
+  flex: 50%;
+  width: 25%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+/* .city-rating {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-}
+} */
 
 .img {
-    max-height: 200px;
-    width: auto;
-    object-fit: cover;
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 6px;
 }
 
-.img .toolTipText {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -50px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
+/* .tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+} */
 
-  .img .toolTipText::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-  }
+.spot-image-container .toolTipText {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  /* text-align: center; */
+  border-radius: 6px;
+  padding: 5px 0;
 
-  .img:hover .toolTipText {
-    visibility: visible;
-    opacity: 1;
-  }
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.spot-image-container:hover .toolTipText {
+  visibility: visible;
+}
