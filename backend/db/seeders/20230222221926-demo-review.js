@@ -22,6 +22,12 @@ module.exports = {
         stars: 1,
        },
        {
+        spotId: 2,
+        userId: 2,
+        review: 'The microwave works and it is a wonderful place.',
+        stars: 5,
+       },
+       {
         spotId: 3,
         userId: 3,
         review: 'Fantastic place',
