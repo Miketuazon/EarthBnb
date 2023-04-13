@@ -79,10 +79,6 @@
   grid-template-columns: 1fr 1fr;
 } */
 
-.spot-details-container {
-
-}
-
 .spot-images-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -108,11 +104,29 @@
   max-height:fit-content
 }
 
+.below-image.container {
+  display: flex;
+}
+
+.price-ratings-review-container {
+  border: black solid 2px;
+  border-radius: 5px;
+  box-shadow: 5px;
+}
+
+.reserve-click {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+
 .owner-description-container {
   display: flex;
   flex-direction: column;
 }
 
-.below-image.container {
-  display: flex;
+.delete-button {
+  background-color: #555;
+  color: white;
+  font-weight: bold;
 }

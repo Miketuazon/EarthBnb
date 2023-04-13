@@ -142,7 +142,7 @@ export default function OneSpot() {
                     </div>
                 </div>
             </div>
-            <hr></hr>
+            <hr className="black-line"></hr>
             <div className="reviews-container">
                 <div className="stars"><i class="fa-solid fa-star" />
                     {
