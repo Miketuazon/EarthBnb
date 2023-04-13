@@ -79,6 +79,10 @@
   grid-template-columns: 1fr 1fr;
 } */
 
+.spot-details-container {
+
+}
+
 .spot-images-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -86,6 +90,15 @@
   grid-auto-flow: column;
 }
 
+.other-images {
+  /* max-width: 50%; */
+  object-fit: fill;
+}
+
+.preview-image1 {
+  /* width: 100%; */
+  object-fit: fill;
+}
 .left-side {
   grid-area: 1 / 1 / span 2 / span 2;
   position: sticky;
@@ -98,4 +111,8 @@
 .owner-description-container {
   display: flex;
   flex-direction: column;
+}
+
+.below-image.container {
+  display: flex;
 }

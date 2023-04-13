@@ -90,13 +90,13 @@ export default function OneSpot() {
                                 />
                             </div>
                             :
-                            // <div className="right-side">
-                            <img
-                                className="other-images"
-                                src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
-                                alt="no image yet"
-                            />
-                        // </div>
+                            <div className="right-side">
+                                <img
+                                    className="other-images"
+                                    src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                    alt="no image yet"
+                                />
+                            </div>
                     )
                     }
 
@@ -106,7 +106,7 @@ export default function OneSpot() {
                         <div className="name-description">Hosted by {owner.firstName} {owner.lastName}</div>
                         <div className="description">{spotDetails.description}</div>
                     </div>
-                    <div className="price-ratings-review container">
+                    <div className="price-ratings-review-container">
                         <div className="price-rating-review">
                             ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {
