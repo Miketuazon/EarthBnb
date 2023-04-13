@@ -34,10 +34,28 @@ export default function OneSpot() {
     // reviewDetails.forEach(review => {
     //     console.log("this is a single review user id", review.userId)
     // })
+
+    // if there is a review from currUser, hide the createReviewButton
     // debugger                                            // cant create review if you own the place
-    const createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    let createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    const currReviewsForSpot = []
+
+    reviews.forEach(review => {
+        // console.log("each review", review)
+        // console.log(spotId)
+        if (Number(review.spotId) === Number(spotId)) currReviewsForSpot.push(review)
+    })
+    console.log("currReviewsForSpot", currReviewsForSpot)
+
+    currReviewsForSpot.forEach(currReview => {
+        const reviewOwner = currReview.User
+        if (reviewOwner.id === sessionUser?.id) createReviewButton = "create-spot" + " hidden"
+    })
+
+
     // const createDeleteButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
-    const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
+    // const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
+
     const reserveClick = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
