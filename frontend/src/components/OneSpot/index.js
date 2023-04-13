@@ -195,9 +195,10 @@ export default function OneSpot() {
                                         <div className="delete-button-here">
                                             {review.User.id === sessionUser?.id
                                                 ? <button className="delete-button">
+                                                    {console.log("review data => ", review)}
                                                     <OpenModalMenuItem
                                                         itemText={"Delete Your Review"}
-                                                        modalComponent={<DeleteReviewModal />}
+                                                        modalComponent={<DeleteReviewModal reviewId={review.id}/>}
                                                     />
                                                 </button>
                                                 : <></>
