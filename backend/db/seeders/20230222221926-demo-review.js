@@ -33,6 +33,18 @@ module.exports = {
         review: 'Fantastic place',
         stars: 5,
        },
+       {
+        spotId: 6,
+        userId: 1,
+        review: 'Great place to stay',
+        stars: 5,
+       },
+       {
+        spotId: 7,
+        userId: 1,
+        review: 'Fantastic place',
+        stars: 5,
+       },
     ], {});
   },
 
