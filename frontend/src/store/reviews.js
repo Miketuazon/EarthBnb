@@ -18,9 +18,9 @@ const createReview = (review) => {
     }
 }
 
-const deleteReview = (review) => ({
+const deleteReview = (reviewId) => ({
     type: DELETE_REVIEW,
-    review
+    reviewId
 })
 
 // Store - Thunk | Reviews
@@ -34,36 +34,36 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 }
 
 // Thunk2. Create new review OF spot
-export const createNewReview = (review, user, spotId) => async (dispatch) => {
+export const createNewReview = (review, spotId) => async (dispatch) => {
+    console.log("created review => ", review)
+    console.log("review spotId => ", spotId)
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            "review": review.review,
-            "stars": review.stars
-        })
+        body: JSON.stringify(review)
     })
 
     if (res.ok) {
-        const data = await res.json()
-        // console.log('review thunk', review)
-        review.User = user
-        await dispatch(createReview(data))
-        return data
+        const createdReview = await res.json()
+        console.log("created review response", createNewReview)
+        await dispatch(createReview(createdReview))
+        return createdReview;
     }
 }
 
 // Thunk3. Delete a review
-export const eraseReview = (id) => async dispatch => {
-    const response = await csrfFetch(`/api/reviews/${id}`, {
+export const eraseReview = (reviewId) => async dispatch => {
+    console.log("reviewId", reviewId)
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
     })
 
     if (response.ok) {
         const data = await response.json();
-        dispatch(deleteReview(data));
-        return data
+        console.log("data => ", data)
+        dispatch(deleteReview(reviewId));
+        return response
     }
 }
 
@@ -80,24 +80,30 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_REVIEWS: {
             const newState = {...state, spot: {...state.spot}};
-            // console.log("action GET_SPOT_REVIEWS =>", action)
+            console.log("action GET_SPOT_REVIEWS =>", action)
             action.reviews.Reviews.map(review => newState.spot[review.id] = review)
             return newState
         }
         case CREATE_REVIEW: {
-            const newState = {...state, spot: {...state.spot}}
-
-            newState.user.userReviews = {}
-            newState.user.userReviews[action.review.id] = action.review
-
+            const newState = {
+                ...state,
+                spot: {...state.spot},
+                user: {...state.user},
+            }
+            console.log("action CREATE REVIEW =>", action)
+            console.log("state CREATE REVIEW => ", state)
+            // newState.user.userReviews = {}
+            // newState.user.userReviews[action.review.id] = action.review
             newState.spot[action.review.id] = action.review
             return newState
         }
         case DELETE_REVIEW:
             const newState = { ...state };
-            delete newState.reviews[action.review.id];
+            console.log("newState del review => ", newState)
+            console.log("action del REVIEW =>", action)
+            if (newState.reviews[action.reviewId]) delete newState.reviews[action.reviewId];
             delete newState.reviews[action.review]
-            delete newState.userReviews[action.review]
+            // delete newState.userReviews[action.review]
             return newState;
         default:
             return state;

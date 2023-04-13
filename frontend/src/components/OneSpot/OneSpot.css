@@ -1,3 +1,10 @@
+.spot-details-page {
+  max-width: 1000px;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+}
+
 .reserve {
   position: relative;
   display: inline-block;
@@ -79,6 +86,15 @@
   grid-auto-flow: column;
 }
 
+.other-images {
+  /* max-width: 50%; */
+  object-fit: fill;
+}
+
+.preview-image1 {
+  /* width: 100%; */
+  object-fit: fill;
+}
 .left-side {
   grid-area: 1 / 1 / span 2 / span 2;
   position: sticky;
@@ -88,7 +104,29 @@
   max-height:fit-content
 }
 
+.below-image.container {
+  display: flex;
+}
+
+.price-ratings-review-container {
+  border: black solid 2px;
+  border-radius: 5px;
+  box-shadow: 5px;
+}
+
+.reserve-click {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+
 .owner-description-container {
   display: flex;
   flex-direction: column;
+}
+
+.delete-button {
+  background-color: #555;
+  color: white;
+  font-weight: bold;
 }

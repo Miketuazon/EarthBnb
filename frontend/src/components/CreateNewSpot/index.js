@@ -87,7 +87,7 @@ export default function CreateNewSpot() {
             country, address, city, state, description, price, name,
         }
         const newSpot = await dispatch(createNewSpot(createdSpotDetails, spotImages))
-        // console.log("new spot submitted", newSpot)
+        console.log("new spot submitted", newSpot)
         history.push(`/spots/${newSpot.id}`)
     }
     // debugger
@@ -140,6 +140,7 @@ export default function CreateNewSpot() {
                     <div>Mention the best features of your space, any special amenities like fast wifi or parking,
                         and what you love about the neighborhood.</div>
                     <textarea
+                        className='description-box'
                         type='textarea' placeholder='Please write at least 30 characters' min='30'
                         required value={description} onChange={updateDescription}
                     />

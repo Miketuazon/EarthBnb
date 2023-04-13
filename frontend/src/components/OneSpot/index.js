@@ -34,10 +34,28 @@ export default function OneSpot() {
     // reviewDetails.forEach(review => {
     //     console.log("this is a single review user id", review.userId)
     // })
+
+    // if there is a review from currUser, hide the createReviewButton
     // debugger                                            // cant create review if you own the place
-    const createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    let createReviewButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
+    const currReviewsForSpot = []
+
+    reviews.forEach(review => {
+        // console.log("each review", review)
+        // console.log(spotId)
+        if (Number(review.spotId) === Number(spotId)) currReviewsForSpot.push(review)
+    })
+    console.log("currReviewsForSpot", currReviewsForSpot)
+
+    currReviewsForSpot.forEach(currReview => {
+        const reviewOwner = currReview.User
+        if (reviewOwner?.id === sessionUser?.id) createReviewButton = "create-spot" + " hidden"
+    })
+
+
     // const createDeleteButton = "create-spot" + (sessionUser && sessionUser?.id !== owner?.id ? "" : " hidden")
-    const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
+    // const averageRating = useSelector(state => state.spots.singleSpot.avgStarRating)
+
     const reserveClick = (e) => {
         e.preventDefault();
         alert('Feature Coming Soon...');
@@ -90,13 +108,13 @@ export default function OneSpot() {
                                 />
                             </div>
                             :
-                            // <div className="right-side">
-                            <img
-                                className="other-images"
-                                src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
-                                alt="no image yet"
-                            />
-                        // </div>
+                            <div className="right-side">
+                                <img
+                                    className="other-images"
+                                    src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                    alt="no image yet"
+                                />
+                            </div>
                     )
                     }
 
@@ -106,7 +124,7 @@ export default function OneSpot() {
                         <div className="name-description">Hosted by {owner.firstName} {owner.lastName}</div>
                         <div className="description">{spotDetails.description}</div>
                     </div>
-                    <div className="price-ratings-review container">
+                    <div className="price-ratings-review-container">
                         <div className="price-rating-review">
                             ${spotDetails.price} night
                             <i class="fa-solid fa-star"></i> {
@@ -124,7 +142,7 @@ export default function OneSpot() {
                     </div>
                 </div>
             </div>
-            <hr></hr>
+            <hr className="black-line"></hr>
             <div className="reviews-container">
                 <div className="stars"><i class="fa-solid fa-star" />
                     {
@@ -146,7 +164,7 @@ export default function OneSpot() {
                     <button className="post-button">
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
-                            modalComponent={<CreateNewReviewModal />}
+                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id}/>}
                         />
                     </button>
                 </div>
@@ -166,7 +184,8 @@ export default function OneSpot() {
                         const day = date.getDate();
                         const year = date.getFullYear();
                         console.log(spotId)
-                        if (Number(review.spotId) === Number(spotId))
+                        console.log(review)
+                        if (Number(review.spotId) === Number(spotId) && review.spotId)
                             return (
                                 <div key={review.id} className="review-place">
                                     <div className="review-container">
@@ -176,9 +195,10 @@ export default function OneSpot() {
                                         <div className="delete-button-here">
                                             {review.User.id === sessionUser?.id
                                                 ? <button className="delete-button">
+                                                    {console.log("review data => ", review)}
                                                     <OpenModalMenuItem
                                                         itemText={"Delete Your Review"}
-                                                        modalComponent={<DeleteReviewModal />}
+                                                        modalComponent={<DeleteReviewModal reviewId={review.id}/>}
                                                     />
                                                 </button>
                                                 : <></>

@@ -9,10 +9,11 @@ function DeleteReviewModal({reviewId}) {
     const dispatch = useDispatch()
     const {closeModal} = useModal();
     const history = useHistory();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         closeModal()
-        history.push(`/`)
+        // history.push(`/`)
         return dispatch(eraseReview(reviewId))
     }
     return (
