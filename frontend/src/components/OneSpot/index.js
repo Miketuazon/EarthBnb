@@ -49,7 +49,7 @@ export default function OneSpot() {
 
     currReviewsForSpot.forEach(currReview => {
         const reviewOwner = currReview.User
-        if (reviewOwner.id === sessionUser?.id) createReviewButton = "create-spot" + " hidden"
+        if (reviewOwner?.id === sessionUser?.id) createReviewButton = "create-spot" + " hidden"
     })
 
 
@@ -164,7 +164,7 @@ export default function OneSpot() {
                     <button className="post-button">
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
-                            modalComponent={<CreateNewReviewModal />}
+                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id}/>}
                         />
                     </button>
                 </div>
@@ -185,7 +185,7 @@ export default function OneSpot() {
                         const year = date.getFullYear();
                         console.log(spotId)
                         console.log(review)
-                        if (Number(review.spotId) === Number(spotId))
+                        if (Number(review.spotId) === Number(spotId) && review.spotId)
                             return (
                                 <div key={review.id} className="review-place">
                                     <div className="review-container">

@@ -87,7 +87,7 @@ export default function CreateNewSpot() {
             country, address, city, state, description, price, name,
         }
         const newSpot = await dispatch(createNewSpot(createdSpotDetails, spotImages))
-        // console.log("new spot submitted", newSpot)
+        console.log("new spot submitted", newSpot)
         history.push(`/spots/${newSpot.id}`)
     }
     // debugger

@@ -1,4 +1,4 @@
-button {
+/* button {
     background-color: transparent;
     border: none;
     outline: none;
@@ -9,4 +9,23 @@ button {
   }
   .off {
     color: #ccc;
-  }
+  } */
+
+.filled {
+  color: green;
+}
+
+.empty {
+  color: burlywood;
+}
+
+.stars-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.star-rating-input {
+  display: flex;
+}
