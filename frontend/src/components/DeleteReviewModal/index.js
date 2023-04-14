@@ -11,8 +11,8 @@ function DeleteReviewModal({reviewId}) {
     const {closeModal} = useModal();
     const history = useHistory();
     const spot = useSelector(state => state.spots.singleSpot)
-    console.log("should be review id inside del rev modal", reviewId)
-    console.log("spotId inside del rev modal", spot.id)
+    // console.log("should be review id inside del rev modal", reviewId)
+    // console.log("spotId inside del rev modal", spot.id)
     const handleSubmit = (e) => {
         e.preventDefault();
         closeModal()

@@ -12,9 +12,9 @@ function ManageSpots() {
     const user = useSelector(state => state.session.user)
 
     const obj = useSelector(state => state.spots.allSpots)
-    console.log("what is this", obj)
+    // console.log("what is this", obj)
     const allSpots = Object.values(obj)
-    console.log("should be spots", allSpots)
+    // console.log("should be spots", allSpots)
 
     // console.log("spots => ", spots)
     // console.log("user =>", user)

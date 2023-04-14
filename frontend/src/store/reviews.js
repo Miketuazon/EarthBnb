@@ -35,9 +35,9 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
 // Thunk2. Create new review OF spot
 export const createNewReview = (review, user, spotId) => async (dispatch) => {
-    console.log("created review => ", review)
-    console.log("created review spotId => ", spotId)
-    console.log("created review user =>", user)
+    // console.log("created review => ", review)
+    // console.log("created review spotId => ", spotId)
+    // console.log("created review user =>", user)
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@ export const createNewReview = (review, user, spotId) => async (dispatch) => {
     if (res.ok) {
         const createdReview = await res.json()
         createdReview.User = user;
-        console.log("created review response", createdReview)
+        // console.log("created review response", createdReview)
         await dispatch(createReview(createdReview))
         return createdReview;
     }
@@ -55,7 +55,7 @@ export const createNewReview = (review, user, spotId) => async (dispatch) => {
 
 // Thunk3. Delete a review
 export const eraseReview = (reviewId) => async dispatch => {
-    console.log("reviewId", reviewId)
+    // console.log("reviewId", reviewId)
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
@@ -63,7 +63,7 @@ export const eraseReview = (reviewId) => async dispatch => {
 
     if (response.ok) {
         const data = await response.json();
-        console.log("data => ", data)
+        // console.log("data => ", data)
         dispatch(deleteReview(reviewId));
         return response
     }
@@ -92,14 +92,14 @@ const reviewsReducer = (state = initialState, action) => {
                 spot: { ...state.spot },
                 user: { ...state.user },
             }
-            console.log("action CREATE REVIEW =>", action)
-            console.log("state CREATE REVIEW => ", newState)
+            // console.log("action CREATE REVIEW =>", action)
+            // console.log("state CREATE REVIEW => ", newState)
             // newState.user.userReviews = {}
             // newState.user.userReviews[action.review.id] = action.review
             // newState.user.userReviews = {}
             // newState.user.userReviews[action.review.id] = action.review
             newState.spot[action.review.id] = action.review
-            console.log("state after CREATE REVIEW => ", newState)
+            // console.log("state after CREATE REVIEW => ", newState)
 
             return newState
         }
@@ -109,12 +109,12 @@ const reviewsReducer = (state = initialState, action) => {
                 spot: { ...state.spot },
                 user: { ...state.user },
             };
-            console.log("newState del review => ", newState)
-            console.log("action del REVIEW =>", action)
+            // console.log("newState del review => ", newState)
+            // console.log("action del REVIEW =>", action)
             // if (newState.reviews[action.reviewId]) delete newState.reviews[action.reviewId];
             delete newState.spot[action.reviewId]
             // delete newState.userReviews[action.review]
-            console.log("newState del after review => ", newState)
+            // console.log("newState del after review => ", newState)
             return newState;
         default:
             return state;
