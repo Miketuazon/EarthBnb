@@ -184,6 +184,81 @@ module.exports = {
         url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
         preview: false,
       },
+      {
+        spotId: 8,
+        url: 'https://a0.muscache.com/im/pictures/8b642f54-2a8d-4f7a-8307-328d9b19b64c.jpg',
+        preview: true,
+      },
+      {
+        spotId: 8,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 8,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 8,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 8,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 9,
+        url: 'https://a0.muscache.com/im/pictures/fdd0c43c-ed7e-466d-878e-713faa4c3d65.jpg',
+        preview: true,
+      },
+      {
+        spotId: 9,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 9,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 9,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 9,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 10,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-734869471053388047/original/558a3607-cce1-4970-a6ea-2bb2832f1d0a.jpeg',
+        preview: true,
+      },
+      {
+        spotId: 10,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 10,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 10,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
+      {
+        spotId: 10,
+        url: 'https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg',
+        preview: false,
+      },
     ], {});
   },
 

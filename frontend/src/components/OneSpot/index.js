@@ -130,7 +130,7 @@ export default function OneSpot() {
                             <div className="rating-review">
                                 {
                                     spotDetails.avgStarRating === null
-                                        ? <i class="fa-solid fa-star">'NEW'</i>
+                                        ? <i class="fa-solid fa-star">NEW</i>
                                         : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
                                 }
                                 <div>&#x2022;</div>
@@ -153,7 +153,7 @@ export default function OneSpot() {
                             <div className="rating-review">
                                 {
                                     spotDetails.avgStarRating === null
-                                        ? <i class="fa-solid fa-star">'NEW'</i>
+                                        ? <i class="fa-solid fa-star">NEW</i>
                                         : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
                                 }
                                 <div>&#x2022;</div>
