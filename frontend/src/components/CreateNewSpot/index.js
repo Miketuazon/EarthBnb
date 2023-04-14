@@ -96,119 +96,122 @@ export default function CreateNewSpot() {
 
     return (
         <section className='edit-form-spots'>
-            <form onSubmit={handleSubmit}>
-                <h1>Create a new Spot</h1>
-                <h3>Where's your place located?</h3>
-                <ul>
-                    {/* will place errors next to labels later */}
-                    {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
-                </ul>
-                <label>
-                    Country
-                    <input
-                        type='text' placeholder='country' min='1'
-                        required value={country} onChange={updateCountry}
-                    />
-                </label>
-                <label>
-                    Street Address
-                    <input
-                        type='text' placeholder='address' min='1'
-                        required value={address} onChange={updateAddress}
-                    ></input>
-                </label>
-                <label>
-                    City
-                    <input
-                        type='text' placeholder='city' min='1'
-                        required value={city} onChange={updateCity}
-                    />
+            <div className='bg-img'>
+                <form onSubmit={handleSubmit}>
+                    <h1>Create a new Spot</h1>
+                    <h3>Where's your place located?</h3>
+                    <ul>
+                        {/* will place errors next to labels later */}
+                        {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
+                    </ul>
                     <label>
-                        ,
+                        Country
+                        <input
+                            type='text' placeholder='country' min='1'
+                            required value={country} onChange={updateCountry}
+                        />
                     </label>
-                </label>
-                <label>
-                    State
-                    <input
-                        type='text' placeholder='state' min='1'
-                        required value={state} onChange={updateState}
-                    />
-                </label>
-                <hr></hr>
-                <label>
-                    <h3>Describe your place to guests</h3>
-                    <div>Mention the best features of your space, any special amenities like fast wifi or parking,
-                        and what you love about the neighborhood.</div>
-                    <textarea
-                        className='description-box'
-                        type='textarea' placeholder='Please write at least 30 characters' min='30'
-                        required value={description} onChange={updateDescription}
-                    />
-                </label>
-                <hr></hr>
-                <label>
-                    <h3>Create a title for your spot</h3>
-                    <div>
-                        Catch guests' attention with a spot tile that
-                        highlights your place special.
-                    </div>
-                    <input
-                        type='text' placeholder='name' min='1'
-                        required value={name} onChange={updateName}
-                    />
-                </label>
-                <hr></hr>
-                <label>
-                    <h3>Set a base price for your spot</h3>
-                    <div>Competitive pricing can help your listing stand out and rank
-                        higher in search results.</div>
-                    $
-                    <input
-                        type='number' placeholder='Price per night (USD)' min='1'
-                        required value={price} onChange={updatePrice}
-                    />
-                </label>
+                    <label>
+                        Street Address
+                        <input
+                            type='text' placeholder='address' min='1'
+                            required value={address} onChange={updateAddress}
+                        ></input>
+                    </label>
+                    <label>
+                        City
+                        <input
+                            type='text' placeholder='city' min='1'
+                            required value={city} onChange={updateCity}
+                        />
+                        <label>
+                            ,
+                        </label>
+                    </label>
+                    <label>
+                        State
+                        <input
+                            type='text' placeholder='state' min='1'
+                            required value={state} onChange={updateState}
+                        />
+                    </label>
+                    <hr></hr>
+                    <label>
+                        <h3>Describe your place to guests</h3>
+                        <div>Mention the best features of your space, any special amenities like fast wifi or parking,
+                            and what you love about the neighborhood.</div>
+                        <textarea
+                            className='description-box'
+                            type='textarea' placeholder='Please write at least 30 characters' min='30'
+                            required value={description} onChange={updateDescription}
+                        />
+                    </label>
+                    <hr></hr>
+                    <label>
+                        <h3>Create a title for your spot</h3>
+                        <div>
+                            Catch guests' attention with a spot tile that
+                            highlights your place special.
+                        </div>
+                        <input
+                            type='text' placeholder='name' min='1'
+                            required value={name} onChange={updateName}
+                        />
+                    </label>
+                    <hr></hr>
+                    <label>
+                        <h3>Set a base price for your spot</h3>
+                        <div>Competitive pricing can help your listing stand out and rank
+                            higher in search results.</div>
+                        $
+                        <input
+                            type='number' placeholder='Price per night (USD)' min='1'
+                            required value={price} onChange={updatePrice}
+                        />
+                    </label>
 
-                <hr></hr>
-                <label>
-                    <h3>Liven up your spot with photos</h3>
-                    <span>Submit a link to at least one photo to publish your spot</span>
-                    <br></br>
-                    <input
-                        type='url' placeholder='Preview Image URL' min='1'
-                        required value={imageURL} onChange={updateImageURL}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageTwo} onChange={updateImageTwo}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageThree} onChange={updateImageThree}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageFour} onChange={updateImageFour}
-                    />
-                    <br></br>
-                    <input
-                        type='url' placeholder='imageURL' min='1'
-                        value={imageFive} onChange={updateImageFive}
-                    />
-                    <br></br>
-                </label>
-                <hr></hr>
-                <button
-                    // disabled={
-                    //     country.length < 1 || address.length < 1 || city.length < 1 ||
-                    //     state.length < 1 || description.length < 30 || name.length < 0 ||
-                    //     price.length < 1 || imageURL.length < 1
-                    // }
-                    type="submit">Create spot!</button>
-            </form>
+                    <hr></hr>
+                    <label>
+                        <h3>Liven up your spot with photos</h3>
+                        <span>Submit a link to at least one photo to publish your spot</span>
+                        <br></br>
+                        <input
+                            type='url' placeholder='Preview Image URL' min='1'
+                            required value={imageURL} onChange={updateImageURL}
+                        />
+                        <br></br>
+                        <input
+                            type='url' placeholder='imageURL' min='1'
+                            value={imageTwo} onChange={updateImageTwo}
+                        />
+                        <br></br>
+                        <input
+                            type='url' placeholder='imageURL' min='1'
+                            value={imageThree} onChange={updateImageThree}
+                        />
+                        <br></br>
+                        <input
+                            type='url' placeholder='imageURL' min='1'
+                            value={imageFour} onChange={updateImageFour}
+                        />
+                        <br></br>
+                        <input
+                            type='url' placeholder='imageURL' min='1'
+                            value={imageFive} onChange={updateImageFive}
+                        />
+                        <br></br>
+                    </label>
+                    <hr></hr>
+                    <button
+                        // disabled={
+                        //     country.length < 1 || address.length < 1 || city.length < 1 ||
+                        //     state.length < 1 || description.length < 30 || name.length < 0 ||
+                        //     price.length < 1 || imageURL.length < 1
+                        // }
+                        className='btn'
+                        type="submit">Create spot!</button>
+                </form>
+            </div>
         </section>
     )
 }
