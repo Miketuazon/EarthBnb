@@ -79,7 +79,7 @@ const initialState = {
 const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SPOT_REVIEWS: {
-            const newState = {...state, spot: {...state.spot}};
+            const newState = { ...state, spot: { ...state.spot } };
             console.log("action GET_SPOT_REVIEWS =>", action)
             action.reviews.Reviews.map(review => newState.spot[review.id] = review)
             return newState
@@ -87,8 +87,8 @@ const reviewsReducer = (state = initialState, action) => {
         case CREATE_REVIEW: {
             const newState = {
                 ...state,
-                spot: {...state.spot},
-                user: {...state.user},
+                spot: { ...state.spot },
+                user: { ...state.user },
             }
             console.log("action CREATE REVIEW =>", action)
             console.log("state CREATE REVIEW => ", state)
@@ -98,12 +98,18 @@ const reviewsReducer = (state = initialState, action) => {
             return newState
         }
         case DELETE_REVIEW:
-            const newState = { ...state };
+            const newState = {
+                ...state,
+                spot: { ...state.spot },
+                user: { ...state.user },
+            };
             console.log("newState del review => ", newState)
             console.log("action del REVIEW =>", action)
-            if (newState.reviews[action.reviewId]) delete newState.reviews[action.reviewId];
-            delete newState.reviews[action.review]
+            // if (newState.reviews[action.reviewId]) delete newState.reviews[action.reviewId];
+            delete newState.spot[action.reviewId]
             // delete newState.userReviews[action.review]
+            console.log("newState del after review => ", newState)
+            console.log("action del after REVIEW =>", action)
             return newState;
         default:
             return state;

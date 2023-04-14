@@ -169,7 +169,7 @@ export default function OneSpot() {
                     <button className="post-button">
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
-                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id} />}
+                            modalComponent={<CreateNewReviewModal spotId={spotId} />}
                         />
                     </button>
                 </div>
