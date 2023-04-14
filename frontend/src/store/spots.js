@@ -113,7 +113,7 @@ export const updateSpot = (detailsOfSpot, imageUrl) => async (dispatch) => {
 
 // Thunk6: Delete one of user's spot
 export const deleteSpot = (id) => async (dispatch) => {
-  console.log("deleteSpot id => ", id)
+  // console.log("deleteSpot id => ", id)
   const res = await csrfFetch(`/api/spots/${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
@@ -121,7 +121,7 @@ export const deleteSpot = (id) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    console.log("data =>", data)
+    // console.log("data =>", data)
     dispatch(removeSpot(id));
     return res
   };
@@ -194,8 +194,8 @@ const spotsReducer = (state = initialState, action) => {
         singleSpot: {...state.singleSpot},
         userSpots: {...state.userSpots},
       };
-      console.log("newState del => ",newState)
-      console.log("action del =>",action )
+      // console.log("newState del => ",newState)
+      // console.log("action del =>",action )
       delete newState.allSpots[action.spotId];
       delete newState.userSpots[action.spotId];
       delete newState.singleSpot[action.spotId];

@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink, Link, useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getSingleSpot, getAllSpots, } from '../../store/spots';
 import { getSpotReviews, createNewReview } from '../../store/reviews'
 import { useModal } from '../../context/Modal';
 import './CreateNewReviewModal.css'
@@ -14,7 +13,7 @@ function CreateNewReviewModal({ spotId }) {
   const [stars, setStars] = useState(0);
   const [activeStars, setActiveStars] = useState(0)
   const [errors, setErrors] = useState([]);
-
+  const sessionUser = useSelector(state => state.session.user)
   const { closeModal } = useModal();
 
   const updateReview = (e) => setReview(e.target.value);
@@ -32,7 +31,7 @@ function CreateNewReviewModal({ spotId }) {
     const createdReviewDetails = {
       review, stars
     }
-    await dispatch(createNewReview(createdReviewDetails, spotId))
+    await dispatch(createNewReview(createdReviewDetails, sessionUser, spotId))
     await dispatch(getSpotReviews(spotId))
     closeModal();
   }

@@ -14,18 +14,18 @@ export default function OneSpot() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
-    console.log("this is spot details =>", spotDetails)
+    // console.log("this is spot details =>", spotDetails)
     // console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
-    console.log("should be owner", owner)
+    // console.log("should be owner", owner)
     const sessionUser = useSelector(state => state.session.user)
-    console.log("should be user =>", sessionUser)
+    // console.log("should be user =>", sessionUser)
     // const spotImages = spotDetails.SpotImages // need to fix this later
     // console.log("spotImages", Object.entries(spotImages))
     const reviewsObj = useSelector(state => (state.reviews.spot))
-    console.log("reviewsObj => ", reviewsObj)
+    // console.log("reviewsObj => ", reviewsObj)
     const reviews = Object.values(reviewsObj)
-    console.log("reviews =>", reviews)
+    // console.log("reviews =>", reviews)
 
     // debugger
     // const xReviews = useSelector(state => (state)) //testing reviews?
@@ -45,7 +45,7 @@ export default function OneSpot() {
         // console.log(spotId)
         if (Number(review.spotId) === Number(spotId)) currReviewsForSpot.push(review)
     })
-    console.log("currReviewsForSpot", currReviewsForSpot)
+    // console.log("currReviewsForSpot", currReviewsForSpot)
 
     currReviewsForSpot.forEach(currReview => {
         const reviewOwner = currReview.User
@@ -169,7 +169,7 @@ export default function OneSpot() {
                     <button className="post-button">
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
-                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id} />}
+                            modalComponent={<CreateNewReviewModal spotId={spotId} />}
                         />
                     </button>
                 </div>
@@ -188,8 +188,8 @@ export default function OneSpot() {
                         const month = months[date.getMonth()];
                         const day = date.getDate();
                         const year = date.getFullYear();
-                        console.log(spotId)
-                        console.log(review)
+                        // console.log(spotId)
+                        // console.log(review)
                         if (Number(review.spotId) === Number(spotId) && currReviewsForSpot.length > 0)
                             return (
                                 <div key={review.id} className="review-place">
@@ -200,7 +200,7 @@ export default function OneSpot() {
                                         <div className="delete-button-here">
                                             {review.User.id === sessionUser?.id
                                                 ? <button className="delete-button">
-                                                    {console.log("review data => ", review)}
+                                                    {/* {console.log("review data => ", review)} */}
                                                     <OpenModalMenuItem
                                                         itemText={"Delete Your Review"}
                                                         modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId} />}
@@ -215,50 +215,6 @@ export default function OneSpot() {
                         else return null
                     })}
                 </div>
-                {/* <div className="reviewer-info"> */}
-                {/* {
-                        <div className="new-spot-hider">
-
-                        </div>
-                    } */}
-                {/* <div className="new-spot-hider">
-                        {spotDetails.avgStarRating === null ? 'NEW' : (
-                            reviewDetails?.map(reviewDetail => {
-                                const date = new Date(reviewDetail.createdAt)
-                                console.log(date)
-                                console.log("day", date.getDate())
-                                console.log("month", date.getMonth())
-                                console.log("year", date.getFullYear())
-                                const months = {
-                                    0: 'January',
-                                    1: 'February',
-                                    2: 'March',
-                                    3: 'April',
-                                    4: 'May',
-                                    5: 'June',
-                                    6: 'July',
-                                    7: 'August',
-                                    8: 'September',
-                                    9: 'October',
-                                    10: 'November',
-                                    11: 'December'
-                                }
-                                const month = months[date.getMonth()];
-                                const day = date.getDate();
-                                const year = date.getFullYear();
-                                console.log(reviewDetail)
-                                return (
-                                    <>
-                                        <div className="firstName-review">{reviewDetail.User.firstName}</div>
-                                        <div className="month-year">{month},{day},{year}</div>
-                                        <div className="review-description">{reviewDetail.review}</div>
-                                    </>
-                                )
-                            })
-                        )
-                        }
-                    </div> */}
-                {/* </div> */}
             </div>
         </div>
     )
