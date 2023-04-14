@@ -126,7 +126,7 @@ export default function OneSpot() {
                     </div>
                     <div className="price-ratings-review-container">
                         <div className="price-rating-review">
-                            <h4 className="price-per-night">${spotDetails.price} night</h4>
+                            <div className="price-per-night">${spotDetails.price} night</div>
                             <div className="rating-review">
                                 {
                                     spotDetails.avgStarRating === null
