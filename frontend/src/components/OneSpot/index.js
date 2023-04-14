@@ -149,21 +149,21 @@ export default function OneSpot() {
             </div>
             <hr className="black-line"></hr>
             <div className="reviews-container">
-                <div className="stars"><i class="fa-solid fa-star" />
-                    {
-                        spotDetails.avgStarRating === null
-                            ? `NEW `
-                            : `${spotDetails.avgStarRating} · `
-                    }
-                    <div className="review-count">
-                        {spotDetails.numReviews === 0
-                            ? <div className="be-the">Be the first to post a review!</div>
-                            : spotDetails.numReviews === 1
-                                ? `${spotDetails.numReviews} review`
-                                : `${spotDetails.numReviews} reviews`
-                        }
-
-                    </div>
+            <div className="stars">
+                            <div className="rating-review">
+                                {
+                                    spotDetails.avgStarRating === null
+                                        ? <i class="fa-solid fa-star">'NEW'</i>
+                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
+                                }
+                                <div>&#x2022;</div>
+                                <div>
+                                    {spotDetails.numReviews === 1
+                                        ? `${spotDetails.numReviews} review`
+                                        : `${spotDetails.numReviews} reviews`
+                                    }
+                                </div>
+                            </div>
                 </div>
                 <div className={createReviewButton}>
                     <button className="post-button">
