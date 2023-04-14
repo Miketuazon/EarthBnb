@@ -124,17 +124,20 @@
   display: flex;
   flex-direction:column;
   width: 24%;
+  padding: 10px;
 }
 
 .price-per-night {
   display: flex;
   align-items: center;
+  margin: 0px;
 }
 
 .price-rating-review {
   display: flex;
   flex-direction: row;
   justify-content:space-between;
+  margin-bottom: 5px;
 }
 
 .rating-review {
@@ -151,6 +154,7 @@
   background-color: red;
   color: white;
   font-weight: bold;
+  box-shadow: 2px 1px 1px black;
 }
 
 hr {
@@ -162,6 +166,15 @@ hr {
   height: 1px;
 }
 
+.review-owner {
+  margin-bottom: 0px;
+}
+
+.review-month-year {
+  margin: 0;
+  margin-bottom: 1px;
+  margin-top: 3px;
+}
 .delete-button {
   background-color: #555;
   color: white;

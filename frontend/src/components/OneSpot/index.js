@@ -126,7 +126,7 @@ export default function OneSpot() {
                     </div>
                     <div className="price-ratings-review-container">
                         <div className="price-rating-review">
-                            <div className="price-per-night">${spotDetails.price} night</div>
+                            <h4 className="price-per-night">${spotDetails.price} night</h4>
                             <div className="rating-review">
                                 {
                                     spotDetails.avgStarRating === null
@@ -149,22 +149,22 @@ export default function OneSpot() {
             </div>
             <hr className="black-line"></hr>
             <div className="reviews-container">
-            <div className="stars">
-                            <div className="rating-review">
-                                {
-                                    spotDetails.avgStarRating === null
-                                        ? <i class="fa-solid fa-star">NEW</i>
-                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
-                                }
-                                <div>&#x2022;</div>
-                                <div>
-                                    {spotDetails.numReviews === 1
-                                        ? `${spotDetails.numReviews} review`
-                                        : `${spotDetails.numReviews} reviews`
-                                    }
-                                </div>
-                            </div>
-                </div>
+                <h3 className="stars">
+                    <div className="rating-review">
+                        {
+                            spotDetails.avgStarRating === null
+                                ? <i class="fa-solid fa-star">NEW</i>
+                                : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
+                        }
+                        <div>&#x2022;</div>
+                        <div>
+                            {spotDetails.numReviews === 1
+                                ? `${spotDetails.numReviews} review`
+                                : `${spotDetails.numReviews} reviews`
+                            }
+                        </div>
+                    </div>
+                </h3>
                 <div className={createReviewButton}>
                     <button className="post-button">
                         <OpenModalMenuItem
@@ -194,8 +194,8 @@ export default function OneSpot() {
                             return (
                                 <div key={review.id} className="review-place">
                                     <div className="review-container">
-                                        <div className="review-owner">{review.User.firstName}</div>
-                                        <div className="review-month-year">{month},{day},{year}</div>
+                                        <h4 className="review-owner">{review.User.firstName} {review.User.lastName[0]}.</h4>
+                                        <h5 className="review-month-year">{month},{day},{year}</h5>
                                         <div className="review-description">{review.review}</div>
                                         <div className="delete-button-here">
                                             {review.User.id === sessionUser?.id
