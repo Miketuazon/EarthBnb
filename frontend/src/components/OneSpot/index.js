@@ -121,20 +121,25 @@ export default function OneSpot() {
                 </div>
                 <div className="below-image-container">
                     <div className="owner-description-container">
-                        <div className="name-description">Hosted by {owner.firstName} {owner.lastName}</div>
+                        <h3 className="name-description">Hosted by {owner.firstName} {owner.lastName}</h3>
                         <div className="description">{spotDetails.description}</div>
                     </div>
                     <div className="price-ratings-review-container">
                         <div className="price-rating-review">
-                            ${spotDetails.price} night
-                            <i class="fa-solid fa-star"></i> {
-                                spotDetails.avgStarRating === null ? 'NEW' : Number.parseFloat(spotDetails.avgStarRating).toFixed(2)
-                            }
-                            <div>
-                                {spotDetails.numReviews === 1
-                                    ? `${spotDetails.numReviews} review`
-                                    : `${spotDetails.numReviews} reviews`
+                            <div className="price-per-night">${spotDetails.price} night</div>
+                            <div className="rating-review">
+                                {
+                                    spotDetails.avgStarRating === null
+                                        ? <i class="fa-solid fa-star">'NEW'</i>
+                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
                                 }
+                                <div>&#x2022;</div>
+                                <div>
+                                    {spotDetails.numReviews === 1
+                                        ? `${spotDetails.numReviews} review`
+                                        : `${spotDetails.numReviews} reviews`
+                                    }
+                                </div>
                             </div>
                         </div>
                         <button className="reserve-click" onClick={reserveClick}> Reserve
@@ -164,7 +169,7 @@ export default function OneSpot() {
                     <button className="post-button">
                         <OpenModalMenuItem
                             itemText={"Post Your Review"}
-                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id}/>}
+                            modalComponent={<CreateNewReviewModal spotId={spotDetails.id} />}
                         />
                     </button>
                 </div>
@@ -185,7 +190,7 @@ export default function OneSpot() {
                         const year = date.getFullYear();
                         console.log(spotId)
                         console.log(review)
-                        if (Number(review.spotId) === Number(spotId) && review.spotId)
+                        if (Number(review.spotId) === Number(spotId) && currReviewsForSpot.length > 0)
                             return (
                                 <div key={review.id} className="review-place">
                                     <div className="review-container">
@@ -198,7 +203,7 @@ export default function OneSpot() {
                                                     {console.log("review data => ", review)}
                                                     <OpenModalMenuItem
                                                         itemText={"Delete Your Review"}
-                                                        modalComponent={<DeleteReviewModal reviewId={review.id}/>}
+                                                        modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId} />}
                                                     />
                                                 </button>
                                                 : <></>
@@ -207,6 +212,7 @@ export default function OneSpot() {
                                     </div>
                                 </div>
                             )
+                        else return null
                     })}
                 </div>
                 {/* <div className="reviewer-info"> */}

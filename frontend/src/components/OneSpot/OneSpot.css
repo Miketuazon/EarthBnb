@@ -101,17 +101,50 @@
 }
 
 .preview-image1 {
-  max-height:fit-content
+  max-height:fit-content;
+  max-width: fit-content;
 }
 
-.below-image.container {
+.below-image-container {
   display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.owner-description-container {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
 }
 
 .price-ratings-review-container {
   border: black solid 2px;
   border-radius: 5px;
   box-shadow: 5px;
+  display: flex;
+  flex-direction:column;
+  width: 24%;
+}
+
+.price-per-night {
+  display: flex;
+  align-items: center;
+}
+
+.price-rating-review {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+}
+
+.rating-review {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.rating-review > * {
+  margin-right: 4px;
 }
 
 .reserve-click {
@@ -120,9 +153,13 @@
   font-weight: bold;
 }
 
-.owner-description-container {
-  display: flex;
-  flex-direction: column;
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 100%;
+  background-color: black;
+  height: 1px;
 }
 
 .delete-button {
