@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
           style={{ font: '24px -apple-system' }} exact to="/"
         >
           <img className="earth" src="https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true"/>
-          EarthBnb
+          <h2 className='title'>EarthBnB</h2>
           <span className="toolTipText">Return home</span>
         </NavLink>
       </li>

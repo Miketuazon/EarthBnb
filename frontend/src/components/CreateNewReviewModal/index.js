@@ -75,7 +75,7 @@ function CreateNewReviewModal({ spotId }) {
           </div>
         </div>
         <button
-          disabled={review.length < 10}
+          disabled={review.length < 10 || !stars}
           type="submit">Submit Your Review!</button>
       </form>
     </section>
