@@ -114,7 +114,7 @@ module.exports = {
         lat: -50.13013,
         lng: 81.57242,
         name: 'Poolside Hideaway',
-        description: 'Your private Poolside Hideaway room has been fully remodeled, with a new private entrance and a pool view. The room is an en-suite, with new walk-in shower. This is a small but cozy space, furnished with a  comfy full sized bed, a beverage station with coffee maker, TV and WIFI.',
+        description: 'Your private Poolside Hideaway room has been fully remodeled, with a new private entrance and a pool view.',
         price: 100.00,
       },
       {
@@ -126,7 +126,7 @@ module.exports = {
         lat: -50.13013,
         lng: 81.57242,
         name: 'Beautiful | Cozy 1BR 1BA in Lakeview',
-        description: 'Experience Chicago at its best by staying at this spacious and cozy apartment. This place gives a peaceful and modern feel making it a place you will never want to leave. We are located in a quiet and friendly neighborhood which is close to various restaurants, cafes, and shopping centers.',
+        description: 'Experience Chicago at its best by staying at this spacious and cozy apartment.',
         price: 150.00,
       },
     ], {});
