@@ -34,9 +34,10 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 }
 
 // Thunk2. Create new review OF spot
-export const createNewReview = (review, spotId) => async (dispatch) => {
+export const createNewReview = (review, user, spotId) => async (dispatch) => {
     console.log("created review => ", review)
-    console.log("review spotId => ", spotId)
+    console.log("created review spotId => ", spotId)
+    console.log("created review user =>", user)
     const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +46,8 @@ export const createNewReview = (review, spotId) => async (dispatch) => {
 
     if (res.ok) {
         const createdReview = await res.json()
-        console.log("created review response", createNewReview)
+        createdReview.User = user;
+        console.log("created review response", createdReview)
         await dispatch(createReview(createdReview))
         return createdReview;
     }
@@ -91,10 +93,14 @@ const reviewsReducer = (state = initialState, action) => {
                 user: { ...state.user },
             }
             console.log("action CREATE REVIEW =>", action)
-            console.log("state CREATE REVIEW => ", state)
+            console.log("state CREATE REVIEW => ", newState)
+            // newState.user.userReviews = {}
+            // newState.user.userReviews[action.review.id] = action.review
             // newState.user.userReviews = {}
             // newState.user.userReviews[action.review.id] = action.review
             newState.spot[action.review.id] = action.review
+            console.log("state after CREATE REVIEW => ", newState)
+
             return newState
         }
         case DELETE_REVIEW:
@@ -109,7 +115,6 @@ const reviewsReducer = (state = initialState, action) => {
             delete newState.spot[action.reviewId]
             // delete newState.userReviews[action.review]
             console.log("newState del after review => ", newState)
-            console.log("action del after REVIEW =>", action)
             return newState;
         default:
             return state;
