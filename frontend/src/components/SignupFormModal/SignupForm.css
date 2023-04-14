@@ -2,3 +2,9 @@
     display:flex;
     align-items: center;
 }
+
+#modal-content > * {
+    margin-bottom: 5px;
+    flex-flow: wrap;
+    flex-direction: column;
+}
