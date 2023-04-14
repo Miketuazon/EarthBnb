@@ -43,6 +43,7 @@ function SignupFormModal() {
 
   return (
     <>
+      <img src="https://images.immediate.co.uk/production/volatile/sites/7/2018/02/Earth-from-space-1-64e9a7c.jpg?quality=90&resize=980,654" />
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -103,11 +104,11 @@ function SignupFormModal() {
           />
         </label>
         <button
-        // disabled={
-        //   email.length < 1 || username.length < 4 || firstName.length < 1 ||
-        //   lastName.length < 1 || password.length < 6 || password !== confirmPassword
-        // }
-        type="submit">Sign Up</button>
+          // disabled={
+          //   email.length < 1 || username.length < 4 || firstName.length < 1 ||
+          //   lastName.length < 1 || password.length < 6 || password !== confirmPassword
+          // }
+          type="submit">Sign Up</button>
         {/* <button onClick={signDemoInfo}>Register as demo user!</button> */}
       </form>
     </>
