@@ -10,7 +10,7 @@ import './UpdateSpot.css'
 export default function UpdateSpot() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const {spotId} = useParams();
+    const { spotId } = useParams();
     const spot = useSelector((state) => state.spots.allSpots[spotId])
     console.log('spots =>', spot)
     const [country, setCountry] = useState(spot.country)
@@ -80,11 +80,12 @@ export default function UpdateSpot() {
     }
     // debugger
     // console.log('errors', errors)
-
+    if (!spot) return <h2>Loading...</h2>
 
     return (
         <section className='edit-form-spots'>
             <form onSubmit={handleSubmit}>
+                <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                 <h1>Update your Spot</h1>
                 <h3>Where's your place located?</h3>
                 <span>Guests will only get your exact address once they booked a reservation</span>
@@ -113,7 +114,6 @@ export default function UpdateSpot() {
                         required value={city} onChange={updateCity}
                     />
                     <label>
-                        ,
                     </label>
                 </label>
                 <label>
@@ -127,10 +127,10 @@ export default function UpdateSpot() {
                 <label>
                     <h3>Describe your place to guests</h3>
                     <div>Mention the best features of your space, any special amenities like fast wifi or parking,
-                    and what you love about the neighborhood.</div>
+                        and what you love about the neighborhood.</div>
                     <textarea
                         type='textarea' placeholder='Please write at least 30 characters' min='30'
-                        required value={description} onChange={updateDescription}
+                        required value={description} onChange={updateDescription} className='description-box'
                     />
                 </label>
                 <hr></hr>
@@ -149,12 +149,14 @@ export default function UpdateSpot() {
                 <label>
                     <h3>Set a base price for your spot</h3>
                     <div>Competitive pricing can help your listing stand out and rank
-                    higher in search results.</div>
-                    $
-                    <input
-                        type='number' placeholder='price' min='1'
-                        required value={price} onChange={updatePrice}
-                    />
+                        higher in search results.</div>
+                    <div className='money-input'>
+                        $
+                        <input
+                            type='number' placeholder='price' min='1'
+                            required value={price} onChange={updatePrice}
+                        />
+                    </div>
                 </label>
                 <hr></hr>
                 <button type="submit">Update spot!</button>

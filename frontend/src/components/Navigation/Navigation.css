@@ -11,10 +11,6 @@
     display: none;
 }
 
-.earth {
-    object-fit: contain;
-}
-
 .navBar {
     border: 2px solid lightgray;
     border-radius: 25px;
@@ -27,14 +23,64 @@
     list-style: none;
     background-color: #94AF9F;
     font-family: 'Lato';
+    border: solid 2px gray;
+    position: sticky;
 }
 
-.earth {
-    display: flex;
-    align-items: center;
-    height: 0;
-    min-height: 100%;
-    color: #0AC25A;
+#home,
+#home:visited {
+    background-image: url("https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true");
+    background-size: 82px;
+    background-repeat: no-repeat;
+    /* background-position; */
+    padding-left: 100px;
+    /* padding-top: 10px; */
+    padding-bottom: 70px;
+    text-decoration: none;
+    background-position: center left;
+    color: lightblue;
+    /* height: 50px; */
+}
+
+.homeButton .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -20px
+}
+
+.homeButton:hover .tooltiptext {
+    visibility: visible;
+}
+
+.homeButton:hover {
+    animation: left-to-right 4s infinite ease-in-out;
+}
+
+@keyframes left-to-right {
+    0% {
+        transform: translateX(-10px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateX(10px) rotate(180deg);
+    }
+
+    100% {
+        transform: translateX(-10px) rotate(360deg);
+    }
+}
+
+.title {
+    padding-left: 80px;
 }
 
 .active .toolTipText {
@@ -56,21 +102,6 @@
     visibility: visible;
     font-size: 12px;
 }
-
-.homeButton {
-    display: flex;
-    height: 0;
-    min-height: 100%;
-    flex-wrap: nowrap;
-    font-size: large;
-}
-
-a.active {
-    font-family: 'Lato';
-    display: flex;
-    align-items: center;
-}
-
 
 .profile-dropdown {
     font-family: 'Lato';
