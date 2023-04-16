@@ -367,7 +367,7 @@ router.delete('/:spotId',
 // Reviews 2: Get all Reviews by a Spot's id | URL: /api/spots/:spotId/reviews
 router.get('/:spotId/reviews',
     async (req, res) => {
-        const userId = req.user.id;
+        // const userId = req.user.id;
         const spotId = req.params.spotId;
         const spot = await Spot.findByPk(req.params.spotId);
         if (!spot) {
