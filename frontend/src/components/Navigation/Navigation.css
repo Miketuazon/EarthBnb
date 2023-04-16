@@ -61,6 +61,24 @@
     visibility: visible;
 }
 
+.homeButton:hover {
+    animation: left-to-right 4s infinite ease-in-out;
+}
+
+@keyframes left-to-right {
+    0% {
+        transform: translateX(-10px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateX(10px) rotate(180deg);
+    }
+
+    100% {
+        transform: translateX(-10px) rotate(360deg);
+    }
+}
+
 .title {
     padding-left: 80px;
 }

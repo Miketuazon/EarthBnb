@@ -80,7 +80,7 @@ export default function UpdateSpot() {
     }
     // debugger
     // console.log('errors', errors)
-
+    if (!spot) return <h2>Loading...</h2>
 
     return (
         <section className='edit-form-spots'>
