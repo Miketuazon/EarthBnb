@@ -11,6 +11,7 @@ function Navigation({ isLoaded }) {
     <ul className="navBar">
       <li className='homeButton'>
         <NavLink exact to="/" id="home"><h2 className='title'>EarthBnB</h2></NavLink>
+        <span class="tooltiptext">Return home</span>
       </li>
       {isLoaded && (
         <li>

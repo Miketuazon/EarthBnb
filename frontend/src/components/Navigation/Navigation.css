@@ -11,16 +11,6 @@
     display: none;
 }
 
-.earth {
-    object-fit: contain;
-}
-
-/* .navBar-container {
-    height: 7rem;
-    justify-content: space-between;
-    overflow: hidden;
-} */
-
 .navBar {
     border: 2px solid lightgray;
     border-radius: 25px;
@@ -52,16 +42,28 @@
     /* height: 50px; */
 }
 
+.homeButton .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -20px
+}
+
+.homeButton:hover .tooltiptext {
+    visibility: visible;
+}
+
 .title {
     padding-left: 80px;
 }
-/* .earth {
-    display: flex;
-    align-items: center;
-    height: 0;
-    min-height: 100%;
-    color: #0AC25A;
-} */
 
 .active .toolTipText {
     visibility: hidden;
@@ -82,24 +84,6 @@
     visibility: visible;
     font-size: 12px;
 }
-
-/* .homeButton {
-    display: flex;
-    height: 0;
-    min-height: 100%;
-    flex-wrap: nowrap;
-    font-size: large;
-} */
-
-/* a.active {
-    font-family: 'Lato';
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    max-width: 239px;
-    max-height: 81;
-} */
-
 
 .profile-dropdown {
     font-family: 'Lato';
