@@ -3,16 +3,19 @@ import { NavLink, Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, } from 'react';
 
-import { updateSpot, getOneSpot } from '../../store/spots';
+import { updateSpot, getOneSpot, getAllSpots } from '../../store/spots';
 
 import './UpdateSpot.css'
 
 export default function UpdateSpot() {
+
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
-    const spot = useSelector((state) => state.spots.allSpots[spotId])
+    const spot = useSelector((state) => state.spots.allSpots[spotId] || {})
     console.log('spots =>', spot)
+    const thisState = useSelector(state => state)
+    console.log("this is og state", thisState)
     const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
@@ -21,6 +24,8 @@ export default function UpdateSpot() {
     const [description, setDescription] = useState(spot.description);
     const [price, setPrice] = useState(spot.price);
     const [id] = useState(spot.id)
+
+    //need to fix page on refresh
 
     const [imageURL, setImageURL] = useState(""); //preview
     // below commented out since it's optional for update spot
@@ -80,7 +85,9 @@ export default function UpdateSpot() {
     }
     // debugger
     // console.log('errors', errors)
-    if (!spot) return <h2>Loading...</h2>
+
+
+    if (!Object.values(spot).length) return <h2>Loading... (this might be a refresh bug)</h2>
 
     return (
         <section className='edit-form-spots'>

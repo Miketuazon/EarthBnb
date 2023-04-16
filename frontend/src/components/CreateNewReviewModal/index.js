@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getSpotReviews, createNewReview } from '../../store/reviews'
 import { useModal } from '../../context/Modal';
 import './CreateNewReviewModal.css'
+import { getOneSpot } from '../../store/spots';
 
 function CreateNewReviewModal({ spotId }) {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function CreateNewReviewModal({ spotId }) {
       review, stars
     }
     await dispatch(createNewReview(createdReviewDetails, sessionUser, spotId))
+    await dispatch(getOneSpot(spotId))
     await dispatch(getSpotReviews(spotId))
     closeModal();
   }
