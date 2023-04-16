@@ -90,7 +90,7 @@ export default function OneSpot() {
     // const month = months[date.getMonth()];
     // const day = date.getDate();
     // const year = date.getFullYear();
-    if (!spotDetails.SpotImages) return null
+    if (Object.keys(spotDetails).length === 0) return <h1>Loading...</h1>
     return (
         <div className="spot-details-page">
             <div className="spot-details-container">
@@ -195,7 +195,7 @@ export default function OneSpot() {
                                 <div key={review.id} className="review-place">
                                     <div className="review-container">
                                         <h4 className="review-owner">{review.User.firstName} {review.User.lastName[0]}.</h4>
-                                        <h5 className="review-month-year">{month},{day},{year}</h5>
+                                        <h5 className="review-month-year">{month} {day}, {year}</h5>
                                         <div className="review-description">{review.review}</div>
                                         <div className="delete-button-here">
                                             {review.User.id === sessionUser?.id

@@ -15,6 +15,12 @@
     object-fit: contain;
 }
 
+/* .navBar-container {
+    height: 7rem;
+    justify-content: space-between;
+    overflow: hidden;
+} */
+
 .navBar {
     border: 2px solid lightgray;
     border-radius: 25px;
@@ -27,15 +33,35 @@
     list-style: none;
     background-color: #94AF9F;
     font-family: 'Lato';
+    border: solid 2px gray;
+    position: sticky;
 }
 
-.earth {
+#home,
+#home:visited {
+    background-image: url("https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true");
+    background-size: 82px;
+    background-repeat: no-repeat;
+    /* background-position; */
+    padding-left: 100px;
+    /* padding-top: 10px; */
+    padding-bottom: 70px;
+    text-decoration: none;
+    background-position: center left;
+    color: lightblue;
+    /* height: 50px; */
+}
+
+.title {
+    padding-left: 80px;
+}
+/* .earth {
     display: flex;
     align-items: center;
     height: 0;
     min-height: 100%;
     color: #0AC25A;
-}
+} */
 
 .active .toolTipText {
     visibility: hidden;
@@ -57,19 +83,22 @@
     font-size: 12px;
 }
 
-.homeButton {
+/* .homeButton {
     display: flex;
     height: 0;
     min-height: 100%;
     flex-wrap: nowrap;
     font-size: large;
-}
+} */
 
-a.active {
+/* a.active {
     font-family: 'Lato';
     display: flex;
     align-items: center;
-}
+    justify-content: space-around;
+    max-width: 239px;
+    max-height: 81;
+} */
 
 
 .profile-dropdown {
