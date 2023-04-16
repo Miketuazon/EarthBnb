@@ -101,20 +101,16 @@ export default function OneSpot() {
                 <div className="spot-images-container">
                     {spotDetails.SpotImages.map((image, idx) =>
                         idx === 0 ?
-                            <div className="left-side">
                                 <img
                                     className="preview-image1"
                                     src={image.url}
                                 />
-                            </div>
                             :
-                            <div className="right-side">
                                 <img
                                     className="other-images"
                                     src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
                                     alt="no image yet"
                                 />
-                            </div>
                     )
                     }
 

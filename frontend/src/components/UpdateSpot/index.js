@@ -85,6 +85,7 @@ export default function UpdateSpot() {
     return (
         <section className='edit-form-spots'>
             <form onSubmit={handleSubmit}>
+            <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                 <h1>Update your Spot</h1>
                 <h3>Where's your place located?</h3>
                 <span>Guests will only get your exact address once they booked a reservation</span>
@@ -130,7 +131,7 @@ export default function UpdateSpot() {
                     and what you love about the neighborhood.</div>
                     <textarea
                         type='textarea' placeholder='Please write at least 30 characters' min='30'
-                        required value={description} onChange={updateDescription}
+                        required value={description} onChange={updateDescription} className='description-box'
                     />
                 </label>
                 <hr></hr>

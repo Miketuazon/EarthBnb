@@ -1,8 +1,8 @@
 .spot-details-page {
   max-width: 1000px;
   display: flex;
-  /* align-items: center; */
   flex-direction: column;
+  justify-content: center;
 }
 
 .reserve {
@@ -88,20 +88,20 @@
   grid-template-columns: repeat(4, 1fr);
   grid-auto-flow: dense;
 }
-.spot-images-container > .left-side {
+.preview-image1 {
   grid-column: span 2;
   grid-row: span 2;
+  width: 100%;
+  height: 100%;
+  object-fit:fill
 }
 
 .other-images {
   max-width: 100%;
   max-height: 100%;
+  object-fit: fill;
 }
-.preview-image1 {
-  width: 100%;
-  height: 100%;
-  object-fit: contain
-}
+
 /* .other-images {
   max-width: 50%;
   object-fit: fill;
@@ -177,11 +177,13 @@ hr {
   border: 0;
   clear:both;
   display:block;
-  width: 100%;
+  width: 1000px;
   background-color: black;
-  height: 1px;
+  height: 2px;
 }
-
+.black-line {
+  width: 1000px;
+}
 .review-owner {
   margin-bottom: 0px;
 }

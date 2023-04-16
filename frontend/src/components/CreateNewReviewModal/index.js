@@ -64,7 +64,7 @@ function CreateNewReviewModal({ spotId }) {
         <label>
           <input
             type='textarea' placeholder='Leave your review here...' min='10'
-            required value={review} onChange={updateReview}
+            required value={review} onChange={updateReview} className='review-text'
           >
           </input>
         </label>

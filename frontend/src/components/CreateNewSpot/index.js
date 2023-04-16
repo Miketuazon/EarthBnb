@@ -98,45 +98,49 @@ export default function CreateNewSpot() {
         <section className='edit-form-spots'>
             <div className='bg-img'>
                 <form onSubmit={handleSubmit}>
-                <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
+                    <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                     <h1>Create a new Spot</h1>
                     <h3>Where's your place located?</h3>
                     <ul>
                         {/* will place errors next to labels later */}
                         {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
                     </ul>
-                    <label>
-                        Country
-                        <input
-                            type='text' placeholder='country' min='1'
-                            required value={country} onChange={updateCountry}
-                        />
-                    </label>
-                    <label>
-                        Street Address
-                        <input
-                            type='text' placeholder='address' min='1'
-                            required value={address} onChange={updateAddress}
-                        ></input>
-                    </label>
-                    <label>
-                        City
-                        <input
-                            type='text' placeholder='city' min='1'
-                            required value={city} onChange={updateCity}
-                        />
+                    <div className='location'>
                         <label>
-                            ,
+                            Country
+                            <input
+                                type='text' placeholder='country' min='1'
+                                required value={country} onChange={updateCountry}
+                            />
                         </label>
-                    </label>
-                    <label>
-                        State
-                        <input
-                            type='text' placeholder='state' min='1'
-                            required value={state} onChange={updateState}
-                        />
-                    </label>
-                    <hr></hr>
+                        <label>
+                            Street Address
+                            <input
+                                type='text' placeholder='address' min='1'
+                                required value={address} onChange={updateAddress}
+                            ></input>
+                        </label>
+                        <div className='city-and-state'>
+                            <label>
+                                City
+                                <input
+                                    type='text' placeholder='city' min='1'
+                                    required value={city} onChange={updateCity}
+                                />
+                                <label>
+                                    ,
+                                </label>
+                            </label>
+                            <label>
+                                State
+                                <input
+                                    type='text' placeholder='state' min='1'
+                                    required value={state} onChange={updateState}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <hr className="black-line"></hr>
                     <label>
                         <h3>Describe your place to guests</h3>
                         <div>Mention the best features of your space, any special amenities like fast wifi or parking,
@@ -147,7 +151,7 @@ export default function CreateNewSpot() {
                             required value={description} onChange={updateDescription}
                         />
                     </label>
-                    <hr></hr>
+                    <hr className="black-line"></hr>
                     <label>
                         <h3>Create a title for your spot</h3>
                         <div>
@@ -159,7 +163,7 @@ export default function CreateNewSpot() {
                             required value={name} onChange={updateName}
                         />
                     </label>
-                    <hr></hr>
+                    <hr className="black-line"></hr>
                     <label>
                         <h3>Set a base price for your spot</h3>
                         <div>Competitive pricing can help your listing stand out and rank
@@ -171,7 +175,7 @@ export default function CreateNewSpot() {
                         />
                     </label>
 
-                    <hr></hr>
+                    <hr className="black-line"></hr>
                     <label>
                         <h3>Liven up your spot with photos</h3>
                         <span>Submit a link to at least one photo to publish your spot</span>
@@ -202,7 +206,7 @@ export default function CreateNewSpot() {
                         />
                         <br></br>
                     </label>
-                    <hr></hr>
+                    <hr className="black-line"></hr>
                     <button
                         disabled={
                             country.length < 1 || address.length < 1 || city.length < 1 ||

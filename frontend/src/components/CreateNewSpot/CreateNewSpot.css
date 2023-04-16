@@ -5,13 +5,26 @@
     background-size:cover; */
 }
 
+.location {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.city-and-state {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-around;
+}
 .description-box {
     width: 100%;
     max-width: 100%;
     height: 90px;
 }
 hr {
-    max-width: 60%;
+    max-width: 100%;
+    height: 2px;
 }
 /* .bg-img {
     The image used
