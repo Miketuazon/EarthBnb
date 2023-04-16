@@ -128,7 +128,6 @@ export default function CreateNewSpot() {
                                     required value={city} onChange={updateCity}
                                 />
                                 <label>
-                                    ,
                                 </label>
                             </label>
                             <label>
