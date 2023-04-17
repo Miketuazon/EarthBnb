@@ -156,7 +156,7 @@ export default function OneSpot() {
                         }
                         <div>
                             {spotDetails.numReviews > 0
-                                ? (Number(spotDetails.numReviews) === 1 ? <>${spotDetails.numReviews} review</> : <>${spotDetails.numReviews} reviews</>)
+                                ? (Number(spotDetails.numReviews) === 1 ? <>{spotDetails.numReviews} review</> : <>{spotDetails.numReviews} reviews</>)
                                 : (sessionUser?.id !== owner.OwnerId ? <>Be the first one to post a review!</> : <></> )
                             }
                         </div>
