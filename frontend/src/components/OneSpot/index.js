@@ -156,9 +156,9 @@ export default function OneSpot() {
                         }
                         <div>
                             {spotDetails.numReviews > 0
-                                ? Number(spotDetails.numReviews) === 1 ? `${spotDetails.numReviews} review`
-                                    : `${spotDetails.numReviews} reviews`
-                                : null}
+                                ? (Number(spotDetails.numReviews) === 1 ? <>${spotDetails.numReviews} review</> : <>${spotDetails.numReviews} reviews</>)
+                                : (sessionUser?.id !== owner.OwnerId ? <>Be the first one to post a review!</> : <></> )
+                            }
                         </div>
                     </div>
                 </h3>
@@ -170,15 +170,6 @@ export default function OneSpot() {
                         />
                     </button>
                 </div>
-                {/* commented out the below 8 lines */}
-                {/* <div className={createDeleteButton}>
-                    <button className="delete-button">
-                        <OpenModalMenuItem
-                            itemText={"Delete Your Review"}
-                            modalComponent={<DeleteReviewModal />}
-                        />
-                    </button>
-                </div> */}
                 <div className="reviews">
                     {reviews?.map(review => {
                         const date = new Date(review.createdAt)

@@ -89,7 +89,7 @@ export default function UpdateSpot() {
     // console.log('errors', errors)
 
 
-    if (!Object.values(spot).length) return <LoaderIcon />
+    if (!Object.values(spot).length) return <>Loading.....This might be a refresh error sorry (T_T) Please click back home</>
 
     return (
         <section className='edit-form-spots'>
