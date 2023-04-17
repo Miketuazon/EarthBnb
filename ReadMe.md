@@ -2,6 +2,7 @@
 [logo]: ./assets//eartbnb%20logo.png
 
 Welcome to my Airbnb clone! Go to https://miket-auth-me.onrender.com/ to check it out!
+Click on the frontend folder to see examples of my features!
 
 ## Technologies Used
 JavaScript, CSS, Redux, React, Sequelize, Render,
