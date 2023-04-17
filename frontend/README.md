@@ -1,3 +1,31 @@
+# Welcome to the FrontEnd!
+
+## Features Implemented
+*CRUD of Spots, CRD of reviews, Reserve function soon! *
+
+   [landing]: ../assets/landing.png
+   [create-rev]: ../assets/create-review.png
+   [create-spot]: ../assets/Create-spot.png
+   [del-rev]: ../assets/delete-review.png
+   [del-spot]: ../assets/delete-spot.png
+   [log-in]: ../assets/log-in.png
+   [manage-spots]: ../assets/manage-spots.png
+   [sign-up]: ../assets/sign-up.png
+   [spot-details]: ../assets/spot-details.png
+   [update-spot]: ../assets/Update-spot.png
+
+1. **Landing Page of All Spots**
+   ![landing]
+2. **Log In / Sign Up**
+   ![log-in] ![sign-up]
+3. **Single Spot Details (Read your reviews on each spot!)**
+   ![spot-details]
+4. **Manage your owned Spots**
+   ![manage-spots]
+5. **Create, Update, and Delete your spots**
+   ![create-spot] ![update-spot] ![del-spot]
+6. **Create, Delete a Review**
+   ![create-rev] ![del-rev]
 
 # Create React App Template
 
