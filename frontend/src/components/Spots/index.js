@@ -18,7 +18,7 @@ export default function Spots() {
 
 
 
-    if (!spots.length) return null;
+    if (!spots.length) return <div class="loader">Loading...</div>;
     return (
         <div className="spots-page">
             {spots?.map(spot => {
