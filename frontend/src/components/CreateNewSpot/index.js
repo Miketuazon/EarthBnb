@@ -142,6 +142,7 @@ export default function CreateNewSpot() {
                                 />
                             </label>
                         </div>
+                        <div className='guests'>*Guests will only get your exact address once they booked a reservation.*</div>
                     </div>
                     <hr className="black-line"></hr>
                     <label>
@@ -162,7 +163,7 @@ export default function CreateNewSpot() {
                             highlights your place special.
                         </div>
                         <input
-                            type='text' placeholder='name' min='1'
+                            type='text' placeholder='Name of your spot' min='1'
                             required value={name} onChange={updateName}
                         />
                     </label>

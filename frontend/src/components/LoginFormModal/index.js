@@ -71,7 +71,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit" disabled={!password.length || !credential.length}>Log In</button>
+        <button type="submit" disabled={password.length < 6 || credential.length < 4}>Log In</button>
         <button onClick={handleDemoUser}>Sign in as demo!</button>
       </form>
     </>
