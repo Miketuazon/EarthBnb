@@ -104,16 +104,16 @@ export default function OneSpot() {
                 <div className="spot-images-container">
                     {spotDetails.SpotImages.map((image, idx) =>
                         idx === 0 ?
-                                <img
-                                    className="preview-image1"
-                                    src={image.url}
-                                />
+                            <img
+                                className="preview-image1"
+                                src={image.url}
+                            />
                             :
-                                <img
-                                    className="other-images"
-                                    src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
-                                    alt="no image yet"
-                                />
+                            <img
+                                className="other-images"
+                                src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                alt="no image yet"
+                            />
                     )
                     }
 
@@ -130,14 +130,13 @@ export default function OneSpot() {
                                 {
                                     spotDetails.avgStarRating === null
                                         ? <i class="fa-solid fa-star">NEW</i>
-                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
+                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)} &#x2022;</i>
                                 }
-                                <div>&#x2022;</div>
                                 <div>
-                                    {spotDetails.numReviews === 1 || spotDetails.numReviews === '1'
-                                        ? `${spotDetails.numReviews} review`
-                                        : `${spotDetails.numReviews} reviews`
-                                    }
+                                    {spotDetails.numReviews > 0
+                                        ? Number(spotDetails.numReviews) === 1 ? `${spotDetails.numReviews} review`
+                                            : `${spotDetails.numReviews} reviews`
+                                        : null}
                                 </div>
                             </div>
                         </div>
@@ -153,14 +152,13 @@ export default function OneSpot() {
                         {
                             spotDetails.avgStarRating === null
                                 ? <i class="fa-solid fa-star">NEW</i>
-                                : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
+                                : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)} &#x2022;</i>
                         }
-                        <div>&#x2022;</div>
                         <div>
-                            {spotDetails.numReviews === 1 || spotDetails.numReviews === '1'
-                                ? `${spotDetails.numReviews} review`
-                                : `${spotDetails.numReviews} reviews`
-                            }
+                            {spotDetails.numReviews > 0
+                                ? Number(spotDetails.numReviews) === 1 ? `${spotDetails.numReviews} review`
+                                    : `${spotDetails.numReviews} reviews`
+                                : null}
                         </div>
                     </div>
                 </h3>
