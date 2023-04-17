@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, } from 'react';
 
 import { updateSpot, getOneSpot, getAllSpots } from '../../store/spots';
-
+import '../LoaderIcon/Loader.css'
+import '../LoaderIcon/index.js'
 import './UpdateSpot.css'
 
 export default function UpdateSpot() {
@@ -87,7 +88,7 @@ export default function UpdateSpot() {
     // console.log('errors', errors)
 
 
-    if (!Object.values(spot).length) return <h2>Loading... (this might be a refresh bug)</h2>
+    if (!Object.values(spot).length) return <div class="loader">Loading...</div>
 
     return (
         <section className='edit-form-spots'>

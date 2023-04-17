@@ -5,6 +5,7 @@ import { getOneSpot } from "../../store/spots";
 import { useParams } from 'react-router-dom';
 // import { Link } from "react-router-dom";
 import "./OneSpot.css";
+import "../LoaderIcon/Loader.css"
 import { getSpotReviews } from "../../store/reviews";
 import CreateNewReviewModal from "../CreateNewReviewModal"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
@@ -90,7 +91,7 @@ export default function OneSpot() {
     // const month = months[date.getMonth()];
     // const day = date.getDate();
     // const year = date.getFullYear();
-    if (Object.keys(spotDetails).length === 0) return <h1>Loading...</h1>
+    if (Object.keys(spotDetails).length === 0) return <div class="loader">Loading...</div>
     return (
         <div className="spot-details-page">
             <div className="spot-details-container">

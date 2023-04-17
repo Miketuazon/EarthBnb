@@ -12,11 +12,16 @@
   max-height: 400px;
   margin: 0 1em;
   flex: 50%;
-  width: 25%;
-  justify-content: space-around;
+  width: 24%;
+  justify-content: space-between;
   flex-direction: column;
 }
 
+.city-rating-spot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 /* .city-rating {
     display: flex;
     justify-content: space-between;
