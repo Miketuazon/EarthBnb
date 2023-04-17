@@ -1,4 +1,4 @@
-.signup-form {
+.signUp-form {
     display:flex;
     align-items: center;
 }
@@ -7,4 +7,11 @@
     margin-bottom: 5px;
     flex-flow: wrap;
     flex-direction: column;
+}
+
+
+
+.signUp-button {
+    border: 2px solid black;
+    border-radius: 5px;
 }

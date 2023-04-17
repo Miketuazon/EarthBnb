@@ -47,14 +47,14 @@ function LoginFormModal() {
     <>
     <img src="https://images.immediate.co.uk/production/volatile/sites/7/2018/02/Earth-from-space-1-64e9a7c.jpg?quality=90&resize=980,654"/>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form">
         <ul>
           {Object.values(errors).map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
-          Username or Email
+        <label className="credential-login">
+          Username/Email
           <input
             type="text"
             value={credential}
@@ -62,7 +62,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="password-login">
           Password
           <input
             type="password"
@@ -71,7 +71,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={!password.length || !credential.length}>Log In</button>
         <button onClick={handleDemoUser}>Sign in as demo!</button>
       </form>
     </>

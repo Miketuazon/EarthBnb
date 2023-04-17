@@ -17,6 +17,7 @@ export default function OneSpot() {
     const { spotId } = useParams();
     const spotDetails = useSelector((state) => state.spots.singleSpot)
     // console.log("this is spot details =>", spotDetails)
+    // debugger
     // console.log("ensure spotId =>", spotId)
     const owner = (spotDetails.Owner)
     // console.log("should be owner", owner)
@@ -133,7 +134,7 @@ export default function OneSpot() {
                                 }
                                 <div>&#x2022;</div>
                                 <div>
-                                    {spotDetails.numReviews === 1
+                                    {spotDetails.numReviews === 1 || spotDetails.numReviews === '1'
                                         ? `${spotDetails.numReviews} review`
                                         : `${spotDetails.numReviews} reviews`
                                     }
@@ -156,7 +157,7 @@ export default function OneSpot() {
                         }
                         <div>&#x2022;</div>
                         <div>
-                            {spotDetails.numReviews === 1
+                            {spotDetails.numReviews === 1 || spotDetails.numReviews === '1'
                                 ? `${spotDetails.numReviews} review`
                                 : `${spotDetails.numReviews} reviews`
                             }

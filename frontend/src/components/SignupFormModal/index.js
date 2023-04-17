@@ -45,7 +45,7 @@ function SignupFormModal() {
     <>
       <img src="https://images.immediate.co.uk/production/volatile/sites/7/2018/02/Earth-from-space-1-64e9a7c.jpg?quality=90&resize=980,654" />
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="signUp-form">
         <ul>
           {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -56,6 +56,7 @@ function SignupFormModal() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder='Must be at least 6 characters'
           />
         </label>
         <label>
@@ -108,7 +109,8 @@ function SignupFormModal() {
             email.length < 1 || username.length < 4 || firstName.length < 1 ||
             lastName.length < 1 || password.length < 6 || password !== confirmPassword
           }
-          type="submit">Sign Up</button>
+          type="submit"
+          className="signUp-button">Sign Up</button>
         {/* <button onClick={signDemoInfo}>Register as demo user!</button> */}
       </form>
     </>
