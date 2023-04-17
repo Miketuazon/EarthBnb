@@ -1,15 +1,25 @@
 .edit-form-spots {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     /* background-image: url("http://missioncleanearth.org/img/intro.jpg");
     background-size:cover; */
+    max-width: 800px;
+    max-height: 1000px;
 }
 
-.earth {
+.create-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 900px;
+    justify-content: center;
+}
+
+/* .earth {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .where-header {
     display: flex;
@@ -37,7 +47,7 @@
 
 .description-box {
     width: 50%;
-    max-width: 100%;
+    max-width: 800px;
     height: 90px;
 }
 hr {

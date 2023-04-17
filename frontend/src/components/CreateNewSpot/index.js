@@ -97,7 +97,7 @@ export default function CreateNewSpot() {
     return (
         <section className='edit-form-spots'>
             <div className='bg-img'>
-                <form onSubmit={handleSubmit}>
+                <form className="create-form" onSubmit={handleSubmit}>
                     <div className='earth'>
                         <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                     </div>
