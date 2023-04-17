@@ -1,5 +1,7 @@
 .profile-dropdown {
     border: 2px solid black;
+    border-radius: 10px;
+    background-color: lightblue;
 }
 
 #menu-button-top-right {
@@ -115,6 +117,8 @@
 .profile-dropdown {
     font-family: 'Lato';
     list-style: none;
+    padding-left: 0px;
+    width: 150px;
 }
 
 #modal-content {

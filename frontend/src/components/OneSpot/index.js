@@ -10,6 +10,7 @@ import { getSpotReviews } from "../../store/reviews";
 import CreateNewReviewModal from "../CreateNewReviewModal"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal"
+import LoaderIcon from "../LoaderIcon";
 
 export default function OneSpot() {
     const dispatch = useDispatch()
@@ -91,7 +92,7 @@ export default function OneSpot() {
     // const month = months[date.getMonth()];
     // const day = date.getDate();
     // const year = date.getFullYear();
-    if (Object.keys(spotDetails).length === 0) return <div class="loader">Loading...</div>
+    if (Object.keys(spotDetails).length === 0) return <LoaderIcon />
     return (
         <div className="spot-details-page">
             <div className="spot-details-container">

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllSpots } from "../../store/spots";
 import { Link } from "react-router-dom";
 import './Spots.css'
+import LoaderIcon from "../LoaderIcon";
 
 export default function Spots() {
     // const [spots, setSpots] = useState({})
@@ -18,7 +19,7 @@ export default function Spots() {
 
 
 
-    if (!spots.length) return <div class="loader">Loading...</div>;
+    if (!spots.length) return <LoaderIcon />;
     return (
         <div className="spots-page">
             {spots?.map(spot => {
