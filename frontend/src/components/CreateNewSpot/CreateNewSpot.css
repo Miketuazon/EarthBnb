@@ -11,6 +11,13 @@
     align-items: center;
 }
 
+.where-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .location {
     display: flex;
     align-items: center;

@@ -99,10 +99,12 @@ export default function CreateNewSpot() {
             <div className='bg-img'>
                 <form onSubmit={handleSubmit}>
                     <div className='earth'>
-                    <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
+                        <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                     </div>
-                    <h1>Create a new Spot</h1>
-                    <h3>Where's your place located?</h3>
+                    <div className='where-header'>
+                        <h1>Create a new Spot</h1>
+                        <h3>Where's your place located?</h3>
+                    </div>
                     <ul>
                         {/* will place errors next to labels later */}
                         {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
