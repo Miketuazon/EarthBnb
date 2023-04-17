@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import './ManageSpots.css';
 import DeleteSpotModal from "../DeleteSpotModal";
 import OpenModalDelete from "./OpenModalDelete";
+import LoaderIcon from "../LoaderIcon";
 function ManageSpots() {
     const spotsObj = useSelector(state => state.spots.userSpots)
     const spots = Object.values(spotsObj)
@@ -54,7 +55,7 @@ function ManageSpots() {
     //     history.push(path)
     // }
     // debugger
-    if (!spots) return null;
+    if (!spots) return <LoaderIcon/>;
     return (
         <div className="manage-spots-page">
             <div className="header">

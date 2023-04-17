@@ -7,6 +7,7 @@ import { updateSpot, getOneSpot, getAllSpots } from '../../store/spots';
 import '../LoaderIcon/Loader.css'
 import '../LoaderIcon/index.js'
 import './UpdateSpot.css'
+import LoaderIcon from '../LoaderIcon/index.js';
 
 export default function UpdateSpot() {
 
@@ -88,7 +89,7 @@ export default function UpdateSpot() {
     // console.log('errors', errors)
 
 
-    if (!Object.values(spot).length) return <div class="loader">Loading...</div>
+    if (!Object.values(spot).length) return <LoaderIcon />
 
     return (
         <section className='edit-form-spots'>
