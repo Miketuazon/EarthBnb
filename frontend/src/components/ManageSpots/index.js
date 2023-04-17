@@ -80,7 +80,7 @@ function ManageSpots() {
                                             : <Link to={`${spot.id}`}>No Preview Image Available</Link>}
                                     </div>
                                     <div className="description">
-                                        <div className="city-rating-spot">
+                                        <div className="city-rating-spot-manage">
                                             <div className="city-rating">
                                                 <div className="city-state">{spot.city}, {spot.state}</div>
                                                 <div>
@@ -95,9 +95,9 @@ function ManageSpots() {
                                             ${spot.price} night
                                         </div>
                                         <div className="update-delete-container">
-                                            <div className="update-button">
+                                            <div className="update">
                                                 <Link to={`/spots/${spot.id}/edit`}>
-                                                    <button>Update</button>
+                                                    <button id="update-button">Update</button>
                                                 </Link>
                                             </div>
                                             <div className="delete-spot">

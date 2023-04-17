@@ -98,7 +98,9 @@ export default function CreateNewSpot() {
         <section className='edit-form-spots'>
             <div className='bg-img'>
                 <form onSubmit={handleSubmit}>
+                    <div className='earth'>
                     <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
+                    </div>
                     <h1>Create a new Spot</h1>
                     <h3>Where's your place located?</h3>
                     <ul>
@@ -121,7 +123,7 @@ export default function CreateNewSpot() {
                             ></input>
                         </label>
                         <div className='city-and-state'>
-                            <label>
+                            <label className='city-input'>
                                 City
                                 <input
                                     type='text' placeholder='city' min='1'
@@ -167,11 +169,13 @@ export default function CreateNewSpot() {
                         <h3>Set a base price for your spot</h3>
                         <div>Competitive pricing can help your listing stand out and rank
                             higher in search results.</div>
-                        $
-                        <input
-                            type='number' placeholder='Price per night (USD)' min='1'
-                            required value={price} onChange={updatePrice}
-                        />
+                        <div className='price'>
+                            $
+                            <input
+                                type='number' placeholder='Price per night (USD)' min='1'
+                                required value={price} onChange={updatePrice}
+                            />
+                        </div>
                     </label>
 
                     <hr className="black-line"></hr>

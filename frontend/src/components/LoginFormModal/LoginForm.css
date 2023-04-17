@@ -6,22 +6,18 @@
     flex-direction: column;
 }
 
-form {
+.login-form {
     display: flex;
+    justify-content: center;
+    /* align-items: center;
+    flex-direction: column; */
+    margin-bottom: 5px;
+}
+
+.login-form > * {
+    margin-bottom: 5px;
+    flex-flow: wrap;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 5px;
-}
-
-form > * {
-    margin-bottom: 5px;
-    flex-flow: wrap;
-}
-
-label {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 60%;
 }
