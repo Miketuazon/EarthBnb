@@ -14,18 +14,40 @@
    [spot-details]: ../assets/spot-details.png
    [update-spot]: ../assets/Update-spot.png
 
+   [landingGif]: /authenticate-me/assets/earthBnBGifs/earthBnB_spotsDemo.gif
+   [create-spot-Gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_createSpotDemo.gif
+   [create-del-rev-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_crudReviewsDemo.gif
+   [del-spot-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_deleteSpotDemo.gif
+   [log-in-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_logInDemoUser.gif
+   [manage-spots-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_manageSpotsPage.gif
+   [spot-details-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_spotDetails.gif
+   [update-spot-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_updateSpotDemo.gif
+
 1. **Landing Page of All Spots**
-   ![landing]
+   - Displays all spots created by users
+   - When hovering over a spot, name of spot is shown
+   ![landingGif]
 2. **Log In / Sign Up**
-   ![log-in] ![sign-up]
+   - Log In modal pops up, log in as a demo user
+   - Sign Up modal pops up, sign up as a new user
+   ![log-in-gif]
 3. **Single Spot Details (Read your reviews on each spot!)**
-   ![spot-details]
+   - When user clicks on a spot in spots page, they are redirected to spot details page
+   - User can see information on spot's title, location, host, reviews and photo[s]
+   ![spot-details-gif]
 4. **Manage your owned Spots**
-   ![manage-spots]
+   - Users can view their owned spots by by clicking the `manage spots` link
+   ![manage-spots-gif]
 5. **Create, Update, and Delete your spots**
-   ![create-spot] ![update-spot] ![del-spot]
+   - Users are able to create a spot
+   - Users are able to update a spot's details if they want to change any details
+   - Users can delete their spot if they would like
+   ![create-spot-gif] ![update-spot-gif] ![del-spot-gif]
 6. **Create, Delete a Review**
-   ![create-rev] ![del-rev]
+   - Reviews are displayed on each spot's details page
+   - Users are able to post a review if they do not own the spot
+   - Users can delete a review if they want to
+   ![create-del-rev-gif]
 
 # Create React App Template
 
