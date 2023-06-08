@@ -35,14 +35,14 @@ Click on the frontend folder to see examples of my features!
    [spot-details]: ../assets/spot-details.png
    [update-spot]: ../assets/Update-spot.png
 
-   [landingGif]: /authenticate-me/assets/earthBnBGifs/earthBnB_spotsDemo.gif
-   [create-spot-Gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_createSpotDemo.gif
-   [create-del-rev-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_crudReviewsDemo.gif
-   [del-spot-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_deleteSpotDemo.gif
-   [log-in-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_logInDemoUser.gif
-   [manage-spots-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_manageSpotsPage.gif
-   [spot-details-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_spotDetails.gif
-   [update-spot-gif]: /authenticate-me/assets/earthBnBGifs/earthBnB_updateSpotDemo.gif
+   [landingGif]: /assets/earthBnBGifs/earthBnB_spotsDemo.gif
+   [create-spot-Gif]: /assets/earthBnBGifs/earthBnB_createSpotDemo.gif
+   [create-del-rev-gif]: /assets/earthBnBGifs/earthBnB_crudReviewsDemo.gif
+   [del-spot-gif]: /assets/earthBnBGifs/earthBnB_deleteSpotDemo.gif
+   [log-in-gif]: /assets/earthBnBGifs/earthBnB_logInDemoUser.gif
+   [manage-spots-gif]: /assets/earthBnBGifs/earthBnB_manageSpotsPage.gif
+   [spot-details-gif]: /assets/earthBnBGifs/earthBnB_spotDetails.gif
+   [update-spot-gif]: /assets/earthBnBGifs/earthBnB_updateSpotDemo.gif
 
 1. **Landing Page of All Spots**
    - Displays all spots created by users
