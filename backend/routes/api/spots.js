@@ -466,7 +466,7 @@ router.get('/:spotId/bookings',
                 where: {
                     spotId: spotId
                 },
-                attributes: ['spotId', 'startDate', 'endDate']
+                attributes: ['spotId', 'startDate', 'endDate', "id"]
             })
 
             const payload = { Bookings: bookings }

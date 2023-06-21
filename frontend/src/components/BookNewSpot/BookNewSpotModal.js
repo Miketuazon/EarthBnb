@@ -12,12 +12,14 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     const { closeModal } = useModal()
     // console.log("spotDetails => ", spotDetails)
     // console.log("spotId => ", spotId)
-    const bookings = useSelector(state => state.bookings)
+    const bookingsObj = useSelector(state => state.bookings.spot)
+    const bookings = Object.values(bookingsObj)
     // console.log("bookings => ", bookings)
+
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
-    const [errors, setErrors] = useState("");
+    const [errors, setErrors] = useState([]);
 
     const updateStartDate = (e) => setStartDate(e.target.value);
     const updateEndDate = (e) => setEndDate(e.target.value)
@@ -80,13 +82,19 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     // console.log("endDatee => ", endDatee)
     return (
         <div className="booking-modal">
+            <ul>
+                {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
+            </ul>
             <h1>Confirm your booking</h1>
             <h2>Your trip</h2>
             <div className="dates-container">
                 {month} {day + 1} - {endDay + 1}
             </div>
             <div className="already-booked-dates">
+                Already booked dates:
+                <div className="booked-dates-container">
 
+                </div>
             </div>
             <form className="bookings-form" onSubmit={handleSubmit}>
                 <label className="start-date-booking">Start Date</label>
@@ -99,7 +107,9 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
                     type="date" id="startDate" value={endDate}
                     onChange={updateEndDate} min={new Date()}
                 />
-                <button type="submit" className="submit">Place booking</button>
+                <div className="booking-button-container">
+                    <button type="submit" className="submit" >Place booking</button>
+                </div>
             </form>
         </div>
     )

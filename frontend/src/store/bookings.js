@@ -45,7 +45,6 @@ export const createBookingThunk = (bookingDetails, spotId) => async (dispatch) =
 
     // console.log("res => ", res)
     // console.log("res.json => ", await res.json())
-
     if (res.ok) {
         const createdBooking = await res.json()
     } else {
@@ -69,8 +68,7 @@ const bookingsReducer = (state = initialState, action) => {
                 ...state,
                 spot: {...state.spot}
             }
-            // debugger
-            action.bookings.Booking.map(booking => {
+            action.bookings.Bookings.forEach(booking => {
                 newState.spot[booking.id] = booking
             })
             return newState;
