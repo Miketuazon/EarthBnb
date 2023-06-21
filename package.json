@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Miketuazon/API-project#readme",
   "dependencies": {
+    "react-datepicker": "^4.14.1",
     "react-tooltip": "^5.10.0"
   }
 }
