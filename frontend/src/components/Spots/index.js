@@ -24,11 +24,12 @@ export default function Spots() {
         <div className="spots-page">
             {spots?.map(spot => {
                 return (
-                    <div key={spot.id} className="spot-place">
+                    <Link key={spot.id} className="spot-place" to={`spots/${spot.id}`} target="_blank">
+                        <span className="toolTipText">{spot.name}</span>
                         <div className="spot-image-container">
-                            <span className="toolTipText">{spot.name}</span>
+                            {/* <span className="toolTipText">{spot.name}</span> */}
                         {spot.previewImage !== "No Preview Image Available"
-                            ? <Link to={`spots/${spot.id}`}><img alt="No preview Available"
+                            ? <Link to={`spots/${spot.id}`} target="_blank"><img alt="No preview Available"
                                 className="img"
                                 src={spot.previewImage}
 
@@ -49,7 +50,7 @@ export default function Spots() {
                                 ${spot.price} night
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )
             })}
 
