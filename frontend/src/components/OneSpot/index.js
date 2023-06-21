@@ -11,6 +11,8 @@ import CreateNewReviewModal from "../CreateNewReviewModal"
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import DeleteReviewModal from "../DeleteReviewModal"
 import LoaderIcon from "../LoaderIcon";
+import OpenModalBooking from "./OpenModalBooking";
+import BookNewSpotModal from "../BookNewSpot/BookNewSpotModal";
 
 export default function OneSpot() {
     const dispatch = useDispatch()
@@ -140,8 +142,25 @@ export default function OneSpot() {
                                 </div>
                             </div>
                         </div>
-                        <button className="reserve-click" onClick={reserveClick}> Reserve
-                        </button>
+                        {/* old click commented out */}
+                        {/* <button className="reserve-click" onClick={reserveClick}> Reserve
+                        </button> */}
+                        {
+                            owner.id !== sessionUser.id
+                                ?
+                                <button className="reserve-click" style={{ "listStyle": "none" }}>
+                                    <OpenModalBooking
+                                        itemText="Reserve"
+                                        modalComponent={<BookNewSpotModal spotId={spotId} spotDetails={spotDetails}
+                                        />}
+                                    />
+                                </button>
+                                :
+                                <button className="reserve-click" style={{ "listStyle": "none", "cursor":"not-allowed", "backgroundColor": "black" }} disabled >
+                                    <div>Reserve disabled!</div>
+                                    <div>You are the owner!</div>
+                                </button>
+                        }
                     </div>
                 </div>
             </div>
@@ -157,7 +176,7 @@ export default function OneSpot() {
                         <div>
                             {spotDetails.numReviews > 0
                                 ? (Number(spotDetails.numReviews) === 1 ? <>{spotDetails.numReviews} review</> : <>{spotDetails.numReviews} reviews</>)
-                                : (sessionUser?.id !== owner.OwnerId ? <>Be the first one to post a review!</> : <></> )
+                                : (sessionUser?.id !== owner.OwnerId ? <>Be the first one to post a review!</> : <></>)
                             }
                         </div>
                     </div>

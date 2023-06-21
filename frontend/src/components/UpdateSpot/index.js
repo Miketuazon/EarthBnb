@@ -15,9 +15,9 @@ export default function UpdateSpot() {
     const history = useHistory();
     const { spotId } = useParams();
     const spot = useSelector((state) => state.spots.allSpots[spotId] || {})
-    console.log('spots =>', spot)
+    // console.log('spots =>', spot)
     const thisState = useSelector(state => state)
-    console.log("this is og state", thisState)
+    // console.log("this is og state", thisState)
     const [country, setCountry] = useState(spot.country)
     const [address, setAddress] = useState(spot.address);
     const [city, setCity] = useState(spot.city);
