@@ -8,6 +8,7 @@ import './ManageBookings.css';
 import LoaderIcon from "../LoaderIcon";
 import { loadUserBookingsThunk } from "../../store/bookings";
 import Spots from "../Spots";
+import OpenModalDelete from "../ManageSpots/OpenModalDelete";
 
 function ManageBookings() {
     const bookingsObj = useSelector(state => state.bookings.user)
@@ -51,8 +52,21 @@ function ManageBookings() {
                                     </div>
                                     <h3 className="">Order: {booking.id}</h3>
                                     <h4 className="booking-address">{spot.address}, {spot.city}, {spot.state}</h4>
-                                    <div></div>
-                                    <div></div>
+                                    <div className="start-end-date">Dates booked: {booking.startDate.slice(5,10)} - {booking.endDate.slice(5,10)}</div>
+                                    <div className="update-delete-container">
+                                        <div className="update">
+                                            <Link to ={`/bookings/${booking.id}/edit`}>
+                                                <button id="update-button">Update</button>
+                                            </Link>
+                                        </div>
+                                        <div className="delete-spot">
+                                            <button className="delete-button">
+                                                <OpenModalDelete
+                                                itemText="Delete"
+                                                />
+                                            </button>
+                                        </div>
+                                    </div>
 
                                 </Link>
                             )
