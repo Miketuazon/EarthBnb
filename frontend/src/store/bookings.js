@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 // Declare POJO action creator
 const LOAD_BOOKINGS_ONE_SPOT = "bookings/LoadBookingsOneSpot"
 const CREATE_BOOKING = "bookings/CreateBooking"
+const LOAD_USER_BOOKINGS = "bookings/LoadUserBookings"
 
 // Store - action creators | Spots
 
@@ -18,6 +19,13 @@ export const createBooking = (booking) => {
     return {
         type:  CREATE_BOOKING,
         booking
+    }
+}
+
+export const loadUserBookings = (bookings) => {
+    return {
+        type: LOAD_USER_BOOKINGS,
+        bookings
     }
 }
 
@@ -56,6 +64,18 @@ export const createBookingThunk = (bookingDetails, spotId) => async (dispatch) =
 
 }
 
+// Thunk3: Load bookings made by user
+export const loadUserBookingsThunk = (bookings) => async (dispatch) => {
+    const res = await csrfFetch(`/api/bookings/current`)
+
+    if (res.ok) {
+        const data = await res.json()
+
+        await dispatch(loadUserBookings(data))
+        return data
+    }
+}
+
 const initialState = {
     user: {},
     spot: {}
@@ -74,9 +94,19 @@ const bookingsReducer = (state = initialState, action) => {
             return newState;
         }
         case CREATE_BOOKING: {
-            const newState = {...state,}
+            const newState = {...state}
             newState.spot[action.booking.id] = action.booking
             return newState
+        }
+        case LOAD_USER_BOOKINGS: {
+            const newState = {...state}
+            console.log("newState => ", newState)
+            action.bookings.Bookings.forEach(booking => {
+
+                newState.user[booking.id] = booking
+            })
+            console.log("newState after=> ", newState)
+            return newState;
         }
         default:
             return state;

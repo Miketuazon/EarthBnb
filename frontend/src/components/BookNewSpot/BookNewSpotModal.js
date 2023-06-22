@@ -14,10 +14,15 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     // console.log("spotId => ", spotId)
     const bookingsObj = useSelector(state => state.bookings.spot)
     const bookings = Object.values(bookingsObj)
-    // console.log("bookings => ", bookings)
+    console.log("bookings => ", bookings)
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+
+
+    const dateIso = new Date().toISOString().slice(0, 10)
+    // console.log("dateIso", dateIso)
+
+    const [startDate, setStartDate] = useState(dateIso);
+    const [endDate, setEndDate] = useState(dateIso);
 
     const [errors, setErrors] = useState([]);
 
@@ -39,15 +44,20 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
         if (today > end) validationErrors.push = (' Booking end date is before today.')
         if (today > start) validationErrors.push = (' Booking start date is before today.')
 
+        // for (let booking of bookings) {
+        //     debugger
+        //     console.log(booking)
+        // }
+
         if (validationErrors.length) return setErrors(validationErrors)
 
-        const yearStart = start.getFullYear()
-        const monthStart = start.getMonth() + 1
-        const dayStart = start.getDate()
+        // const yearStart = start.getFullYear()
+        // const monthStart = start.getMonth() + 1
+        // const dayStart = start.getDate()
 
-        const yearEnd = end.getFullYear()
-        const monthEnd = end.getMonth() + 1
-        const dayEnd = end.getDate()
+        // const yearEnd = end.getFullYear()
+        // const monthEnd = end.getMonth() + 1
+        // const dayEnd = end.getDate()
 
         const createdBookingDates = {
             startDate, endDate
@@ -80,6 +90,12 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     const endDay = endDatee.getDate()
     // console.log("date => ", date)
     // console.log("endDatee => ", endDatee)
+
+    bookings.map(booking => {
+        console.log(booking.startDate, booking.endDate)
+        console.log(typeof(booking.startDate))
+    })
+
     return (
         <div className="booking-modal">
             <ul>
@@ -93,19 +109,25 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
             <div className="already-booked-dates">
                 Already booked dates:
                 <div className="booked-dates-container">
-
+                    {
+                        bookings.map(booking => (
+                            <div className="already-booked">
+                                <div>{[booking.startDate.slice(5,10)]} - {booking.endDate.slice(5,10)}</div>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
             <form className="bookings-form" onSubmit={handleSubmit}>
                 <label className="start-date-booking">Start Date</label>
                 <input
                     type="date" id="startDate" value={startDate}
-                    onChange={updateStartDate} min={new Date()}
+                    onChange={updateStartDate} min={dateIso}
                 />
-                <label className="start-date-booking">End Date</label>
+                <label className="end-date-booking">End Date</label>
                 <input
-                    type="date" id="startDate" value={endDate}
-                    onChange={updateEndDate} min={new Date()}
+                    type="date" id="endDate" value={endDate}
+                    onChange={updateEndDate} min={startDate}
                 />
                 <div className="booking-button-container">
                     <button type="submit" className="submit" >Place booking</button>
