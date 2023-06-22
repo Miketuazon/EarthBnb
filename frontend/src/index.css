@@ -1,5 +1,6 @@
 /* TODO Add site wide styles */
 body {
     background-color: #FFE4C7;
-    background-image: linear-gradient(to left, #E3DAA6, #FDDDB8 )
+    background-image: linear-gradient(to left, #E3DAA6, #FDDDB8 );
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;;
 }

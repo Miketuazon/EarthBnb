@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import "./BookNewSpotModal.css"
+import "./UpdateBookingModal.css"
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 import { loadBookingsThunk, createBookingThunk } from "../../store/bookings";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function BookNewSpotModal({ spotId, spotDetails }) {
+export default function UpdateBookingModal({ spotId, spotDetails }) {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
     // console.log("spotDetails => ", spotDetails)
-    // console.log("spotId => ", spotId)
+    console.log("spotId => ", spotId)
     const bookingsObj = useSelector(state => state.bookings.spot)
     const bookings = Object.values(bookingsObj)
     console.log("bookings => ", bookings)
-
+    console.log("spotDetails", spotDetails)
 
 
     const dateIso = new Date().toISOString().slice(0, 10)
@@ -63,8 +63,7 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
             startDate, endDate
         }
 
-        await dispatch(createBookingThunk(createdBookingDates, spotId));
-        history.push(`/bookings/current`)
+        // await dispatch(createBookingThunk(createdBookingDates, spotId));
         closeModal()
 
     }
@@ -102,13 +101,14 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
             <ul>
                 {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
             </ul>
-            <h1>Confirm your booking</h1>
+            <h1>Edit your booking</h1>
             <h2>Your trip</h2>
             <div className="dates-container">
                 {month} {day + 1} - {endDay + 1}
             </div>
+            <br></br>
             <div className="already-booked-dates">
-                Already booked dates:
+                {/* Already booked dates: */}
                 <div className="booked-dates-container">
                     {
                         bookings.map(booking => (
