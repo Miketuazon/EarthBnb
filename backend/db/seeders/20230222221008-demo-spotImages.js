@@ -11,7 +11,7 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/download-23.jpg',
+        url: 'https://hips.hearstapps.com/hmg-prod/images/1271-saint-ives-place-high-resolution-73-1666640275.jpg',
         preview: true,
       },
       {
@@ -111,7 +111,7 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: 'https://crumrealestate.com/wp-content/uploads/2018/05/House-For-Sale-In-Queens.jpg',
+        url: 'https://www.foresthillsrealestate.com/blog/wp-content/uploads/2017/07/IMG_0020-1024x683.jpg',
         preview: true,
       },
       {
@@ -186,7 +186,7 @@ module.exports = {
       },
       {
         spotId: 8,
-        url: 'https://a0.muscache.com/im/pictures/8b642f54-2a8d-4f7a-8307-328d9b19b64c.jpg',
+        url: 'https://www.photoshelter.com/img-get2/I0000Pg.xDHKYCxo/sec=wdfsdfoeflwefms1440ed20230624tZTb4GAYyEUp8Y./fill=1680x945/01-500-Folsom-Apartments-For-Rent-San-Francisco.jpg',
         preview: true,
       },
       {

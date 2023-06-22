@@ -3,3 +3,13 @@
     flex-direction: column;
     width: 30rem;
 }
+
+.booking-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submit {
+    margin: 5px;
+}
