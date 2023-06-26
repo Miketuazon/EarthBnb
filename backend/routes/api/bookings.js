@@ -43,6 +43,8 @@ router.get('/current',
         else bookingsObjectsArray.push(allBookings);
 
         for (let book of bookingsObjectsArray) {
+            // if there are no keys in book, get out of loop
+            if (!Object.keys(book).length) break;
             if (book.Spot.SpotImages.length) {
                 const isPreviewTrue = book.Spot.SpotImages.filter(image => image.preview === true);
                 if (isPreviewTrue.length) book.Spot.previewImage = isPreviewTrue[0].url

@@ -127,13 +127,10 @@ const bookingsReducer = (state = initialState, action) => {
             return newState
         }
         case LOAD_USER_BOOKINGS: {
-            const newState = { ...state, user: { ...state.user }, spot: { ...state.spot } }
-            console.log("newState => ", newState)
+            const newState = { ...state, user: {} }
             action.bookings.Bookings.forEach(booking => {
-
                 newState.user[booking.id] = booking
             })
-            console.log("newState after=> ", newState)
             return newState;
         }
         case UPDATE_BOOKING: {

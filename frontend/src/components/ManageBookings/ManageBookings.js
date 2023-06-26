@@ -19,7 +19,7 @@ function ManageBookings() {
     console.log("bookings => ", bookings)
     const user = useSelector(state => state.session.user)
     const currUserId = user.id;
-
+    console.log(currUserId)
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -35,6 +35,7 @@ function ManageBookings() {
             <div className="manage-booking">
                 <div className="user-spots">
                     {
+                        bookings.length > 1?
                         bookings.map(booking => {
                             const spot = booking.Spot
                             if (booking.userId === currUserId)
@@ -73,6 +74,10 @@ function ManageBookings() {
                                     </div>
                                 )
                         })
+                    : <section className="no-bookings">
+                        <h1>You have no bookings.</h1>
+                        <h2>Go to a spot and create a booking!</h2>
+                        </section>
                     }
                 </div>
             </div>
