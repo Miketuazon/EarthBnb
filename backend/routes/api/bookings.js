@@ -1,5 +1,6 @@
 const express = require('express'); //This file will hold the resources for the route paths beginning with /api/spots.
 const router = express.Router();
+const { Op } = require('sequelize')
 const { Spot, SpotImage, Review, ReviewImage, Booking, sequelize, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrorsForSpots } = require('../../utils/validation');
@@ -21,40 +22,52 @@ const validateEditReview = [
 router.get('/current',
     requireAuth,
     async (req, res) => {
-        const currentUserId = req.user.id
-        // Get all bookings
         const { user } = req;
 
-        const allBookings = await Booking.findAll({
-            where: { userId: user.id },
-            include: [
-                {
-                    model: Spot,
-                    attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-                    include: [{ model: SpotImage }]
-                }
-            ]
+        // Get all bookings
+        const allUserBookings = await Booking.findAll({
+            where: {userId: user.id},
+            include: {
+                model: Spot,
+                attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"],
+                include: [{model: SpotImage}]
+            }
         })
-        // console.log(allBookings)
         // have arr to hold
-        const bookingsObjectsArray = [];
-        // iterate thru allBookings
-        if (allBookings.length) allBookings.forEach(book => bookingsObjectsArray.push(book.toJSON()))
-        else bookingsObjectsArray.push(allBookings);
+        const bookingsObjectsArray  = [];
+         // iterate thru allBookings
+        for (let i = 0; i < allUserBookings.length; i++) {
+            const booking = allUserBookings[i];
 
-        for (let book of bookingsObjectsArray) {
-            if (book.Spot.SpotImages.length) {
-                const isPreviewTrue = book.Spot.SpotImages.filter(image => image.preview === true);
-                if (isPreviewTrue.length) book.Spot.previewImage = isPreviewTrue[0].url
-                else book.Spot.previewImage = "No Preview Image Available";
-            } else book.Spot.previewImage = "No Preview Image Available";
-            delete book.Spot.SpotImages;
+            bookingsObjectsArray.push(booking.toJSON());
         }
-        // return now
+        for (let i = 0; i < bookingsObjectsArray.length; i++) {
+            const booking = bookingsObjectsArray[i];
+            const previewImage = await SpotImage.findOne({
+                where: {
+                    spotId: booking.Spot.id,
+                    preview: {
+                        [Op.is]: true
+                    }
+                }
+            })
+
+            !previewImage
+                ? booking.Spot.previewImage = "No Preview Image Yet"
+                : booking.Spot.previewImage = previewImage.url;
+        }
+         // return empty arr if length is nothing
+        if (!bookingsObjectsArray.length) {
+            return res.status(200).json({
+                Bookings: []
+            })
+        }
+         // return now
         res.status(200).json({
             Bookings: bookingsObjectsArray
-        })
-    })
+        });
+    }
+)
 
 // 4. Edit a booking | URL /api/bookings/:bookingId
 //  reqAuth AND reqPropAuthorization

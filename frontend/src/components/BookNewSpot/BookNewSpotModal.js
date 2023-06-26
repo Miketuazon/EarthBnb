@@ -14,7 +14,7 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     // console.log("spotId => ", spotId)
     const bookingsObj = useSelector(state => state.bookings.spot)
     const bookings = Object.values(bookingsObj)
-    console.log("bookings => ", bookings)
+    // console.log("bookings => ", bookings)
 
 
 
@@ -93,9 +93,11 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     // console.log("endDatee => ", endDatee)
 
     bookings.map(booking => {
-        console.log(booking.startDate, booking.endDate)
-        console.log(typeof(booking.startDate))
+        // console.log(booking.startDate, booking.endDate)
+        // console.log(typeof(booking.startDate))
     })
+
+    console.log(errors)
 
     return (
         <div className="booking-modal">

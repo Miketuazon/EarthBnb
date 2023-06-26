@@ -3,26 +3,27 @@ import React, { useEffect, useState } from "react";
 import "./UpdateBookingModal.css"
 import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
-import { loadBookingsThunk, createBookingThunk } from "../../store/bookings";
+import { loadBookingsThunk, loadUserBookings, loadUserBookingsThunk, updateBookingThunk } from "../../store/bookings";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function UpdateBookingModal({ spotId, spotDetails }) {
+export default function UpdateBookingModal({ spotId, spotDetails, bookingDetails }) {
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
     // console.log("spotDetails => ", spotDetails)
-    console.log("spotId => ", spotId)
+    // console.log("spotId => ", spotId)
     const bookingsObj = useSelector(state => state.bookings.spot)
     const bookings = Object.values(bookingsObj)
-    console.log("bookings => ", bookings)
-    console.log("spotDetails", spotDetails)
+    // console.log("bookings => ", bookings)
+    // console.log("spotDetails", spotDetails)
+    // console.log("bookingDetails => ", bookingDetails)
 
 
     const dateIso = new Date().toISOString().slice(0, 10)
     // console.log("dateIso", dateIso)
 
-    const [startDate, setStartDate] = useState(dateIso);
-    const [endDate, setEndDate] = useState(dateIso);
+    const [startDate, setStartDate] = useState(new Date(bookingDetails.startDate).toISOString().slice(0, 10));
+    const [endDate, setEndDate] = useState(new Date(bookingDetails.endDate).toISOString().slice(0, 10));
 
     const [errors, setErrors] = useState([]);
 
@@ -63,7 +64,8 @@ export default function UpdateBookingModal({ spotId, spotDetails }) {
             startDate, endDate
         }
 
-        // await dispatch(createBookingThunk(createdBookingDates, spotId));
+        await dispatch(updateBookingThunk(createdBookingDates, bookingDetails.id));
+        await dispatch(loadUserBookingsThunk())
         closeModal()
 
     }
@@ -91,11 +93,11 @@ export default function UpdateBookingModal({ spotId, spotDetails }) {
     // console.log("date => ", date)
     // console.log("endDatee => ", endDatee)
 
-    bookings.map(booking => {
-        console.log(booking.startDate, booking.endDate)
-        console.log(typeof(booking.startDate))
-    })
-
+    // bookings.map(booking => {
+    //     // console.log(booking.startDate, booking.endDate)
+    //     // console.log(typeof(booking.startDate))
+    // })
+    // console.log(errors)
     return (
         <div className="booking-modal">
             <ul>

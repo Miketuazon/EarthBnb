@@ -11,6 +11,7 @@ import Spots from "../Spots";
 import OpenModalDelete from "../ManageSpots/OpenModalDelete";
 import OpenModalBooking from "../OneSpot/OpenModalBooking";
 import UpdateBookingModal from "../UpdateBookingModal/UpdateBookingModal";
+import DeleteBookingModal from "../DeleteBookingModal/DeleteBookingModal";
 
 function ManageBookings() {
     const bookingsObj = useSelector(state => state.bookings.user)
@@ -19,12 +20,12 @@ function ManageBookings() {
     console.log("bookings => ", bookings)
     const user = useSelector(state => state.session.user)
     const currUserId = user.id;
-
-
+    // console.log(currUserId)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadUserBookingsThunk(bookings))
     }, [dispatch])
+    console.log(bookingsObj === undefined)
 
     if (!bookings) return <LoaderIcon />
     return (
@@ -35,6 +36,7 @@ function ManageBookings() {
             <div className="manage-booking">
                 <div className="user-spots">
                     {
+                        bookings.length ?
                         bookings.map(booking => {
                             const spot = booking.Spot
                             if (booking.userId === currUserId)
@@ -58,13 +60,14 @@ function ManageBookings() {
                                             <button className="update" id="update-button" style={{"listStyle": "none"}}>
                                                 <OpenModalBooking
                                                     itemText="Update"
-                                                    modalComponent={< UpdateBookingModal spotDetails={spot} spotId={spot.id}/>}
+                                                    modalComponent={< UpdateBookingModal spotDetails={spot} spotId={spot.id} bookingDetails={booking}/>}
                                             />
                                             </button>
                                             <div className="delete-spot">
                                                 <button className="delete-button">
                                                     <OpenModalDelete
                                                         itemText="Delete"
+                                                        modalComponent={< DeleteBookingModal bookingId={booking.id}/>}
                                                     />
                                                 </button>
                                             </div>
@@ -73,6 +76,10 @@ function ManageBookings() {
                                     </div>
                                 )
                         })
+                        : <div>
+                            <h1>You currently have no bookings.</h1>
+                            <h2>Go to a spot and create one!</h2>
+                        </div>
                     }
                 </div>
             </div>
