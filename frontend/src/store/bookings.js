@@ -7,6 +7,7 @@ const LOAD_BOOKINGS_ONE_SPOT = "bookings/LoadBookingsOneSpot"
 const CREATE_BOOKING = "bookings/CreateBooking"
 const LOAD_USER_BOOKINGS = "bookings/LoadUserBookings"
 const UPDATE_BOOKING = "bookings/UpdateBooking"
+const DELETE_BOOKING = "bookings/DeleteBooking"
 
 // Store - action creators | Spots
 
@@ -35,6 +36,13 @@ export const UpdateBooking = (booking) => {
     return {
         type: UPDATE_BOOKING,
         booking
+    }
+}
+
+export const deleteBooking = (bookingId) => {
+    return {
+        type: DELETE_BOOKING,
+        bookingId
     }
 }
 
@@ -87,6 +95,8 @@ export const loadUserBookingsThunk = (bookings) => async (dispatch) => {
 
 // Thunk4: Update booking of a spot
 export const updateBookingThunk = (bookingDetails, bookingId) => async (dispatch) => {
+    console.log("bookingId => ", bookingId)
+    console.log("bookingDetails => ", bookingDetails)
     const res = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -103,6 +113,17 @@ export const updateBookingThunk = (bookingDetails, bookingId) => async (dispatch
     }
 }
 
+// Thunk 5: Delete a booking
+export const deleteBookingThunk = (bookingId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: "DELETE"
+    })
+
+    if (res.ok) {
+        dispatch(deleteBooking(bookingId))
+    }
+}
+
 
 const initialState = {
     user: {},
@@ -114,7 +135,7 @@ const bookingsReducer = (state = initialState, action) => {
         case LOAD_BOOKINGS_ONE_SPOT: {
             const newState = {
                 ...state,
-                spot: { ...state.spot }
+                spot: {}
             }
             action.bookings.Bookings.forEach(booking => {
                 newState.spot[booking.id] = booking
@@ -124,6 +145,7 @@ const bookingsReducer = (state = initialState, action) => {
         case CREATE_BOOKING: {
             const newState = { ...state }
             newState.spot[action.booking.id] = action.booking
+            newState.user[action.booking.id] = action.booking
             return newState
         }
         case LOAD_USER_BOOKINGS: {
@@ -136,6 +158,14 @@ const bookingsReducer = (state = initialState, action) => {
         case UPDATE_BOOKING: {
             const newState = { ...state }
             newState.user[action.booking.id] = { ...action.spot }
+            return newState;
+        }
+        case DELETE_BOOKING: {
+            const newState = {...state, spot: {...state.spot}, user: {...state.spot}}
+            console.log("newState => ", newState)
+            delete newState.spot[action.bookingId]
+            delete newState.user[action.bookingId]
+            console.log("newState after delete => ", newState)
             return newState;
         }
         default:
