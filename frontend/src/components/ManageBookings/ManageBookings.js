@@ -14,12 +14,12 @@ import UpdateBookingModal from "../UpdateBookingModal/UpdateBookingModal";
 
 function ManageBookings() {
     const bookingsObj = useSelector(state => state.bookings.user)
-    console.log("bookingsObj => ", bookingsObj)
+    // console.log("bookingsObj => ", bookingsObj)
     const bookings = Object.values(bookingsObj)
-    console.log("bookings => ", bookings)
+    // console.log("bookings => ", bookings)
     const user = useSelector(state => state.session.user)
     const currUserId = user.id;
-    console.log(currUserId)
+    // console.log(currUserId)
 
     const dispatch = useDispatch()
     useEffect(() => {
