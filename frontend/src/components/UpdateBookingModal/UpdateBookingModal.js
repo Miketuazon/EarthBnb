@@ -10,13 +10,13 @@ export default function UpdateBookingModal({ spotId, spotDetails, bookingDetails
     const dispatch = useDispatch()
     const history = useHistory()
     const { closeModal } = useModal()
-    console.log("spotDetails => ", spotDetails)
-    console.log("spotId => ", spotId)
+    // console.log("spotDetails => ", spotDetails)
+    // console.log("spotId => ", spotId)
     const bookingsObj = useSelector(state => state.bookings.spot)
     const bookings = Object.values(bookingsObj)
-    console.log("bookings => ", bookings)
-    console.log("spotDetails", spotDetails)
-    console.log("bookingDetails => ", bookingDetails)
+    // console.log("bookings => ", bookings)
+    // console.log("spotDetails", spotDetails)
+    // console.log("bookingDetails => ", bookingDetails)
 
 
     const dateIso = new Date().toISOString().slice(0, 10)
@@ -93,11 +93,11 @@ export default function UpdateBookingModal({ spotId, spotDetails, bookingDetails
     // console.log("date => ", date)
     // console.log("endDatee => ", endDatee)
 
-    bookings.map(booking => {
-        // console.log(booking.startDate, booking.endDate)
-        // console.log(typeof(booking.startDate))
-    })
-
+    // bookings.map(booking => {
+    //     // console.log(booking.startDate, booking.endDate)
+    //     // console.log(typeof(booking.startDate))
+    // })
+    // console.log(errors)
     return (
         <div className="booking-modal">
             <ul>

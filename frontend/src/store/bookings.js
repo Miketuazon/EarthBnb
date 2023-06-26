@@ -95,8 +95,8 @@ export const loadUserBookingsThunk = (bookings) => async (dispatch) => {
 
 // Thunk4: Update booking of a spot
 export const updateBookingThunk = (bookingDetails, bookingId) => async (dispatch) => {
-    console.log("bookingId => ", bookingId)
-    console.log("bookingDetails => ", bookingDetails)
+    // console.log("bookingId => ", bookingId)
+    // console.log("bookingDetails => ", bookingDetails)
     const res = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -162,10 +162,10 @@ const bookingsReducer = (state = initialState, action) => {
         }
         case DELETE_BOOKING: {
             const newState = {...state, spot: {...state.spot}, user: {...state.spot}}
-            console.log("newState => ", newState)
+            // console.log("newState => ", newState)
             delete newState.spot[action.bookingId]
             delete newState.user[action.bookingId]
-            console.log("newState after delete => ", newState)
+            // console.log("newState after delete => ", newState)
             return newState;
         }
         default:
