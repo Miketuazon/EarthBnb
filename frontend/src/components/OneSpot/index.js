@@ -146,6 +146,7 @@ export default function OneSpot() {
                         {/* <button className="reserve-click" onClick={reserveClick}> Reserve
                         </button> */}
                         {
+                            sessionUser ?
                             owner.id !== sessionUser.id
                                 ?
                                 <button className="reserve-click" style={{ "listStyle": "none" }}>
@@ -160,6 +161,10 @@ export default function OneSpot() {
                                     <div>Reserve disabled!</div>
                                     <div>You are the owner!</div>
                                 </button>
+                            : <button className="reserve-click" style={{ "listStyle": "none", "cursor":"not-allowed", "backgroundColor": "black" }} disabled >
+                            <div>Reserve disabled!</div>
+                            <div>You are not logged in!</div>
+                        </button>
                         }
                     </div>
                 </div>
