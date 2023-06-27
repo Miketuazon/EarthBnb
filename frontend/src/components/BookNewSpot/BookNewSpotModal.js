@@ -97,7 +97,7 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
         // console.log(typeof(booking.startDate))
     })
 
-    console.log(errors)
+    // console.log(errors)
 
     return (
         <div className="booking-modal">

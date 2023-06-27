@@ -15,9 +15,9 @@ import DeleteBookingModal from "../DeleteBookingModal/DeleteBookingModal";
 
 function ManageBookings() {
     const bookingsObj = useSelector(state => state.bookings.user)
-    console.log("bookingsObj => ", bookingsObj)
+    // console.log("bookingsObj => ", bookingsObj)
     const bookings = Object.values(bookingsObj)
-    console.log("bookings => ", bookings)
+    // console.log("bookings => ", bookings)
     const user = useSelector(state => state.session.user)
     const currUserId = user.id;
     // console.log(currUserId)
@@ -25,7 +25,6 @@ function ManageBookings() {
     useEffect(() => {
         dispatch(loadUserBookingsThunk(bookings))
     }, [dispatch])
-    console.log(bookingsObj === undefined)
 
     if (!bookings) return <LoaderIcon />
     return (
