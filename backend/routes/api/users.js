@@ -27,11 +27,11 @@ const validateSignup = [
   check("firstName")
     .exists({ checkFalsy: true })
     .isLength({ min: 3 })
-    .withMessage("First Name is required"),
+    .withMessage("First Name is required and needs at least 3 letters"),
   check("lastName")
     .exists({ checkFalsy: true })
     .isLength({ min: 3 })
-    .withMessage("Last Name is required"),
+    .withMessage("Last Name is required and needs at least 3 letters"),
   // handleValidationErrors
   handleValidationError
 ];

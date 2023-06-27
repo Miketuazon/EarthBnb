@@ -15,6 +15,9 @@ function SignupFormModal() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
@@ -23,23 +26,17 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          // console.log('data type errors', data)
-          if (data && data.errors) setErrors(data.errors);
+
+          if (data && data.errors) {
+            const { email, username } = data.errors;
+            setEmailError(email || "");
+            setUsernameError(username || "");
+          }
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
-  // couldn't figure out way to test register
-  // const signDemoInfo = (e) => {
-  //   e.preventDefault();
-  //   setEmail("demoUser1337@gmail.com");
-  //   setUsername("demoUser1337");
-  //   setFirstName("demo");
-  //   setLastName("user");
-  //   setPassword("password");
-  //   setConfirmPassword("password");
-  // }
 
   return (
     <>
@@ -48,6 +45,8 @@ function SignupFormModal() {
       <form onSubmit={handleSubmit} className="signUp-form">
         <ul>
           {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
+          {emailError && <li className="error-message">{emailError}</li>}
+          {usernameError && <li className="error-message">{usernameError}</li>}
         </ul>
         <label>
           Email
@@ -105,10 +104,7 @@ function SignupFormModal() {
           />
         </label>
         <button
-          disabled={
-            email.length < 1 || username.length < 4 || firstName.length < 1 ||
-            lastName.length < 1 || password.length < 6 || password !== confirmPassword
-          }
+          // disabled={errors.length}
           type="submit"
           className="signUp-button">Sign Up</button>
         {/* <button onClick={signDemoInfo}>Register as demo user!</button> */}
