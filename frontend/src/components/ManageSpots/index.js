@@ -15,11 +15,14 @@ function ManageSpots() {
     const obj = useSelector(state => state.spots.allSpots)
     // console.log("what is this", obj)
     const allSpots = Object.values(obj)
-    // console.log("should be spots", allSpots)
 
-    // console.log("spots => ", spots)
-    // console.log("user =>", user)
+    const userSpots = []
     const currUserId = user.id;
+
+    allSpots.filter(spot => spot.ownerId === currUserId).map(spot => {
+        userSpots.push(spot)
+    })
+
     // console.log(currUserId)
 
     const dispatch = useDispatch();
@@ -65,7 +68,9 @@ function ManageSpots() {
             </div>
             <div className="manage-place">
                 <div className="user-spots">
-                    {allSpots?.map(spot => {
+                    {
+                    userSpots.length ?
+                    allSpots?.map(spot => {
                         if (spot.ownerId === currUserId)
                             return (
                                 <div key={spot.id} className="spot-place">
@@ -150,7 +155,12 @@ function ManageSpots() {
                                 //     </div>
                                 // </div>
                             )
-                    })}
+                    })
+                : <div className="no-spots-holder">
+                    <h1>Oh no, you have no spots!</h1>
+                    <h2>Create a new spot to view and manage them!</h2>
+                </div>
+                }
                 </div>
             </div>
         </div>

@@ -72,6 +72,8 @@ export const createBookingThunk = (bookingDetails, spotId) => async (dispatch) =
     // console.log("res.json => ", await res.json())
     if (res.ok) {
         const createdBooking = await res.json()
+        dispatch(createBooking(createdBooking, spotId))
+        return createdBooking
     } else {
         const data = await res.json()
         if (data.errors) {
@@ -89,7 +91,6 @@ export const loadUserBookingsThunk = (bookings) => async (dispatch) => {
         const data = await res.json()
 
         await dispatch(loadUserBookings(data))
-        return data
     }
 }
 
@@ -125,7 +126,7 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
 }
 
 
-const initialState = {
+let initialState = {
     user: {},
     spot: {}
 }
@@ -149,7 +150,7 @@ const bookingsReducer = (state = initialState, action) => {
             return newState
         }
         case LOAD_USER_BOOKINGS: {
-            const newState = { ...state, user: {} }
+            const newState = { ...state, user: {...state.user}, }
             action.bookings.Bookings.forEach(booking => {
                 newState.user[booking.id] = booking
             })
@@ -158,10 +159,11 @@ const bookingsReducer = (state = initialState, action) => {
         case UPDATE_BOOKING: {
             const newState = { ...state }
             newState.user[action.booking.id] = { ...action.spot }
+            newState.spot[action.booking.id] = { ...action.spot }
             return newState;
         }
         case DELETE_BOOKING: {
-            const newState = {...state, spot: {...state.spot}, user: {...state.spot}}
+            const newState = {...state, user: {...state.spot}}
             // console.log("newState => ", newState)
             delete newState.spot[action.bookingId]
             delete newState.user[action.bookingId]

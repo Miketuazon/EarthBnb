@@ -5,6 +5,7 @@ import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 import { loadBookingsThunk, createBookingThunk } from "../../store/bookings";
 import "react-datepicker/dist/react-datepicker.css";
+import { getOneSpot } from "../../store/spots";
 
 export default function BookNewSpotModal({ spotId, spotDetails }) {
     const dispatch = useDispatch()
@@ -40,20 +41,23 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
         let start = new Date(startDate)
         let end = new Date(endDate)
         let today = new Date()
-        if (start > end) validationErrors.push = (' Booking end date is before start date')
-        if (today > end) validationErrors.push = (' Booking end date is before today.')
-        if (today > start) validationErrors.push = (' Booking start date is before today.')
+        if (startDate > endDate) validationErrors.push(' Booking end date is before start date')
+        // if (today > end) validationErrors.push(' Booking end date is before today.')
+        // if (today > start) validationErrors.push(' Booking start date is before today.')
+        if (startDate === endDate) validationErrors.push(' Booking start and end date cannot be the same day. Make end date at least one day after')
 
         for (let booking of bookings) {
 
-            console.log(booking)
+            // console.log(booking)
             const alreadyBookedStartDate = booking.startDate
             const alreadyBookedEndDate = booking.endDate
-
-            if (startDate <= alreadyBookedStartDate && startDate >= alreadyBookedEndDate) {
-                validationErrors.push(`Booking is within the range of this period: ${alreadyBookedStartDate} - ${alreadyBookedEndDate}`)
+            // console.log(startDate)
+            // console.log(endDate)
+            // debugger
+            if (startDate <= alreadyBookedEndDate && startDate <= alreadyBookedStartDate
+                && endDate >= alreadyBookedStartDate && endDate >= alreadyBookedEndDate) {
+                validationErrors.push(`Booking is within the range of this booking: ${alreadyBookedStartDate.slice(5, 10)} to ${alreadyBookedEndDate.slice(5,10)}.`)
             }
-
         }
 
         if (validationErrors.length) return setErrors(validationErrors)
@@ -69,8 +73,9 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
         const createdBookingDates = {
             startDate, endDate
         }
-
-        await dispatch(createBookingThunk(createdBookingDates, spotId));
+        dispatch(createBookingThunk(createdBookingDates, spotId));
+        dispatch(getOneSpot(spotId))
+        dispatch(loadBookingsThunk(spotId))
         history.push(`/bookings/current`)
         closeModal()
 
@@ -94,6 +99,7 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     const date = new Date(startDate)
     const endDatee = new Date(endDate)
     const month = months[date.getMonth()]
+    const endMonth = months[endDatee.getMonth()]
     const day = date.getDate()
     const endDay = endDatee.getDate()
     // console.log("date => ", date)
@@ -109,25 +115,33 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
     return (
         <div className="booking-modal">
             <ul>
-                {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
+                {errors?.map((error, idx) => (<li key={idx} style={{"color": "red", "listStyle": "none"}}>ERROR: {error}</li>))}
             </ul>
             <h1>Confirm your booking</h1>
             <h2>Your trip</h2>
             <div className="dates-container">
-                {month} {day + 1} - {endDay + 1}
+                {/* {month} {day + 1} - {endMonth} {endDay + 1} */}
+                {month} {startDate.slice(8,10)} - {endMonth} {endDate.slice(8,10)}
             </div>
-            <div className="already-booked-dates">
-                Already booked dates:
+                <div>Current bookings:</div>
                 <div className="booked-dates-container">
                     {
-                        bookings.map(booking => (
-                            <div className="already-booked">
-                                <div>{[booking.startDate.slice(5,10)]} - {booking.endDate.slice(5,10)}</div>
-                            </div>
-                        ))
+                        bookings.length ?
+                        <div className="booked-dates-container">
+                            {
+                                bookings.filter(booking => booking.endDate < new Date().toDateString()).map(booking => (
+                                    <div className="already-booked">
+                                        <div className="booked-booking">{[booking.startDate.slice(5,10)]} - {booking.endDate.slice(5,10)}</div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        :
+                        <div className="no-bookings">
+                            There are currently no bookings for this spot.
+                        </div>
                     }
                 </div>
-            </div>
             <form className="bookings-form" onSubmit={handleSubmit}>
                 <label className="start-date-booking">Start Date</label>
                 <input
