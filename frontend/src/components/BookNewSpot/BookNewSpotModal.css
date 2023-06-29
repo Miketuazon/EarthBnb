@@ -13,3 +13,28 @@
 .submit {
     margin: 5px;
 }
+
+.booked-dates-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 2px;
+}
+
+.already-booked-dates {
+    padding: 1px;
+}
+
+.already-booked {
+    display: flex;
+    flex: 1 0 21%;
+    border: 2px solid gray;
+    font-weight: bold;
+    color: black;
+    margin: 1px;
+}
+
+.dates-container {
+    padding: 5px;
+    padding-top: 0px;
+}

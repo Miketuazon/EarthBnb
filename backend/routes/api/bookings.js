@@ -145,7 +145,7 @@ router.put('/:bookingId',
                 conflictErrors.startDate = "Start date conflicts with an existing booking";
                 conflictErrors.endDate = "End date conflicts with an existing booking";
             }
-            else if (startDate.getTime() === book.startDate.getTime()) {
+            else if (startDate === book.startDate) {
                 conflictErrors.startDate = "Start date conflicts with an existing booking";
             }
             else if (startDate < book.startDate && endDate > book.startDate) {

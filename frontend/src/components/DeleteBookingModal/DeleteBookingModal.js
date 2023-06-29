@@ -9,12 +9,10 @@ function DeleteBookingModal({ bookingId }) {
     const dispatch = useDispatch();
     // console.log("bookingId => ", bookingId)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        closeModal();
-        dispatch(deleteBookingThunk(bookingId));
-        dispatch(loadUserBookingsThunk());
-        return;
+    const handleSubmit = async (e) => {
+        // e.preventDefault()
+        await dispatch(deleteBookingThunk(bookingId));
+        closeModal()
     };
 
     return (
