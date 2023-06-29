@@ -44,10 +44,17 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
         if (today > end) validationErrors.push = (' Booking end date is before today.')
         if (today > start) validationErrors.push = (' Booking start date is before today.')
 
-        // for (let booking of bookings) {
-        //     debugger
-        //     console.log(booking)
-        // }
+        for (let booking of bookings) {
+
+            console.log(booking)
+            const alreadyBookedStartDate = booking.startDate
+            const alreadyBookedEndDate = booking.endDate
+
+            if (startDate <= alreadyBookedStartDate && startDate >= alreadyBookedEndDate) {
+                validationErrors.push(`Booking is within the range of this period: ${alreadyBookedStartDate} - ${alreadyBookedEndDate}`)
+            }
+
+        }
 
         if (validationErrors.length) return setErrors(validationErrors)
 
