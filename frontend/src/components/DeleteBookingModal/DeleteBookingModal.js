@@ -11,9 +11,9 @@ function DeleteBookingModal({ bookingId }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        closeModal();
         dispatch(deleteBookingThunk(bookingId));
         dispatch(loadUserBookingsThunk());
-        closeModal();
         return;
     };
 
