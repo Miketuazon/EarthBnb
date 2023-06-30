@@ -111,11 +111,13 @@ export default function OneSpot() {
                                 src={image.url}
                             />
                             :
-                            <img
-                                className="other-images"
-                                src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
-                                alt="no image yet"
-                            />
+                            <div className="other-images-container">
+                                <img
+                                    className="other-images"
+                                    src={image.url === "" ? `https://t4.ftcdn.net/jpg/03/08/68/19/240_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg` : image.url}
+                                    alt="no image yet"
+                                />
+                            </div>
                     )
                     }
 
@@ -147,24 +149,24 @@ export default function OneSpot() {
                         </button> */}
                         {
                             sessionUser ?
-                            owner.id !== sessionUser.id
-                                ?
-                                <button className="reserve-click" style={{ "listStyle": "none" }}>
-                                    <OpenModalBooking
-                                        itemText="Reserve"
-                                        modalComponent={<BookNewSpotModal spotId={spotId} spotDetails={spotDetails}
-                                        />}
-                                    />
-                                </button>
-                                :
-                                <button className="reserve-click" style={{ "listStyle": "none", "cursor":"not-allowed", "backgroundColor": "black" }} disabled >
+                                owner.id !== sessionUser.id
+                                    ?
+                                    <button className="reserve-click" style={{ "listStyle": "none" }}>
+                                        <OpenModalBooking
+                                            itemText="Reserve"
+                                            modalComponent={<BookNewSpotModal spotId={spotId} spotDetails={spotDetails}
+                                            />}
+                                        />
+                                    </button>
+                                    :
+                                    <button className="reserve-click" style={{ "listStyle": "none", "cursor": "not-allowed", "backgroundColor": "black" }} disabled >
+                                        <div>Reserve disabled!</div>
+                                        <div>You are the owner!</div>
+                                    </button>
+                                : <button className="reserve-click" style={{ "listStyle": "none", "cursor": "not-allowed", "backgroundColor": "black" }} disabled >
                                     <div>Reserve disabled!</div>
-                                    <div>You are the owner!</div>
+                                    <div>You are not logged in!</div>
                                 </button>
-                            : <button className="reserve-click" style={{ "listStyle": "none", "cursor":"not-allowed", "backgroundColor": "black" }} disabled >
-                            <div>Reserve disabled!</div>
-                            <div>You are not logged in!</div>
-                        </button>
                         }
                     </div>
                 </div>
@@ -175,13 +177,13 @@ export default function OneSpot() {
                     <div className="rating-review">
                         {
                             spotDetails.avgStarRating === null
-                                ? <i class="fa-solid fa-star">NEW</i>
+                                ? <i class="fa-solid fa-star"></i>
                                 : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)} &#x2022;</i>
                         }
                         <div>
                             {spotDetails.numReviews > 0
                                 ? (Number(spotDetails.numReviews) === 1 ? <>{spotDetails.numReviews} review</> : <>{spotDetails.numReviews} reviews</>)
-                                : (sessionUser?.id !== owner.OwnerId ? <>Be the first one to post a review!</> : <></>)
+                                : (sessionUser?.id !== owner.OwnerId ? <>NEW Be the first one to post a review!</> : <></>)
                             }
                         </div>
                     </div>

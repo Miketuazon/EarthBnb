@@ -14,9 +14,11 @@ function Navigation({ isLoaded }) {
         <span class="tooltiptext">Return home</span>
       </li>
       {isLoaded && (
-        <li>
+        <li className='create-and-menu'>
+          <div>
           <NavLink className={createSpotButton} to="/spots/new">Create a new spot</NavLink>
           <ProfileButton user={sessionUser} />
+          </div>
         </li>
       )}
     </ul>

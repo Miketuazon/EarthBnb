@@ -41,8 +41,18 @@ export default function Spots() {
                                 <div>{spot.city}, {spot.state}</div>
                                 <div>
                                     {spot.avgRating === "0.0"
-                                        ? (<i class="fa-solid fa-star">New</i>)
-                                        : (<i class="fa-solid fa-star">{Number.parseFloat(spot.avgRating).toFixed(2)}</i>)
+                                        ? (
+                                            <div>
+                                                <i class="fa-solid fa-star"></i>
+                                                NEW
+                                            </div>
+                                        )
+                                        : (
+                                            <div>
+                                                <i class="fa-solid fa-star"></i>
+                                                {Number.parseFloat(spot.avgRating).toFixed(2)}
+                                            </div>
+                                        )
                                     }
                                 </div>
                             </div>
