@@ -7,6 +7,11 @@
 #menu-button-top-right {
     border: 2px solid black;
     border-radius: 5px;
+    margin-left: .5rem;
+    height: 2rem;
+    width: 4rem;
+    position: relative;
+    display: inline-block;
 }
 
 .profile-dropdown>*:hover {
@@ -19,7 +24,7 @@
 }
 
 .navBar {
-    border: 2px solid lightgray;
+    /* border: 2px solid lightgray; */
     border-radius: 25px;
     display: flex;
     justify-content: space-between;
@@ -30,8 +35,10 @@
     list-style: none;
     background-color: #94AF9F;
     font-family: 'Lato';
-    border: solid 2px gray;
+    /* border: solid 2px gray; */
     position: sticky;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .create-spot, .create-spot:visited {
@@ -41,16 +48,20 @@
 #home,
 #home:visited {
     background-image: url("https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true");
-    background-size: 82px;
+    background-size: 75px;
     background-repeat: no-repeat;
     /* background-position; */
-    padding-left: 100px;
+    padding-left: 75px;
     /* padding-top: 10px; */
     padding-bottom: 70px;
     text-decoration: none;
     background-position: center left;
-    color: lightblue;
+    color: #00009e;
     /* height: 50px; */
+}
+
+.homeButton {
+    height: 5.6rem;
 }
 
 .homeButton .tooltiptext {
@@ -65,7 +76,8 @@
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-    top: -20px
+    top: .5rem;
+    left: 5rem;
 }
 
 .homeButton:hover .tooltiptext {
@@ -78,15 +90,15 @@
 
 @keyframes left-to-right {
     0% {
-        transform: translateX(-10px) rotate(0deg);
+        transform: translateX(-10px);
     }
 
     50% {
-        transform: translateX(10px) rotate(180deg);
+        transform: translateX(10px);
     }
 
     100% {
-        transform: translateX(-10px) rotate(360deg);
+        transform: translateX(-10px);
     }
 }
 
@@ -123,9 +135,16 @@
     flex-wrap:wrap;
     align-items: baseline;
     flex-direction: column;
-
+    margin-left: 2.8rem;
 }
 
 #modal-content {
     font-family: 'Lato';
+}
+
+.create-and-menu {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    height: 3rem;
 }
