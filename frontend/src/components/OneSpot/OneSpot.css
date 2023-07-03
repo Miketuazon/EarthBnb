@@ -52,6 +52,8 @@
 
 .post-button {
   list-style: none;
+  background-color: #555;
+  color: white;
 }
 
 .review-submit {
