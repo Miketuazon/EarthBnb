@@ -133,7 +133,11 @@ export default function OneSpot() {
                             <div className="rating-review">
                                 {
                                     spotDetails.avgStarRating === null
-                                        ? <i class="fa-solid fa-star">NEW</i>
+                                        ?
+                                        <div style={{"fontWeight": "bold"}}>
+                                            <i class="fa-solid fa-star"></i>
+                                            NEW
+                                        </div>
                                         : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)} &#x2022;</i>
                                 }
                                 <div>
