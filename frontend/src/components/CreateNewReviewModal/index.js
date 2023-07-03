@@ -63,12 +63,15 @@ function CreateNewReviewModal({ spotId }) {
         <ul>
           {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
         </ul>
+        {review.length < 10 ? <>Your review must be at least 10 characters</> : null}
+
         <label>
           <input
-            type='textarea' placeholder='Leave your review here...' min='10'
+            type='text' placeholder='Leave your review here...' min='10' max='50'
             required value={review} onChange={updateReview} className='review-text'
           >
           </input>
+          {review.length} / 50
         </label>
         <div className='stars-container'>
           <div className='stars-container-child1'>Stars</div>
@@ -77,7 +80,7 @@ function CreateNewReviewModal({ spotId }) {
           </div>
         </div>
         <button
-          disabled={review.length < 10 || !stars}
+          disabled={review.length < 10 || !stars || review.length > 50}
           type="submit">Submit Your Review!</button>
       </form>
     </section>
