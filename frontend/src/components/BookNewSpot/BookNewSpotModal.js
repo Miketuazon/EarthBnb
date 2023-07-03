@@ -129,7 +129,7 @@ export default function BookNewSpotModal({ spotId, spotDetails }) {
                         bookings.length ?
                         <div className="booked-dates-container">
                             {
-                                bookings.filter(booking => booking.endDate < new Date().toDateString()).map(booking => (
+                                bookings.filter(booking => booking.startDate < new Date().toDateString()).map(booking => (
                                     <div className="already-booked">
                                         <div className="booked-booking">{[booking.startDate.slice(5,10)]} - {booking.endDate.slice(5,10)}</div>
                                     </div>
