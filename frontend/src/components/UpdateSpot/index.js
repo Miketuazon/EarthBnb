@@ -140,9 +140,10 @@ export default function UpdateSpot() {
                     <div>Mention the best features of your space, any special amenities like fast wifi or parking,
                         and what you love about the neighborhood.</div>
                     <textarea
-                        type='textarea' placeholder='Please write at least 30 characters' min='30'
+                        type='text' placeholder='Please write at least 30 characters' min='30' maxLength="400"
                         required value={description} onChange={updateDescription} className='description-box'
                     />
+                    {description.length} / 400
                 </label>
                 <hr></hr>
                 <label>
@@ -170,7 +171,7 @@ export default function UpdateSpot() {
                     </div>
                 </label>
                 <hr></hr>
-                <button type="submit">Update spot!</button>
+                <button className="btn" type="submit">Update spot!</button>
             </form>
         </section>
     )

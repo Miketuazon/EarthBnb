@@ -134,16 +134,21 @@ export default function OneSpot() {
                                 {
                                     spotDetails.avgStarRating === null
                                         ?
-                                        <div style={{"fontWeight": "bold"}}>
+                                        <div style={{ "fontWeight": "bold" }}>
                                             <i class="fa-solid fa-star"></i>
                                             NEW
                                         </div>
-                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)} &#x2022;</i>
+                                        : <i class="fa-solid fa-star">{Number.parseFloat(spotDetails.avgStarRating).toFixed(2)}</i>
                                 }
                                 <div>
                                     {spotDetails.numReviews > 0
-                                        ? Number(spotDetails.numReviews) === 1 ? `${spotDetails.numReviews} review`
-                                            : `${spotDetails.numReviews} reviews`
+                                        ? Number(spotDetails.numReviews) === 1
+                                            ? <>
+                                                &nbsp; &#x2022; &nbsp; `${spotDetails.numReviews} review`
+                                            </>
+                                            : <>
+                                                &nbsp; &#x2022; &nbsp;`${spotDetails.numReviews} reviews`
+                                            </>
                                         : null}
                                 </div>
                             </div>

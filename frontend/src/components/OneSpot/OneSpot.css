@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 25%;
+  margin-left: 30%;
   margin-right: 25%;
 }
 
@@ -134,6 +134,12 @@
   /* justify-content: space-between; */
 }
 
+.description {
+  display: flex;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+}
+
 .owner-description-container {
   display: flex;
   flex-direction: column;
@@ -146,9 +152,13 @@
   box-shadow: 5px;
   display: flex;
   flex-direction:column;
-  width: 24%;
+  min-width: 35%;
   padding: 10px;
   flex-wrap: wrap;
+}
+
+.price-rating-review > * {
+  padding-left: 1px;
 }
 
 .price-per-night {
@@ -190,7 +200,7 @@ hr {
   height: 2px;
 }
 .black-line {
-  width: 1000px;
+  width: 100%;
 }
 .review-owner {
   margin-bottom: 0px;
@@ -205,4 +215,8 @@ hr {
   background-color: #555;
   color: white;
   font-weight: bold;
+}
+
+.other-images-container {
+  /* max-width: 240px; */
 }
