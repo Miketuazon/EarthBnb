@@ -105,10 +105,6 @@ export default function CreateNewSpot() {
                         <h1>Create a new Spot</h1>
                         <h3>Where's your place located?</h3>
                     </div>
-                    <ul>
-                        {/* will place errors next to labels later */}
-                        {errors?.map((error, idx) => (<li key={idx}>{error}</li>))}
-                    </ul>
                     <div className='location'>
                         <label>
                             Country
@@ -151,9 +147,10 @@ export default function CreateNewSpot() {
                             and what you love about the neighborhood.</div>
                         <textarea
                             className='description-box'
-                            type='textarea' placeholder='Please write at least 30 characters' min='30'
-                            required value={description} onChange={updateDescription}
+                            type='text' placeholder='Please write at least 30 characters' min='30'
+                            required value={description} onChange={updateDescription} maxLength="400"
                         />
+                        {description.length} / 400
                     </label>
                     <hr className="black-line"></hr>
                     <label>
@@ -213,12 +210,16 @@ export default function CreateNewSpot() {
                         <br></br>
                     </label>
                     <hr className="black-line"></hr>
+                    <ul className='errors' style={{listStyle: "none", color: "red", fontWeight: "bold"}}>
+                        {/* will place errors next to labels later */}
+                        {errors?.map((error, idx) => (<li key={idx}>ERROR: {error}</li>))}
+                    </ul>
                     <button
-                        disabled={
-                            country.length < 1 || address.length < 1 || city.length < 1 ||
-                            state.length < 1 || description.length < 30 || name.length < 0 ||
-                            price.length < 1 || imageURL.length < 1
-                        }
+                        // disabled={
+                        //     country.length < 1 || address.length < 1 || city.length < 1 ||
+                        //     state.length < 1 || description.length < 30 || name.length < 0 ||
+                        //     price.length < 1 || imageURL.length < 1
+                        // }
                         className='btn'
                         type="submit">Create spot!</button>
                 </form>

@@ -36,7 +36,7 @@ export default function Spots() {
                             /></Link>
                             : <Link to={`spots/${spot.id}`}>No Preview Image Available</Link>}
                         </div>
-                        <div className="description">
+                        <div className="description-each-spot">
                             <div className="city-rating-spot">
                                 <div>{spot.city}, {spot.state}</div>
                                 <div>

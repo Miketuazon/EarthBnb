@@ -5,7 +5,7 @@
     background-size:cover; */
     /* max-width: 800px;
     max-height: 1000px; */
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .create-form {
@@ -78,3 +78,9 @@ label {
     background-color: rgb(202, 250, 202);
     font-weight: bold;
   }
+
+.btn {
+    background-color: #9dffde;
+    color: black;
+    font-weight: bold;
+}
