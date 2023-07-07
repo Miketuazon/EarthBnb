@@ -144,10 +144,10 @@ export default function OneSpot() {
                                     {spotDetails.numReviews > 0
                                         ? Number(spotDetails.numReviews) === 1
                                             ? <>
-                                                &nbsp; &#x2022; &nbsp; `${spotDetails.numReviews} review`
+                                                &nbsp; &#x2022; &nbsp; {`${spotDetails.numReviews} review`}
                                             </>
                                             : <>
-                                                &nbsp; &#x2022; &nbsp;`${spotDetails.numReviews} reviews`
+                                                &nbsp; &#x2022; &nbsp; {`${spotDetails.numReviews} reviews`}
                                             </>
                                         : null}
                                 </div>

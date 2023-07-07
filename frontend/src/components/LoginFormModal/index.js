@@ -46,6 +46,7 @@ function LoginFormModal() {
   return (
     <>
     <img id="background-form"src="https://images.immediate.co.uk/production/volatile/sites/7/2018/02/Earth-from-space-1-64e9a7c.jpg?quality=90&resize=980,654"/>
+      <h2 className="title">EarthBnB</h2>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit} className="login-form">
         <ul>

@@ -1,12 +1,23 @@
 .profile-dropdown {
     border: 2px solid black;
     border-radius: 10px;
-    background-color: lightblue;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+    width: 12rem;
+}
+
+.dropdown-items {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
 }
 
 #menu-button-top-right {
-    border: 2px solid black;
-    border-radius: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 21px;
+    background: transparent;
     margin-left: .5rem;
     height: 2rem;
     width: 4rem;
@@ -15,8 +26,9 @@
 }
 
 .profile-dropdown>*:hover {
-    background-color: bisque;
-    border: 5px black;
+    background-color: #d0d0d0;
+    /* border: 5px black; */
+    width: 97%;
 }
 
 .hidden {
@@ -25,44 +37,47 @@
 
 .navBar {
     /* border: 2px solid lightgray; */
-    border-radius: 25px;
+    border-bottom: 1px solid lightgray;
+    /* border-radius: 25px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     /* flex:  */
-    height: 5rem;
+    height: 80px;
     flex-direction: row;
     list-style: none;
-    background-color: #94AF9F;
+    /* background-color: #94AF9F; */
     font-family: 'Lato';
     /* border: solid 2px gray; */
     position: sticky;
     padding-left: 5%;
     padding-right: 5%;
+    margin-bottom: 0;
 }
 
 .create-spot, .create-spot:visited {
     text-decoration: none;
+    color: #818181;
 }
 
 #home,
 #home:visited {
-    background-image: url("https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true");
+    /* background-image: url("https://images.newscientist.com/wp-content/uploads/2021/06/09132308/credit_tetra-imagesalamy_anmp9y_web.jpg?crop=1:1,smart&width=1200&height=1200&upscale=true");
     background-size: 75px;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     /* background-position; */
-    padding-left: 75px;
+    /* padding-left: 75px; */
     /* padding-top: 10px; */
-    padding-bottom: 70px;
+    /* padding-bottom: 70px; */
     text-decoration: none;
     background-position: center left;
-    color: #00009e;
+    color: #2B52FF;
     /* height: 50px; */
 }
 
-.homeButton {
+/* .homeButton {
     height: 5.6rem;
-}
+} */
 
 .homeButton .tooltiptext {
     visibility: hidden;
@@ -76,12 +91,12 @@
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-    top: .5rem;
-    left: 5rem;
+    /* bottom: 3rem; */
+    /* left: 5rem; */
 }
 
 .homeButton:hover .tooltiptext {
-    visibility: visible;
+    /* visibility: visible; */
 }
 
 .homeButton:hover {
@@ -102,9 +117,9 @@
     }
 }
 
-.title {
+/* .title {
     padding-left: 80px;
-}
+} */
 
 .active .toolTipText {
     visibility: hidden;
@@ -135,7 +150,21 @@
     flex-wrap:wrap;
     align-items: baseline;
     flex-direction: column;
-    margin-left: 2.8rem;
+    /* margin-left: 2.8rem; */
+}
+
+.profile-dropdown > li {
+    width: 100%;
+    padding: .2rem;
+}
+
+.manage-dropdown, .manage-dropdown:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.navlink-dropdown > a {
+    width: 100%;
 }
 
 #modal-content {
