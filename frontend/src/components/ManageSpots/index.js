@@ -63,7 +63,7 @@ function ManageSpots() {
         <div className="manage-spots-page">
             <div className="header">
                 <h1>Manage your spots</h1>
-                <button className="create-spot-button" onClick={goToCreateSpot} style={{"backgroundColor": "black", "color": "white"}}>Create a new spot</button>
+                <button className="create-spot-button" onClick={goToCreateSpot}>Create a new spot</button>
                 <br></br>
             </div>
             <div className="manage-place">

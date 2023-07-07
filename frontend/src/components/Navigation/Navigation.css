@@ -1,5 +1,5 @@
 .profile-dropdown {
-    border: 2px solid black;
+    border: 1px solid ;
     border-radius: 10px;
     background-color: white;
     position: relative;
@@ -19,10 +19,22 @@
     border-radius: 21px;
     background: transparent;
     margin-left: .5rem;
-    height: 2rem;
-    width: 4rem;
+    height: 3rem;
+    width: 5rem;
+    font-size: 1.2rem;
     position: relative;
     display: inline-block;
+    color: gray;
+}
+
+
+#menu-button-log {
+    color: white;
+    background-color: #F83158;
+    border: 0;
+    border-radius: 12px;
+    padding: .5rem;
+    font-weight: bold;
 }
 
 .profile-dropdown>*:hover {
@@ -151,10 +163,11 @@
     align-items: baseline;
     flex-direction: column;
     /* margin-left: 2.8rem; */
+    color: gray;
 }
 
 .profile-dropdown > li {
-    width: 100%;
+    width: 97%;
     padding: .2rem;
 }
 

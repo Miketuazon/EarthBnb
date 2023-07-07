@@ -26,25 +26,23 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-
           if (data && data.errors) {
-            const { email, username } = data.errors;
-            setEmailError(email || "");
-            setUsernameError(username || "");
+            return setErrors(data.errors)
           }
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+    return setErrors(['Passwords do not match']);
   };
 
 
   return (
     <>
       <img id="background-form" src="https://images.immediate.co.uk/production/volatile/sites/7/2018/02/Earth-from-space-1-64e9a7c.jpg?quality=90&resize=980,654" />
+      <h2 className="title">Welcome to EarthBnB</h2>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit} className="signUp-form">
         <ul>
-          {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors?.map((error, idx) => <li key={idx} style={{color: "red", fontWeight: "bold", listStyle: "none"}}>{idx + 1}. {error}</li>)}
           {emailError && <li className="error-message">{emailError}</li>}
           {usernameError && <li className="error-message">{usernameError}</li>}
         </ul>
