@@ -15,6 +15,20 @@
 }
 
 .signUp-button {
-    border: 2px solid black;
+    background-color: #F83158;
+    color: white;
+    border: 0;
     border-radius: 5px;
+    padding: .5rem;
+    font-weight: bold;
+    margin-top: .5rem;
+}
+
+.signUp-form > label {
+    padding: .2rem;
+    font-weight: bold;
+}
+
+.signUp-button:hover {
+    background-color: #EB215E;
 }

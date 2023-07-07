@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     transition: opacity 0.75s, visibility 0.75s;
 }
 

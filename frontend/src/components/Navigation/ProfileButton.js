@@ -65,8 +65,8 @@ function ProfileButton({ user }) {
               <div className="manage-dropdown">Manage Bookings</div>
               </NavLink></li>
 
-            <li>
-              <button onClick={logout} id="menu-button-top-right">Log Out</button>
+            <li className="logout-container">
+              <button onClick={logout} id="menu-button-log">Log Out</button>
             </li>
           </>
         ) : (

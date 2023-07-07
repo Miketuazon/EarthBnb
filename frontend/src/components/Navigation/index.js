@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
       <li className='homeButton'>
         <NavLink exact to="/" id="home">
           <h2 className='title'>
-            <i class="fa-solid fa-earth-americas"></i>EarthBnB
+            <i class="fa-solid fa-earth-americas"></i> EarthBnB
           </h2>
         </NavLink>
         <span class="tooltiptext">Return home</span>
