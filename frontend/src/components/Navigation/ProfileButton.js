@@ -39,22 +39,31 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
+
+  const createSpotButton = "create-spot" + (user ? "" : " hidden")
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
+    <div>
+      <NavLink className={createSpotButton} to="/spots/new">EarthBnB your home</NavLink>
       <button onClick={openMenu} id="menu-button-top-right">
         <i class="fa-solid fa-bars"></i>
         &nbsp;&nbsp;
         <i className="fas fa-user-circle" />
       </button>
+    </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li>Hello, {user.firstName}</li>
-            <li>{user.email}</li>
-            <li><NavLink to="/spots/current">Manage Spots</NavLink></li>
-            <li><NavLink to="/bookings/current">Manage Bookings</NavLink></li>
+            <li style={{borderBottom: "1px solid lightgray"}}>{user.email}</li>
+            <li><NavLink to="/spots/current">
+              <div className="manage-dropdown">Manage Spots</div>
+              </NavLink></li>
+            <li style={{borderBottom: "1px solid lightgray"}}><NavLink to="/bookings/current">
+              <div className="manage-dropdown">Manage Bookings</div>
+              </NavLink></li>
 
             <li>
               <button onClick={logout} id="menu-button-top-right">Log Out</button>
