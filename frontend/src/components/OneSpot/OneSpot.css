@@ -191,6 +191,10 @@
   box-shadow: 2px 1px 1px black;
 }
 
+.reserve-click:hover {
+  cursor: pointer;
+}
+
 hr {
   border: 0;
   clear:both;
@@ -215,6 +219,17 @@ hr {
   background-color: #555;
   color: white;
   font-weight: bold;
+}
+
+.delete-button:hover, .submit:hover, .no:hover, .post-button:hover, #menu-button-log:hover,
+#update-button:hover, .btn
+{
+  cursor: pointer;
+}
+
+.delete-keep {
+  display: flex;
+  align-items: center;
 }
 
 .other-images-container {
