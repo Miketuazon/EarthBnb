@@ -94,6 +94,7 @@
 
 .create-spot-button:hover {
   background-color: #EB215E;
+  cursor: pointer;
 }
 
 .manage-spots-page {

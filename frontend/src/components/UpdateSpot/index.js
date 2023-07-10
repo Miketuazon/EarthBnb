@@ -95,7 +95,7 @@ export default function UpdateSpot() {
         <section className='edit-form-spots'>
             <form className="edit-form" onSubmit={handleSubmit}>
                 <div className='earth'>
-                <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
+                    <img className='earth-img' src="https://cdn.shortpixel.ai/spai/q_lossy+w_754+h_424+to_auto+ret_img/https://cosmosmagazine.com/wp-content/uploads/2022/02/GettyImages-1313642868-min.jpg"></img>
                 </div>
                 <h1>Update your Spot</h1>
                 <h3>Where's your place located?</h3>
@@ -171,7 +171,9 @@ export default function UpdateSpot() {
                     </div>
                 </label>
                 <hr></hr>
-                <button className="btn" type="submit">Update spot!</button>
+                <div className='submit-container'>
+                    <button className="btn" type="submit">Update spot!</button>
+                </div>
             </form>
         </section>
     )
