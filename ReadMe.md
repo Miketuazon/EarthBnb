@@ -1,10 +1,10 @@
-# ![logo]
-[logo]: ./assets//eartbnb%20logo.png
+# EarthBnB
 
 Welcome to my Airbnb clone!
 Click on the frontend folder to see examples of my features!
 
-## Live at: https://miket-auth-me.onrender.com/  Check it out!
+## Live at: https://miket-auth-me.onrender.com/ 
+## Live link 2 (if above is not working) -> https://earthbnb-2l5p.onrender.com 
 
 <hr>
 
