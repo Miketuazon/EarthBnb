@@ -211,7 +211,7 @@ module.exports = {
       },
       {
         spotId: 9,
-        url: 'https://a0.muscache.com/im/pictures/fdd0c43c-ed7e-466d-878e-713faa4c3d65.jpg',
+        url: 'https://luxesource.com/wp-content/uploads/2021/05/LX_SouthEast13_HOM_Benedict_10.jpg',
         preview: true,
       },
       {
